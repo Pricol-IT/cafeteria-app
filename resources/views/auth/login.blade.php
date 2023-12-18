@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Login - {{ config('app.name') }}</title>
     <style type="text/css">
       section {
           height: 100vh;
