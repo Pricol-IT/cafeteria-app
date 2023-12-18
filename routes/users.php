@@ -27,14 +27,16 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::post('/remove-monthly-day/{id}', 'removeMonthlyDay')->name('user.removemonthlyday');
 
     
-
 });
 
 Route::prefix('canteen')->middleware('canteen')->group(function () { 
     Route::get('/dashboard', [CanteenController::class, 'index'])->name('canteen.dashboard');
     Route::resource('menu_master', MenuMasterController::class);
     Route::resource('menu_selection', MenuSelectionController::class);
-    Route::get('/delivery', [CanteenController::class, 'deliveryView'])->name('canteen.deliveryview');
+    Route::get('/sp_delivery', [CanteenController::class, 'deliverySpm'])->name('canteen.deliverySpm');
+    Route::get('/si_delivery', [CanteenController::class, 'deliverySim'])->name('canteen.deliverySim');
     Route::post('/deliveryStore', [CanteenController::class, 'deliveryStore'])->name('canteen.deliverystore');
+    Route::get('/total', [CanteenController::class, 'total_month_request'])->name('canteen.total_request');
+    Route::get('/today', [CanteenController::class, 'singleday_request'])->name('canteen.today');
 });
 

@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function token()
     {
-        $this->hasMany(Token::class,'emp_id');
+        $this->hasMany(Token::class,'id','emp_id');
     }
 }

@@ -13,7 +13,7 @@ class Token extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class,'emp_id');
+        $this->belongsTo(User::class,'id','emp_id');
     }
 
     // public function scopeSpm($query)

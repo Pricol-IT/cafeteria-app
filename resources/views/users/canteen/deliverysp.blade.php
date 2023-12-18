@@ -5,9 +5,13 @@
 @section('main')
 <main id="main" class="main">
     <div class="container">
-        
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h2 class="text-primary text-center p-2 fw-bold">Special Meal - Delivery</h2>
+            </div>
+        </div>
 
-        <form action="{{route('canteen.deliveryview')}}" method="get">
+        <form action="{{route('canteen.deliverySpm')}}" method="get">
             @csrf
             @method('get')
             <div class="row">
@@ -20,7 +24,7 @@
                             <div class="col-lg-4">
                               <center>
                                   <button class="btn btn-primary  mt-2"> Search</button>
-                                <a href="{{route('canteen.deliveryview')}}" class="btn  mt-2 btn-danger">Reset</a> 
+                                <a href="{{route('canteen.deliverySpm')}}" class="btn  mt-2 btn-danger">Reset</a> 
                               </center>
                                
                             </div>
@@ -51,8 +55,8 @@
                                     @endforeach
                                     <input type="hidden" name="day"  value="{{date('Y-m-d'); }}">
                                     <input type="hidden" name="spm"  value="{{$result['spm'] }}">
-                                    <input type="hidden" name="sim"  value="{{$result['sim']  }}">
                                     <input type="hidden" name="curd"  value="{{$result['curd'] }}">
+                                    <input type="hidden" name="page" value="canteen.deliverySpm">
 
                                 </div>
                             </div>
@@ -65,13 +69,7 @@
                                     </div>
                                     
                                 </div>
-                                <div class="text-white  bg-primary fw-bold card pt-2 p-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h4 class="fw-bold">South Indian Meal </h4> 
-                                        <h1 class=" text-white fw-bold ">x {{$result['sim'] ? $result['sim'] : 0 }}</h1>
-                                    </div>
-                                    
-                                </div>
+                                
                                 <div class="text-white bg-primary  fw-bold card pt-2 p-2">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h4 class="fw-bold">Curd </h4> 
@@ -79,14 +77,14 @@
                                     </div>
                                     
                                 </div>
-                                <!-- <div class="text-primary card fw-bold p-3"><h4 class="fw-bold"> <span class="text-white fw-bold badge bg-primary text-right">{{$result['sim']}}</span></h4></div>
-                                <div class="text-primary card fw-bold p-3"><h4 class="fw-bold">Curd <span class="text-white fw-bold badge bg-primary text-right">{{$result['sim']}}</span></h4></div> -->
+                                <!-- <div class="text-primary card fw-bold p-3"><h4 class="fw-bold"> <span class="text-white fw-bold badge bg-primary text-right">{{$result['spm']}}</span></h4></div>
+                                <div class="text-primary card fw-bold p-3"><h4 class="fw-bold">Curd <span class="text-white fw-bold badge bg-primary text-right">{{$result['spm']}}</span></h4></div> -->
                             </div>
                             
                             <div class="col-lg-12">
                                 <center>
                                     <input type="submit" name="submit" value="Deliver" class="btn btn-primary">
-                                <a href="{{route('canteen.deliveryview')}}" class="btn btn-danger">Back</a>
+                                <a href="{{route('canteen.deliverySpm')}}" class="btn btn-danger">Back</a>
                                 </center>
                                 
                             </div>
