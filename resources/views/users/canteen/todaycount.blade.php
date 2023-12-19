@@ -26,8 +26,8 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-
-                                    @forelse ($results as $result)
+                                    
+                                    <!-- @forelse ($results as $result)
                                     
                                     <tr>
                                       <td>{{$loop->iteration}}</td>
@@ -41,7 +41,46 @@
                                         
                                         <td colspan="5"> No Data Found</td>
                                     </tr>
+                                    @endforelse -->
+                                    @php
+                                        $totalEmpId = 0;
+                                        $totalSpm = 0;
+                                        $totalSim = 0;
+                                        $totalCurd = 0;
+                                    @endphp
+
+                                    @forelse ($results as $result)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{ $result->emp_id }}</td>
+                                            <td>{{ $result->total_spm }}</td>
+                                            <td>{{ $result->total_sim }}</td>
+                                            <td>{{ $result->total_curd }}</td>
+                                        </tr>
+
+                                        @php
+                                            // Update total values
+                                            $totalEmpId += (int)$result->emp_id;
+                                            $totalSpm += (int)$result->total_spm;
+                                            $totalSim += (int)$result->total_sim;
+                                            $totalCurd += (int)$result->total_curd;
+                                        @endphp
+
+                                    @empty
+                                        <tr>
+                                            <td colspan="5"> No Data Found</td>
+                                        </tr>
                                     @endforelse
+
+                                    @if(count($results) > 0)
+                                        <tr>
+                                            <td></td>
+                                            <td >Total</td>
+                                            <td>{{ $totalSpm }}</td>
+                                            <td>{{ $totalSim }}</td>
+                                            <td>{{ $totalCurd }}</td>
+                                        </tr>
+                                    @endif
                                   </tbody>
                                 </table>
                               </div>

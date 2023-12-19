@@ -38,6 +38,7 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $primaryKey = 'id';
     /**
      * The attributes that should be cast.
      *
@@ -50,6 +51,6 @@ class User extends Authenticatable
 
     public function token()
     {
-        $this->hasMany(Token::class,'id','emp_id');
+        return $this->hasMany(Token::class,'emp_id','id');
     }
 }

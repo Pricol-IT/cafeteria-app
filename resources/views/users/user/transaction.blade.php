@@ -33,13 +33,14 @@
     <div id="ndate" style="display:none;">{{date('t')}}</div>
     
     <div>
-      @if(!empty($singles))
-      
       @php
         $spmCount = 0;
         $simCount = 0;
         $curdCount = 0;
+      @endphp
+      @if(!empty($singles))
       
+      @php
 
         foreach ($singles as $single)
         {
@@ -51,9 +52,6 @@
         @endphp
         @endif
 
-        
-        
-        
     </div>
     
     <div class="card pt-4 pb-4">
@@ -87,8 +85,8 @@
 
   //   var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
-        left: 'prev,next',
-        center: 'title',
+          
+        // center: 'title',
         right: 'dayGridMonth'
       },
        aspectRatio: 2,

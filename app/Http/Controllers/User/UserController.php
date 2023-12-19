@@ -218,6 +218,7 @@ class UserController extends Controller
         $deliverys =Delivery::where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->get();
 
         $combinedRecords = [];
+        $singles = [];
 
         foreach ($monthlyEntries as $monthlyEntry) {
             foreach (json_decode($monthlyEntry->monthly_days) as $weekday) {
@@ -235,10 +236,6 @@ class UserController extends Controller
             $combinedRecords[$weeklyEntry->day]['curd'] = ($combinedRecords[$weeklyEntry->day]['curd'] ?? 0) + ($weeklyEntry->curd ?? 0);
         }
 
-    // Now $combinedRecords contains the desired array format
-        // $result = array_values(array_map(function ($empRecords) {
-        //     return array_values($empRecords);
-        // }, $combinedRecords));
         $i=0;
         foreach($combinedRecords as $key => $array)
         {
@@ -247,6 +244,59 @@ class UserController extends Controller
         }
 
         return view('users.user.transaction',compact('singles','deliverys'));
+
+
+    // Now $combinedRecords contains the desired array format
+        // $result = array_values(array_map(function ($empRecords) {
+        //     return array_values($empRecords);
+        // }, $combinedRecords));
+
+        // $monthlyEntries = Token::select('id', 'emp_id', 'monthly', 'monthly_curd', 'monthly_sim', 'monthly_days')
+        //         ->where('emp_id', auth()->user()->id)
+        //         ->whereMonth('monthly', Carbon::now()->month)
+        //         ->get();
+
+        //     $weeklyEntries = Token::select('id', 'emp_id', 'day', 'spm', 'sim', 'curd')
+        //         ->where('emp_id', auth()->user()->id)
+        //         ->whereMonth('day', Carbon::now()->month)
+        //         ->get();
+
+        //     $deliverys = Delivery::where('emp_id', auth()->user()->id)
+        //         ->whereMonth('day', Carbon::now()->month)
+        //         ->get();
+
+        //     $combinedRecords = [];
+
+        //     foreach ($monthlyEntries as $monthlyEntry) {
+        //         foreach (json_decode($monthlyEntry->monthly_days) as $weekday) {
+        //             $combinedRecords[$weekday] = [
+        //                 'day'  => $weekday,
+        //                 'spm'  => 0,
+        //                 'sim'  => $monthlyEntry->monthly_sim ?? 0,
+        //                 'curd' => $monthlyEntry->monthly_curd ?? 0,
+        //             ];
+        //         }
+        //     }
+
+        //     foreach ($weeklyEntries as $weeklyEntry) {
+        //         if (!isset($combinedRecords[$weeklyEntry->day])) {
+        //             $combinedRecords[$weeklyEntry->day] = [
+        //                 'day'  => $weeklyEntry->day,
+        //                 'spm'  => 0,
+        //                 'sim'  => 0,
+        //                 'curd' => 0,
+        //             ];
+        //         }
+
+        //         $combinedRecords[$weeklyEntry->day]['spm'] += $weeklyEntry->spm ?? 0;
+        //         $combinedRecords[$weeklyEntry->day]['sim'] += $weeklyEntry->sim ?? 0;
+        //         $combinedRecords[$weeklyEntry->day]['curd'] += $weeklyEntry->curd ?? 0;
+        //     }
+
+        //     $singles = array_values($combinedRecords);
+
+            // return view('users.user.transaction', compact('singles', 'deliverys'));
+
     // return $singles;
     }
 

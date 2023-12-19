@@ -199,19 +199,29 @@ class CanteenController extends Controller
         $formattedDates = Carbon::createFromFormat('Y-m-d', $currentDate)->format('d-m-Y');
 // return $formattedDates;
         $results = DB::table('tokens')
-            ->select('emp_id')
-            ->selectRaw('SUM(IFNULL(spm, 0)) as total_spm')
-            ->selectRaw('SUM(IFNULL(sim, 0) + IFNULL(monthly_sim, 0)) as total_sim')
-            ->selectRaw('SUM(IFNULL(curd, 0) + IFNULL(monthly_curd, 0)) as total_curd')
+            ->select('tokens.emp_id','users.emp_id')
+            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as total_spm')
+            ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as total_sim')
+            ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as total_curd')
+             
             ->where(function ($query) use ($currentDate,$formattedDates) {
                 $query->orWhereDate('day', $currentDate)
                     ->orWhereRaw("monthly_days REGEXP '[[:<:]]{$formattedDates}[[:>:]]'");
             })
-            ->groupBy('emp_id')
+            ->groupBy('tokens.emp_id','users.emp_id')
+            ->join('users', 'tokens.emp_id', '=', 'users.id')
             ->get();
         
             // return $results;
 
-            return view('users.canteen.todaycount',compact('results'));
+             return view('users.canteen.todaycount',compact('results'));
+    }
+
+
+    public function usertoken()
+    {
+        $user = Token::with('user:id,emp_id')->get();
+
+        return $user;
     }
 }

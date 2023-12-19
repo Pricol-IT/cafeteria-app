@@ -43,7 +43,7 @@
                            @method('POST') 
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="card p-3 bg-primary">
+                                <div class="card p-2 bg-primary">
                                     @foreach($user_id as $user)
 
                                     <div class="d-flex justify-content-between">
@@ -61,7 +61,28 @@
                             </div>
 
                             <div class="col-lg-12">
-                                <div class="text-white  bg-primary fw-bold card pt-2 p-2">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6"> 
+                                        <div class="card bg-primary text-white  p-2 shadow">
+
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h4 class=" fw-bold">South Indian Meal</h4> 
+                                            <h1 class=" text-white fw-bold  h1">x {{$result['sim'] ? $result['sim'] : 0 }}</h1>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6"> 
+                                        <div class="card bg-primary text-white  p-2 shadow">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h4 class="fw-bold">Curd </h4> 
+                                            <h1 class=" text-white fw-bold  h1">x {{$result['curd'] ? $result['curd'] : 0 }}</h1>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="text-white  bg-primary fw-bold card pt-2 p-2">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h4 class="fw-bold">South Indian Meal </h4> 
                                         <h1 class=" text-white fw-bold ">x {{$result['sim'] ? $result['sim'] : 0 }}</h1>
@@ -74,7 +95,7 @@
                                         <h1 class=" text-white fw-bold ">x {{$result['curd'] ? $result['curd'] : 0 }}</h1>
                                     </div>
                                     
-                                </div>
+                                </div> -->
                                 <!-- <div class="text-primary card fw-bold p-3"><h4 class="fw-bold"> <span class="text-white fw-bold badge bg-primary text-right">{{$result['sim']}}</span></h4></div>
                                 <div class="text-primary card fw-bold p-3"><h4 class="fw-bold">Curd <span class="text-white fw-bold badge bg-primary text-right">{{$result['sim']}}</span></h4></div> -->
                             </div>
