@@ -206,7 +206,7 @@ class CanteenController extends Controller
              
             ->where(function ($query) use ($currentDate,$formattedDates) {
                 $query->orWhereDate('day', $currentDate)
-                    ->orWhereRaw("monthly_days REGEXP '[[:<:]]{$formattedDates}[[:>:]]'");
+                    ->orWhereRaw("monthly_days REGEXP ?",['[[:<:]]' . $formattedDates . '[[:>:]]']);
             })
             ->groupBy('tokens.emp_id','users.emp_id')
             ->join('users', 'tokens.emp_id', '=', 'users.id')
