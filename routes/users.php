@@ -23,8 +23,9 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::post('/monthly_store', 'monthlyStore')->name('user.monthlystore');
     Route::post('/weekly_store', 'weeklyStore')->name('user.weeklystore');
     Route::get('/transaction_history', 'transactionHistory')->name('user.transaction');
-
+    Route::get('/weekly_menu', 'weeklyIndex')->name('user.weeklyindex');
     Route::post('/remove-monthly-day/{id}', 'removeMonthlyDay')->name('user.removemonthlyday');
+    Route::post('/remove-weekly-day/{id}', 'weeklyRemove')->name('user.removeweeklyday');
 
     
 });
