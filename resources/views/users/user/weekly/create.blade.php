@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-6"><h3 class="text-primary fw-bold">Weekly Menu</h3></div>
     <div class="col-6 text-end">
-      <a href="{{route('user.weeklyindex')}}" class="btn btn-danger text-end">Cancel Menu</a>
+      <a href="{{route('user.weeklyindex')}}" class="btn btn-danger text-end">Cancel Order</a>
     </div>
   </div>
   <form action="{{route('user.weeklystore')}}" method="post">

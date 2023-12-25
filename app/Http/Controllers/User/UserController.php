@@ -64,7 +64,7 @@ class UserController extends Controller
         else
         {
             $emp_id = auth()->user()->id;
-            $month = Token::where('monthly','=', $monthly)->exists();
+            $month = Token::where('emp_id',$emp_id)->where('monthly','=', $monthly)->exists();
             if(!$month)
             {
                 
