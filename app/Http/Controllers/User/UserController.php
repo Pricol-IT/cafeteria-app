@@ -183,23 +183,35 @@ class UserController extends Controller
         $singleArray = array_filter($singleArray, function ($item) {
             return $item['sim'] !== null || $item['spm'] !== null || $item['curd'] !== null;
         });
-        
-        // $weekly = Token::create($singleArray);
-         foreach($singleArray as $week)
-         {
-             $weekly = Token::create($week);
-         }
-        
-        if($weekly)
-        {
+        $weeklyFirstDB = $this->insertIntoDatabase('mysql', $singleArray);
+
+        // Insert into the second database
+        $weeklySecondDB = $this->insertIntoDatabase('second_mysql', $singleArray);
+
+        if ($weeklyFirstDB && $weeklySecondDB) {
             toastr()->success('Weekly Menu Created Successfully');
             return redirect()->route('user.weekly');
-        }
-        else
-        {
-            toastr()->error('Something Went Wrong Please Try Again');
-            return back();   
-        }
+        } else {
+            toastr()->error('Something Went Wrong. Please Try Again');
+            return back();
+        }  
+
+        // $weekly = Token::create($singleArray);
+        //  foreach($singleArray as $week)
+        //  {
+        //      $weekly = Token::create($week);
+        //  }
+        
+        // if($weekly)
+        // {
+        //     toastr()->success('Weekly Menu Created Successfully');
+        //     return redirect()->route('user.weekly');
+        // }
+        // else
+        // {
+        //     toastr()->error('Something Went Wrong Please Try Again');
+        //     return back();   
+        // }
     }
 
     public function checkdate(Request $request)
@@ -343,4 +355,22 @@ class UserController extends Controller
         }
     }
 
+    protected function insertIntoDatabase($connection, $data)
+    {
+        try {
+            // Use the specified database connection
+            DB::connection($connection)->beginTransaction();
+
+            foreach ($data as $week) {
+                Token::on($connection)->create($week);
+            }
+
+            DB::connection($connection)->commit();
+            return true;
+        } catch (\Exception $e) {
+            // Handle the exception if something goes wrong
+            DB::connection($connection)->rollBack();
+            return false;
+        }
+    }
 }

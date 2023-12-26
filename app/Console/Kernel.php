@@ -10,9 +10,18 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      */
+
+    protected $commands = [
+        Commands\SyncTokenDetails::class,
+        Commands\SyncRFIDData::class,
+    ];
+
+
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('sync:token-details')->dailyAt('10:00');
+        $schedule->command('sync:rfid-data')->dailyAt('14:32');
     }
 
     /**

@@ -20,6 +20,7 @@
                                     <tr>
                                       <th scope="col">#</th>
                                       <th scope="col">Emp ID</th>
+                                      <th scope="col">Name</th>
                                       <th scope="col">SPM</th>
                                       <th scope="col">SIM</th>
                                       <th scope="col">CURD</th>
@@ -27,21 +28,6 @@
                                   </thead>
                                   <tbody>
                                     
-                                    <!-- @forelse ($results as $result)
-                                    
-                                    <tr>
-                                      <td>{{$loop->iteration}}</td>
-                                      <td>{{ $result->emp_id }}</td>
-                                      <td>{{ $result->total_spm }}</td>
-                                      <td>{{ $result->total_sim }}</td>
-                                      <td>{{ $result->total_curd }}</td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        
-                                        <td colspan="5"> No Data Found</td>
-                                    </tr>
-                                    @endforelse -->
                                     @php
                                         $totalEmpId = 0;
                                         $totalSpm = 0;
@@ -53,27 +39,29 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{ $result->emp_id }}</td>
-                                            <td>{{ $result->total_spm }}</td>
-                                            <td>{{ $result->total_sim }}</td>
-                                            <td>{{ $result->total_curd }}</td>
+                                            <td>{{ $result->name }}</td>
+                                            <td>{{ $result->spm }}</td>
+                                            <td>{{ $result->sim }}</td>
+                                            <td>{{ $result->curd }}</td>
                                         </tr>
 
                                         @php
                                             // Update total values
                                             $totalEmpId += (int)$result->emp_id;
-                                            $totalSpm += (int)$result->total_spm;
-                                            $totalSim += (int)$result->total_sim;
-                                            $totalCurd += (int)$result->total_curd;
+                                            $totalSpm += (int)$result->spm;
+                                            $totalSim += (int)$result->sim;
+                                            $totalCurd += (int)$result->curd;
                                         @endphp
 
                                     @empty
                                         <tr>
-                                            <td colspan="5"> No Data Found</td>
+                                            <td colspan="6"> No Data Found</td>
                                         </tr>
                                     @endforelse
 
                                     @if(count($results) > 0)
                                         <tr>
+                                            <td></td>
                                             <td></td>
                                             <td >Total</td>
                                             <td>{{ $totalSpm }}</td>

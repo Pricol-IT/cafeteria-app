@@ -39,6 +39,7 @@ Route::prefix('canteen')->middleware('canteen')->group(function () {
     Route::post('/deliveryStore', [CanteenController::class, 'deliveryStore'])->name('canteen.deliverystore');
     Route::get('/total', [CanteenController::class, 'total_month_request'])->name('canteen.total_request');
     Route::get('/today', [CanteenController::class, 'singleday_request'])->name('canteen.today');
+    Route::get('/synk', [CanteenController::class, 'syncTokenDetails'])->name('canteen.synk');
     Route::get('/usertoken', [CanteenController::class, 'usertoken'])->name('canteen.usertoken');
 });
 

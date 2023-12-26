@@ -194,21 +194,20 @@ class CanteenController extends Controller
     public function singleday_request()
     {
         $currentMonth = Carbon::now()->format('Y-m');
-        // $currentMonth = Carbon::now()->format('Y-m');
         $currentDate = Carbon::now()->toDateString();
         $formattedDates = Carbon::createFromFormat('Y-m-d', $currentDate)->format('d-m-Y');
-// return $formattedDates;
+      
         $results = DB::table('tokens')
-            ->select('tokens.emp_id','users.emp_id')
-            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as total_spm')
-            ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as total_sim')
-            ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as total_curd')
+            ->select('tokens.day','users.id','tokens.emp_id','users.emp_id','users.rfid','users.name')
+            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
+            ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
+            ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
              
             ->where(function ($query) use ($currentDate,$formattedDates) {
                 $query->orWhereDate('day', $currentDate)
                     ->orwhereRaw("monthly_days REGEXP ?", ['\\b' . $formattedDates . '\\b']);
             })
-            ->groupBy('tokens.emp_id','users.emp_id')
+            ->groupBy('tokens.emp_id','users.emp_id','users.id','users.name','users.rfid','tokens.day')
             ->join('users', 'tokens.emp_id', '=', 'users.id')
             ->get();
         
@@ -223,5 +222,34 @@ class CanteenController extends Controller
         $user = Token::with('user:id,emp_id')->get();
 
         return $user;
+    }
+
+    public function syncTokenDetails()
+    {
+        $currentDate = Carbon::now()->toDateString();
+        $formattedDates = Carbon::now()->format('d-m-Y');
+
+        // Connect to the first server database
+        $resultsFirstServer = DB::connection('mysql')->table('tokens')
+            ->select('tokens.day', 'users.id', 'tokens.emp_id', 'users.emp_id', 'users.rfid', 'users.name')
+            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
+            ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
+            ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
+            ->where(function ($query) use ($currentDate, $formattedDates) {
+                $query->orWhereDate('day', $currentDate)
+                    ->orWhereRaw("monthly_days REGEXP ?", ['\\b' . $formattedDates . '\\b']);
+            })
+            ->groupBy('tokens.emp_id', 'users.emp_id', 'users.id', 'users.name', 'users.rfid', 'tokens.day')
+            ->join('users', 'tokens.emp_id', '=', 'users.id')
+            ->get();
+
+                // return date('Y-m-d:h:i:s');
+            return $resultsFirstServer;
+        // Connect to the second server database
+        
+
+        // Insert into the rfid_masters table in both databases
+        // DB::connection('first_server')->table('rfid_masters')->insert($resultsFirstServer->toArray());
+        // DB::connection('second_server')->table('rfid_masters')->insert($resultsSecondServer->toArray());
     }
 }
