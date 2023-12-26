@@ -186,9 +186,9 @@ class UserController extends Controller
         $weeklyFirstDB = $this->insertIntoDatabase('mysql', $singleArray);
 
         // Insert into the second database
-        $weeklySecondDB = $this->insertIntoDatabase('second_mysql', $singleArray);
+        // $weeklySecondDB = $this->insertIntoDatabase('second_mysql', $singleArray);
 
-        if ($weeklyFirstDB && $weeklySecondDB) {
+        if ($weeklyFirstDB) {
             toastr()->success('Weekly Menu Created Successfully');
             return redirect()->route('user.weekly');
         } else {
