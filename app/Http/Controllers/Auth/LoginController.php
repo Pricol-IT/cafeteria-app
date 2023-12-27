@@ -45,4 +45,9 @@ class LoginController extends Controller
     {
         return Auth::guard('user');
     }
+
+    public function username()
+    {
+        return 'emp_id';
+    }
 }

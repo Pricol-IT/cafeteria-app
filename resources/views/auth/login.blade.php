@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{asset('icon/favicon.ico')}}" rel="icon">
+  <link href="{{asset('icon/apple-touch-icon.png')}}" rel="apple-touch-icon">
     <title>Login - {{ config('app.name') }}</title>
     <style type="text/css">
       section {
@@ -35,16 +37,16 @@
         <div class="loginBox d-flex justify-content-center">
           <div class="loginCard p-4 bg-white rounded shadow">
             <div class="logo text-center p-3">
-              <img src="{{asset('img/pricol_logo.png') }}" alt="logo" width="150px" />
+              <img src="{{asset('img/pricol_logo.png') }}" alt="logo" width="" />
             </div>
             <form method="POST" action="{{ route('login') }}" class="p-3">
             @csrf
             
               <div class="row p-3">
                 
-                <input id="email" type="email" class="form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Username">
+                <input id="emp_id" type="text" class="form-control  @error('emp_id') is-invalid @enderror" name="emp_id" value="{{ old('emp_id') }}"  autocomplete="emp_id" autofocus placeholder="Username">
 
-                    @error('email')
+                    @error('emp_id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -63,9 +65,9 @@
 
               <div class="row mb-3 p-3">
                 @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                    <!-- <a class="btn btn-link" href="{{ route('password.request') }}">
                         {{ __('Forgot Your Password?') }}
-                    </a>
+                    </a> -->
                 @endif
                 <button
                   type="submit"
