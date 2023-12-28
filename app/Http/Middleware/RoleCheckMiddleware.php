@@ -21,6 +21,6 @@ class RoleCheckMiddleware
             return redirect()->route('canteen.dashboard');
         }
 
-        return redirect('login');
+        return redirect('/');
     }
 }

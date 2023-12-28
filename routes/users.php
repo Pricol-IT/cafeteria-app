@@ -5,14 +5,18 @@ use App\Http\Controllers\User\Canteen\MenuMasterController;
 use App\Http\Controllers\User\Canteen\MenuSelectionController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CheckController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/checkuser/{id}', [App\Http\Controllers\CheckController::class, 'checkuser'])->name('checkuser');
+
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
 Route::post('/check-date', [App\Http\Controllers\User\UserController::class, 'checkdate'])->name('checkdate');
 
 Route::controller(UserController::class)->prefix('user')->middleware('user')->group(function () { 
