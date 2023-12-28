@@ -37,14 +37,14 @@
         <div class="loginBox d-flex justify-content-center">
           <div class="loginCard p-4 bg-white rounded shadow">
             <div class="logo text-center p-3">
-              <img src="{{asset('img/pricol_logo.png') }}" alt="logo" width="" />
+              <img src="{{asset('img/pricol_logo.png') }}" alt="logo" width="200" />
             </div>
             <form method="POST" action="{{ route('login') }}" class="p-3">
             @csrf
             
               <div class="row p-3">
                 
-                <input id="emp_id" type="text" class="form-control  @error('emp_id') is-invalid @enderror" name="emp_id" value="{{ old('emp_id') }}"  autocomplete="emp_id" autofocus placeholder="Username">
+                <input id="emp_id" type="text" class="form-control  @error('emp_id') is-invalid @enderror" name="emp_id" value="{{ old('emp_id') }}"  autocomplete="emp_id" autofocus placeholder="Username" >
 
                     @error('emp_id')
                         <span class="invalid-feedback" role="alert">

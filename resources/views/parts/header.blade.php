@@ -2,7 +2,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="#." class="logo d-flex align-items-center">
-        <img src="{{asset('assets/img/logo.png')}}" alt="">
+        <img src="{{asset('img/pricol_logo.png')}}" alt="180">
         
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
