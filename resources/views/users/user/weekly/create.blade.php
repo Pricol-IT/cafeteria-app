@@ -84,7 +84,7 @@
 
               <td class="p-2">
                 
-                <input class="form-check-input p-2 border {{ in_array($master->day, $exist) ? 'border-link ' : 'border-primary' }} " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }} data-date="{{$master->day}}" type="checkbox" name="si[]" id=""   value="{{$master->day}}" />
+                <input class="form-check-input p-2 border {{ in_array($master->day, $exist) ? 'border-link ' : 'border-primary' }} {{ in_array($master->day, $days) ? 'border-link' : 'border-primary' }} " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }} data-date="{{$master->day}}" type="checkbox" name="si[]" id=""   value="{{$master->day}}" />
                 
               </td>
               
