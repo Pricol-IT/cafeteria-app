@@ -35,7 +35,12 @@
                                 @forelse ($monthlys as $monthly)
                                 
                                 @foreach((json_decode($monthly->monthly_days)) as $month)
-                                @if($month > date('d-m-Y'))
+                                @php
+                                    $formattedDate = date('Y-m-d:10:i:s', strtotime($month));
+                                @endphp
+
+                                @if($formattedDate >= date('Y-m-d:H:i:s'))
+                                
                                 <tr>
                                   <td>{{$loop->iteration}}</td>
                                   <td>{{ day1Format($month) }}<br>{{$month}}</td>

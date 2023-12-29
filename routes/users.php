@@ -7,9 +7,11 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CheckController;
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/checkuser/{id}', [App\Http\Controllers\CheckController::class, 'checkuser'])->name('checkuser');
 

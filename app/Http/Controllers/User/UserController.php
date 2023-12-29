@@ -28,8 +28,21 @@ class UserController extends Controller
 
     public function monthly()
     {
-        
-        $monthlys = Token::select('id','emp_id','monthly_sim','monthly_curd','monthly','monthly_days')->where('emp_id',(auth()->user()->id))->whereMonth('monthly', Carbon::now()->month)->get();
+        $currentMonth = Carbon::now()->month;
+        $nextMonth = Carbon::now()->addMonth()->month;
+
+        $monthlys = Token::select('id','emp_id','monthly_sim','monthly_curd','monthly','monthly_days')->where('emp_id',(auth()->user()->id))
+        ->where(function ($query) use ($currentMonth, $nextMonth) {
+            $query->whereMonth('monthly', $currentMonth)
+            ->orWhereMonth('monthly', $nextMonth);
+        })
+        ->orderBy('monthly','asc')
+        ->get();
+
+        // return $monthlys;
+
+                    
+                                
         return view('users.user.monthly.index',compact('monthlys'));
     }
 
@@ -93,11 +106,13 @@ class UserController extends Controller
 
     public function weekly()
     {
-        // $masters = MenuSelection::with('menu')->take(5)->orderBy('day','asc')->get();
+        
 
         $currentDateTime = Carbon::now('Asia/Kolkata');
         $currentDate = $currentDateTime->format('Y-m-d');
         $currentTime = $currentDateTime->format('H:i:s');
+        $currentMonth = Carbon::now()->month;
+        $nextMonth = Carbon::now()->addMonth()->month;
 
         $masters = MenuSelection::with('menu')
         ->where(function ($query) use ($currentDate, $currentTime) {
@@ -112,23 +127,25 @@ class UserController extends Controller
         ->orderBy('day', 'asc')
         ->limit(5)
         ->get();
-        // return $masters;
-        // $masters = MenuSelection::with('menu')
-        //     ->where('day', '>=', $currentDateTime->format('Y-m-d'))
-        //     ->orderBy('day', 'asc')
-        //     ->take(5)
-        //     ->get();
-        $check_day = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->where('day', '>=', $currentDate)->whereMonth('day', Carbon::now()->month)->get();
+        
+        $check_day = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->where('day', '>=', $currentDate)->get();
         $check = Token::select('id', 'emp_id', 'monthly_sim', 'monthly_curd', 'monthly', 'monthly_days')
             ->where('emp_id', auth()->user()->id)
-            ->whereMonth('monthly', Carbon::now()->month)
-            ->first(); // Assuming there is only one monthly entry per user per month
+            ->where(function ($query) use ($currentMonth, $nextMonth) {
+            $query->whereMonth('monthly', $currentMonth)
+            ->orWhereMonth('monthly', $nextMonth);
+            })
+            ->get(); // Assuming there is only one monthly entry per user per month
 
         $existArray = [];
         $notExistArray = [];
 
         if ($check) {
-            $monthlyDays = json_decode($check->monthly_days, true);
+            foreach($check as $che)
+            {
+
+
+            $monthlyDays = json_decode($che->monthly_days, true);
 
             foreach ($masters as $master) {
                 $dayToCheck = date('d-m-Y',strtotime($master->day));
@@ -139,26 +156,11 @@ class UserController extends Controller
                     $notExistArray[] = $dayToCheck;
                 }
             }
+            }
         }
 
-        // if($check_day)
-        // {
-        //     foreach($check_day as $che)
-        //     {
-        //         $day[] = date('d-m-Y',strtotime($che->day));
-        //     }
-        //     foreach ($masters as $master) {
-        //         $dayToCheck = date('d-m-Y',strtotime($master->day));
-
-        //         if (in_array($dayToCheck, $day)) {
-        //             $existArray[] = $dayToCheck;
-        //         } else {
-        //             $notExistArray[] = $dayToCheck;
-        //         }
-        //     }
-        // }
-        // $check = Token::select('id','emp_id','monthly_sim','monthly_curd','monthly','monthly_days')->where('emp_id',(auth()->user()->id))->whereMonth('monthly', Carbon::now()->month)->get();
-        // return $notExistArray;
+        // return $masters;
+        
         return view('users.user.weekly.create',compact('masters','check','check_day','existArray','notExistArray'));
     }
 
@@ -173,20 +175,13 @@ class UserController extends Controller
                 "day" => $day,
                 "spm" => ($request['sp'] != '' && in_array($day, $request['sp'])) ? 1 : null,
                 "sim" => ($request['si'] != '' && in_array($day, $request['si'])) ? 1 : null,
-                "curd" => ($request['curd'] != '' && in_array($day, $request['curd'])) ? 1 : null
-                // $request['sp'] != '' ? ("spm" => in_array($day, $request['sp']) ? 1 : null ) : "spm" =>null,
-                // $request['si'] != '' ? ("sim" => in_array($day, $request['si']) ? 1 : null ) : "sim" => null,
-                // $request['curd'] != '' ? ("curd" => in_array($day, $request['curd']) ? 1 : null ) : "curd" => null
-                
+                "curd" => ($request['curd'] != '' && in_array($day, $request['curd'])) ? 1 : null                
             ];
         }
         $singleArray = array_filter($singleArray, function ($item) {
             return $item['sim'] !== null || $item['spm'] !== null || $item['curd'] !== null;
         });
         $weeklyFirstDB = $this->insertIntoDatabase('mysql', $singleArray);
-
-        // Insert into the second database
-        // $weeklySecondDB = $this->insertIntoDatabase('second_mysql', $singleArray);
 
         if ($weeklyFirstDB) {
             toastr()->success('Weekly Menu Created Successfully');
@@ -196,22 +191,6 @@ class UserController extends Controller
             return back();
         }  
 
-        // $weekly = Token::create($singleArray);
-        //  foreach($singleArray as $week)
-        //  {
-        //      $weekly = Token::create($week);
-        //  }
-        
-        // if($weekly)
-        // {
-        //     toastr()->success('Weekly Menu Created Successfully');
-        //     return redirect()->route('user.weekly');
-        // }
-        // else
-        // {
-        //     toastr()->error('Something Went Wrong Please Try Again');
-        //     return back();   
-        // }
     }
 
     public function checkdate(Request $request)
@@ -335,8 +314,9 @@ class UserController extends Controller
 
     public function weeklyIndex()
     {
-        
-        $weeklys = Token::select('id','emp_id','day','sim','curd','spm')->where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->where('day','!=',null)->get();
+        $date = date('Y-m-d');
+        $weeklys = Token::select('id','emp_id','day','sim','curd','spm')->where('emp_id',(auth()->user()->id))->where('day','>=',$date)->where('day','!=',null)->get();
+
         return view('users.user.weekly.index',compact('weeklys'));
     }
 

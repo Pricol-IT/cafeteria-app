@@ -41,11 +41,11 @@
         @forelse($masters as $master)
         
         
-        <div class="col-lg-4">
-          <div class="card bg-primary p-3 rounded shadow {{ in_array($master->day, $days) ? 'bg-light' : 'bg-primary' }} {{ in_array($master->day, $exist) ? 'bg-light' : 'bg-primary' }}">
-            <div class="daycontent bg-white ms-2 p-2 rounded ">
+        <div class="col-lg-4 d-flex">
+          <div class="card bg-primary p-3 flex-fill rounded shadow {{ in_array($master->day, $days) ? 'bg-light' : 'bg-primary' }} {{ in_array($master->day, $exist) ? 'bg-light' : 'bg-primary' }}">
+            <div class="daycontent flex-fill bg-white ms-2 p-2 rounded ">
               <img class="float-left" src="{{ $master->menu->imageurl }}" class="p-2" width="120px" style="position: relative; left: -20px; top: -10px;float: left;border-radius: 50%;"/>
-              <div class="menucontent ms-2" style="position: relative; left: -11px">
+              <div class="menucontent  ms-2" style="position: relative; left: -11px">
                 <h6 class="text-primary fw-bold">{{dayFormat($master->day)}} Menu</h6>
                 <h6>
                   {{convertDateFormat($master->day)}}
@@ -81,8 +81,11 @@
             <tr class="text-primary">
               <td class="p-1 fw-bold">South Indian Meal</td>
               @forelse($masters as $master)
+
               <td class="p-2">
-                <input class="form-check-input p-2 border border-primary" {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' . ($check->monthly_sim != null ? 'checked' : '') : '' }} data-date="{{$master->day}}" type="checkbox" name="si[]" id=""   value="{{$master->day}}" />
+                
+                <input class="form-check-input p-2 border {{ in_array($master->day, $exist) ? 'border-link ' : 'border-primary' }} " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }} data-date="{{$master->day}}" type="checkbox" name="si[]" id=""   value="{{$master->day}}" />
+                
               </td>
               
               @empty
@@ -92,8 +95,10 @@
               <td class="p-2 fw-bold">Curd</td>
               @forelse($masters as $master)
               <td class="p-2">
-                <input class="form-check-input p-2 border border-primary" {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' . ($check->monthly_curd != null ? 'checked' : '') : '' }}
+                
+                <input class="form-check-input p-2 border  {{ in_array($master->day, $exist) ? 'border-link ' : 'border-primary' }}  " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }}
  type="checkbox" name="curd[]"  id="" value="{{$master->day}}" />
+                
               </td>
               
               @empty
@@ -105,7 +110,7 @@
         <div class="col-lg-6">
           <div class="row bg-white p-3 rounded">
             <div class="col-lg-12">
-              <h5 class="fw-bold text-primary">No. of. tokens</h5>
+              <h5 class="fw-bold text-primary">No. of. tokens (selected)</h5>
               <p class=" text-primary">Note: You can only select Either Special Meals or South Indian Meal</p>
               <div class="row">
                 <div class="col-6"><p>Special Lunch </p></div>

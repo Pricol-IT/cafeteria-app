@@ -11,7 +11,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link " href="{{route('user.transaction')}}">
+  <a class="nav-link " href="{{route('user.transaction')}}" oncontextmenu="return false;">
     <i class='bx bxs-calendar'></i>
     <span>Transaction History </span>
   </a>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Token;
+use App\Models\RfidMaster;
 use DB;
 use App\Models\Delivery;
 
@@ -251,5 +252,10 @@ class CanteenController extends Controller
         // Insert into the rfid_masters table in both databases
         // DB::connection('first_server')->table('rfid_masters')->insert($resultsFirstServer->toArray());
         // DB::connection('second_server')->table('rfid_masters')->insert($resultsSecondServer->toArray());
+    }
+
+    public function reports()
+    {
+        $rfid = RfidMaster::orderBy('id','desc');
     }
 }
