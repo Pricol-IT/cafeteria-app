@@ -33,7 +33,7 @@
                                     @if($weekly->day > date('Y-m-d'))
                                     <tr>
                                       <td>{{$loop->iteration}}</td>
-                                      <td>{{ dayFormat($weekly->day) }}<br>{{$weekly->day}}</td>
+                                      <td>{{ dayFormat($weekly->day) }}<br>{{convertDateFormat($weekly->day)}}</td>
                                       <td>
                                         @if($weekly->spm != null)
                                             <p class="mb-2"><span class="text-primary">Special Meal -</span>  {{$weekly->spm}}</p>

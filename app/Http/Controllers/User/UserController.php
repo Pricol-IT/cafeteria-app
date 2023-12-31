@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Token;
+use App\Models\RfidMaster;
 use App\Models\Delivery;
 use Carbon\Carbon;
 use DateTime;
@@ -352,5 +353,30 @@ class UserController extends Controller
             DB::connection($connection)->rollBack();
             return false;
         }
+    }
+
+    public function userReport(Request $request)
+    {
+        $query = RfidMaster::select('day','spm','sim','curd','status')->where('user_id',auth()->user()->id)->orderBy('day','desc');
+        // return $query;
+        $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
+        $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
+        
+
+        if ($request->has('from_date') && $request->from_date != null )
+        {
+            // $query->whereBetween('from_date', [$start_date, $end_date]);
+            $query->whereDate('day', '>=', $start_date);
+        }
+
+        if ($request->has('to_date') && $request->to_date != null )
+        {
+            // $query->whereBetween('to_date', [$start_date, $end_date]);
+            $query->whereDate('day', '<=', $end_date);
+        }
+        $reports = $query->get();
+        
+
+        return view('users.user.reports',compact('reports'));
     }
 }

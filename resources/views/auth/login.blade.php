@@ -35,8 +35,13 @@
         background-image: 
             url("{{asset('assets/plugins/des-logo.png')}}");
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center center;
           background-size: cover;
+      }
+      @media (max-width: 992px) {
+       .smv {
+        margin-top: 12vh!important;
+       }
       }
   </style>
     <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap.min.css')}}" />
@@ -50,7 +55,7 @@
         <div class="col-lg-6 col-md-6">
           <div class="cv">
             <div class="p-3 ">
-              <div class="row mt-lg-5">
+              <div class="row mt-lg-5 smv">
                   <div class="col-lg-8 offset-lg-2 mt-3 mt-lg-5">
                     <h1 class="text-primary  fw-bold fst-italic">My Pricol</h1>
                     <h6 class="fw-bold">Cafeteria Log in</h6>

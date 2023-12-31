@@ -32,7 +32,7 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::get('/weekly_menu', 'weeklyIndex')->name('user.weeklyindex');
     Route::post('/remove-monthly-day/{id}', 'removeMonthlyDay')->name('user.removemonthlyday');
     Route::post('/remove-weekly-day/{id}', 'weeklyRemove')->name('user.removeweeklyday');
-
+    Route::get('/report', 'userReport')->name('user.userReport');
     
 });
 
@@ -47,5 +47,6 @@ Route::prefix('canteen')->middleware('canteen')->group(function () {
     Route::get('/today', [CanteenController::class, 'singleday_request'])->name('canteen.today');
     Route::get('/synk', [CanteenController::class, 'syncTokenDetails'])->name('canteen.synk');
     Route::get('/usertoken', [CanteenController::class, 'usertoken'])->name('canteen.usertoken');
+    Route::get('/reports', [CanteenController::class, 'reports'])->name('canteen.reports');
 });
 

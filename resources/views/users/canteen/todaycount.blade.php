@@ -21,8 +21,8 @@
                                       <th scope="col">#</th>
                                       <th scope="col">Emp ID</th>
                                       <th scope="col">Name</th>
-                                      <th scope="col">SPM</th>
-                                      <th scope="col">SIM</th>
+                                      <th scope="col">SP Meal</th>
+                                      <th scope="col">SI Meal</th>
                                       <th scope="col">CURD</th>
                                     </tr>
                                   </thead>

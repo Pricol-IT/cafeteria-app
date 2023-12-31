@@ -16,6 +16,12 @@
     <span>Transaction History </span>
   </a>
 </li>
+<li class="nav-item">
+  <a class="nav-link " href="{{route('user.userReport')}}" oncontextmenu="return false;">
+    <i class='bx bxs-calendar'></i>
+    <span>Report</span>
+  </a>
+</li>
 
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
