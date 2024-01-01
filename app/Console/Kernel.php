@@ -20,8 +20,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('sync:token-details')->dailyAt('11:45');
-        $schedule->command('sync:rfid-data')->dailyAt('16:00');
+        $schedule->command('sync:token-details')->dailyAt('10:05');
+        $schedule->command('sync:rfid-data')->dailyAt('15:30');
     }
 
     /**
