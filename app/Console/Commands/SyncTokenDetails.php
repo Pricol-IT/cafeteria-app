@@ -51,10 +51,10 @@ class SyncTokenDetails extends Command
             ->join('users', 'tokens.emp_id', '=', 'users.id')
             ->get();
 
-        
+        if ($resultsFirstServer->isNotEmpty()) {
             $weeklyFirstDB = $this->insertIntoDatabase('mysql', $resultsFirstServer);
             $weeklySecondDB = $this->insertIntoDatabase('second_mysql', $resultsFirstServer);
-        
+        }
     }
 
     // private function updateDeliveriesTable()
@@ -73,6 +73,7 @@ class SyncTokenDetails extends Command
 
     protected function insertIntoDatabase($connection, $data)
     {
+        $currentDate = Carbon::now()->toDateString();
         try {
             // Use the specified database connection
             DB::connection($connection)->beginTransaction();
@@ -80,7 +81,7 @@ class SyncTokenDetails extends Command
             foreach ($data as $week) {
 
                 RfidMaster::on($connection)->create([
-                    'day' =>$week->day,
+                    'day' =>$currentDate,
                     'user_id' =>$week->id,
                     'emp_id' =>$week->emp_id,
                     'rfid' =>$week->rfid,

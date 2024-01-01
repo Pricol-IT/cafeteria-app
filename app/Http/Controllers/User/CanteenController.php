@@ -188,7 +188,40 @@ class CanteenController extends Controller
             ->groupBy('emp_id')
             ->get();
             return $results;
-            
+        // $currentDate = Carbon::now()->toDateString();
+        // $formattedDates = Carbon::now()->format('d-m-Y');
+
+        // $resultsFirstServer = DB::connection('mysql')->table('tokens')
+        //     ->select('tokens.day', 'users.id', 'tokens.emp_id', 'users.emp_id', 'users.rfid', 'users.name')
+        //     ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
+        //     ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
+        //     ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
+        //     ->where(function ($query) use ($currentDate, $formattedDates) {
+        //         $query->orWhereDate('day', $currentDate)
+        //             ->orWhereRaw("monthly_days REGEXP ?", ['\\b' . $formattedDates . '\\b']);
+        //     })
+        //     ->groupBy('tokens.emp_id', 'users.emp_id', 'users.id', 'users.name', 'users.rfid', 'tokens.day')
+        //     ->join('users', 'tokens.emp_id', '=', 'users.id')
+        //     ->get();
+        //     // return $resultsFirstServer;
+        //     foreach ($resultsFirstServer as $week) {
+
+        //         RfidMaster::on('mysql')->create([
+        //             'day' =>$currentDate,
+        //             'user_id' =>$week->id,
+        //             'emp_id' =>$week->emp_id,
+        //             'rfid' =>$week->rfid,
+        //             'name' =>$week->name,
+        //             'spm' =>$week->spm,
+        //             'sim' =>$week->sim,
+        //             'curd' =>$week->curd,
+        //         ]);
+        //     }
+
+            // return $resultsFirstServer;
+            // $weeklyFirstDB = $this->insertIntoDatabase('mysql', $resultsFirstServer);
+            //  DB::connection('second_mysql')->table('rfid_masters')->truncate();
+            // $weeklySecondDB = $this->insertIntoDatabase('second_mysql', $resultsFirstServer);
     }
 
 
@@ -216,6 +249,36 @@ class CanteenController extends Controller
 
              return view('users.canteen.todaycount',compact('results'));
     }
+
+    protected function insertIntoDatabase($connection, $data)
+    {
+        try {
+            // Use the specified database connection
+            DB::connection($connection)->beginTransaction();
+            
+            
+            foreach ($data as $week) {
+
+                RfidMaster::on($connection)->create([
+                    'day' =>$week->day,
+                    'user_id' =>$week->id,
+                    'emp_id' =>$week->emp_id,
+                    'rfid' =>$week->rfid,
+                    'name' =>$week->name,
+                    'spm' =>$week->spm,
+                    'sim' =>$week->sim,
+                    'curd' =>$week->curd,
+                ]);
+            }
+
+            DB::connection($connection)->commit();
+            return true;
+        } catch (\Exception $e) {
+            // Handle the exception if something goes wrong
+            DB::connection($connection)->rollBack();
+            return false;
+        }
+    }   
 
 
     public function usertoken()
@@ -318,4 +381,6 @@ class CanteenController extends Controller
 
         return view('users.canteen.reports',compact('combinedData'));
     }
+
+    
 }
