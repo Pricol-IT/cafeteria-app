@@ -21,16 +21,18 @@
                                     <tr>
                                       <th scope="col">#</th>
                                       <th scope="col">Date</th>
-                                      <th scope="col">Menu</th>
+                                         <th scope="col">Menu</th>
                                       <th scope="col">Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-
+                                    
                                     @forelse ($weeklys as $weekly)
                                     
-                                    
-                                    @if($weekly->day > date('Y-m-d'))
+                                    @php
+                                    $formattedDate = date('Y-m-d:10:i:s', strtotime($weekly->day));
+                                    @endphp
+                                    @if($formattedDate >= date('Y-m-d:H:i:s'))
                                     <tr>
                                       <td>{{$loop->iteration}}</td>
                                       <td>{{ dayFormat($weekly->day) }}<br>{{convertDateFormat($weekly->day)}}</td>
