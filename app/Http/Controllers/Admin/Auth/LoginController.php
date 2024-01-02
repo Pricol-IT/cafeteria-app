@@ -62,10 +62,6 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => config('captcha.active') ? 'required|captcha' : '',
-        ], [
-            'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
-            'g-recaptcha-response.captcha' => 'Captcha error! try again later or contact site admin.',
         ]);
     }
 
@@ -85,6 +81,10 @@ class LoginController extends Controller
     
         $this->guard()->logout();
     
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
         return $request->wantsJson()
             ? new JsonResponse([], 204)
             : redirect()->route('admin.login');

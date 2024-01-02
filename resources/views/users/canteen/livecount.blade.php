@@ -13,7 +13,7 @@
                 <h4 class="text-white fw-bold">Live Delivery Details</h4>
               </div>
               <div class="col-lg-6 text-lg-end">
-                    
+                    <h3 class="text-white">{{ $datas ? convertWDateFormat($datas[0]->day) : '0' }}</h3>
                 </div>
             </div>
           </div>
