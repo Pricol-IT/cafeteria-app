@@ -10,12 +10,7 @@
       <span>Special Menu Selection </span>
     </a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link " href="{{route('canteen.today')}}">
-      <i class='bx bxs-category'></i>
-      <span>Today Meal Count </span>
-    </a>
-  </li>
+  
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
       <i class="bx bx-category"></i><span>Delivery</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -39,6 +34,12 @@
     <span>Reports</span>
   </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link " href="{{route('canteen.today')}}">
+      <i class='bx bxs-category'></i>
+      <span>Today Meal Count </span>
+    </a>
+  </li>
 <li class="nav-item">
   <a class="nav-link " href="{{route('canteen.livereport')}}" oncontextmenu="return false;">
     <i class='bx bxs-calendar'></i>

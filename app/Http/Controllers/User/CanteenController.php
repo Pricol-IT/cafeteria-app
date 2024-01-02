@@ -384,22 +384,24 @@ class CanteenController extends Controller
 
     public function livecount()
     {
-        $results = DB::connection('second_mysql')
+        $datas = DB::connection('second_mysql')
                 ->table('rfid_masters')
-                ->selectRaw('SUM(IFNULL(spm, 0)) as spm')
-                ->selectRaw('SUM(IFNULL(sim, 0)) as sim')
-                ->selectRaw('SUM(IFNULL(curd, 0)) as curd')
-                ->where('status','!=',1)
+                ->selectRaw('
+                    day,
+                    SUM(IFNULL(spm, 0)) as total_spm,
+                    SUM(IFNULL(sim, 0)) as total_sim,
+                    SUM(IFNULL(curd, 0)) as total_curd,
+                    SUM(IF(status != 1, IFNULL(spm, 0), 0)) as remaining_spm,
+                    SUM(IF(status != 1, IFNULL(sim, 0), 0)) as remaining_sim,
+                    SUM(IF(status != 1, IFNULL(curd, 0), 0)) as remaining_curd,
+                    SUM(IF(status != 0, IFNULL(spm, 0), 0)) as delivered_spm,
+                    SUM(IF(status != 0, IFNULL(sim, 0), 0)) as delivered_sim,
+                    SUM(IF(status != 0, IFNULL(curd, 0), 0)) as delivered_curd
+                ')
                 ->groupBy('day')
                 ->get();
-        $result1 = DB::connection('second_mysql')
-                ->table('rfid_masters')
-                ->selectRaw('SUM(IFNULL(spm, 0)) as spm')
-                ->selectRaw('SUM(IFNULL(sim, 0)) as sim')
-                ->selectRaw('SUM(IFNULL(curd, 0)) as curd')
-                ->groupBy('day')
-                ->get();
-        // return $results;
-                return view('users.canteen.livecount',compact('results','result1'));
+        
+        // return $data;
+                return view('users.canteen.livecount',compact('datas'));
     }
 }

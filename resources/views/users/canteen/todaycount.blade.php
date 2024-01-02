@@ -82,19 +82,10 @@
 @endsection
 @section('script')
 <script type="text/javascript" src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
 
 <!-- Your existing table code -->
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.datatable').DataTable({
-            "lengthMenu": [10, 20, 50, 100], // Set the available options for items per page
-            "pageLength": 10, // Set the default number of items per page
-            // Add other DataTables options if needed
-        });
-    });
-</script>
+
 
 @endsection
