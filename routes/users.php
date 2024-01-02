@@ -48,5 +48,6 @@ Route::prefix('canteen')->middleware('canteen')->group(function () {
     Route::get('/synk', [CanteenController::class, 'syncTokenDetails'])->name('canteen.synk');
     Route::get('/usertoken', [CanteenController::class, 'usertoken'])->name('canteen.usertoken');
     Route::get('/reports', [CanteenController::class, 'reports'])->name('canteen.reports');
+    Route::get('/livereports', [CanteenController::class, 'livecount'])->name('canteen.livereport');
 });
 

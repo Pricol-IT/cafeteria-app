@@ -184,7 +184,7 @@ class CanteenController extends Controller
             ->where(function ($query) use ($currentMonth) {
         $query->where('day', 'like', $currentMonth . '%')
             ->orWhere('monthly', 'like', $currentMonth . '%');
-    })
+        })
             ->groupBy('emp_id')
             ->get();
             return $results;
@@ -382,5 +382,24 @@ class CanteenController extends Controller
         return view('users.canteen.reports',compact('combinedData'));
     }
 
-    
+    public function livecount()
+    {
+        $results = DB::connection('second_mysql')
+                ->table('rfid_masters')
+                ->selectRaw('SUM(IFNULL(spm, 0)) as spm')
+                ->selectRaw('SUM(IFNULL(sim, 0)) as sim')
+                ->selectRaw('SUM(IFNULL(curd, 0)) as curd')
+                ->where('status','!=',1)
+                ->groupBy('day')
+                ->get();
+        $result1 = DB::connection('second_mysql')
+                ->table('rfid_masters')
+                ->selectRaw('SUM(IFNULL(spm, 0)) as spm')
+                ->selectRaw('SUM(IFNULL(sim, 0)) as sim')
+                ->selectRaw('SUM(IFNULL(curd, 0)) as curd')
+                ->groupBy('day')
+                ->get();
+        // return $results;
+                return view('users.canteen.livecount',compact('results','result1'));
+    }
 }
