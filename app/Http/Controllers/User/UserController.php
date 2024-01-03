@@ -374,6 +374,11 @@ class UserController extends Controller
             // $query->whereBetween('to_date', [$start_date, $end_date]);
             $query->whereDate('day', '<=', $end_date);
         }
+        if ($request->has('status') && $request->status != null )
+        {
+            // $query->whereBetween('to_date', [$start_date, $end_date]);
+            $query->where('status', $request->status);
+        }
         $reports = $query->get();
         
 

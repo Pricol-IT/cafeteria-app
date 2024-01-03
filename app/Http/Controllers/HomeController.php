@@ -34,6 +34,9 @@ class HomeController extends Controller
         } elseif (auth('user')->check() && authUser()->role == 'canteen') {
             
             return redirect()->route('menu_master.index');
+        } elseif(auth('admin')->check())
+        {
+            return redirect()->route('admin.dashboard');
         }
 
         return redirect('login');

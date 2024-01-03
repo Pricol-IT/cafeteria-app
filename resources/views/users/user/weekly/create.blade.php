@@ -14,6 +14,9 @@
     @csrf
     @method('post')
       <div class="row">
+        <div class="col-lg-12">
+          <h6 class="fw-bold text-primary"><span class="">Note: </span><br> 1.Next day Menu to be booked on previous day itself before 07.00 PM. <br> 2.Cancellation of booked menu to be done before 9.58 AM of current date.</h6>
+        </div>
         @php 
 
 

@@ -15,10 +15,14 @@
             </div>
           </div>
         </div>
+        
         <div class="col-lg-12">
             <div class="card breadcome-bottom p-2">
                 
                 <div class="row">
+                    <div class="col-lg-12">
+                      <h6 class=" text-primary"><span class="fw-bold">Note: </span><br> 1.Next Month Menu to be booked on or before last date of current month 07.00 PM.<br> 2.Cancellation of booked menu to be done before 9.58 AM of current date.</h6>
+                    </div>
                     <div class="col-lg-12">
                         <div class="table-responsive">
                             <table class="table datatable">

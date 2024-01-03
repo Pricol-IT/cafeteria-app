@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -46,6 +47,10 @@ class LoginController extends Controller
         if (auth('user')->check()) {
             return redirect()->route('dashboard');
         }
+        else if(auth('admin')->check())
+        {
+            return redirect()->route('admin.dashboard');
+        }
 
         return view('admin.auth.login');
     }
@@ -57,12 +62,32 @@ class LoginController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function validateLogin(Request $request)
+    // protected function validateLogin(Request $request)
+    // {
+    //     $request->validate([
+    //         $this->username() => 'required|string',
+    //         'password' => 'required|string',
+    //     ]);
+    // }
+
+     public function login(Request $request)
     {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ]);
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        if ($request->isMethod('post')) {
+             $request->validate([
+                $this->username() => 'required|string',
+                'password' => 'required|string',
+            ]);
+            
+            if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->back();
+            }
+        }
+        return view('backend.modules.auth.login')->withTitle('Login');
     }
 
     protected function guard()
@@ -79,15 +104,8 @@ class LoginController extends Controller
     {
         
     
-        $this->guard()->logout();
-    
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->route('admin.login');
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
     }
     
 }

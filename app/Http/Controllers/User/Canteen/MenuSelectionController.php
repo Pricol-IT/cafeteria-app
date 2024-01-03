@@ -16,7 +16,7 @@ class MenuSelectionController extends Controller
      */
     public function index()
     {
-        $masters = MenuSelection::with('menu')->orderBy('day','asc')->get();
+        $masters = MenuSelection::with('menu')->orderBy('day','desc')->get();
 
         return view('users.canteen.menu_selection.index',compact('masters'));
     }

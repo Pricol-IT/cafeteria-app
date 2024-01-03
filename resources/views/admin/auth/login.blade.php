@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Login</title>
     <style type="text/css">
       section {
           height: 100vh;
@@ -62,11 +62,11 @@
               </div>
 
               <div class="row mb-3 p-3">
-                @if (Route::has('password.request'))
+                <!-- @if (Route::has('password.request'))
                     <a class="btn btn-link" href="{{ route('password.request') }}">
                         {{ __('Forgot Your Password?') }}
                     </a>
-                @endif
+                @endif -->
                 <button
                   type="submit"
                   class="btn btn-primary form-control form-control-lg"

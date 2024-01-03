@@ -61,11 +61,11 @@
                                 <tr>
                                   <td scope="col"></td>
                                   <td scope="col"></td>
-                                  <td scope="col">Token</td>
+                                  <td scope="col">Booked</td>
                                   <td scope="col">Delivery</td>
-                                  <td scope="col">Token</td>
+                                  <td scope="col">Booked</td>
                                   <td scope="col">Delivery</td>
-                                  <td scope="col">Token</td>
+                                  <td scope="col">Booked</td>
                                   <td scope="col">Delivery</td>
                                 </tr>
                                 @php
@@ -110,6 +110,7 @@
                                 
                               </tbody>
                             </table>
+
                         </div>
 
                     </div>
@@ -123,7 +124,7 @@
                     <table width="100%">
                         <tr>
                             <td></td>
-                            <td>Token</td>
+                            <td>Booked</td>
                             <td>Delivered</td>
                         </tr>
                         <tr>

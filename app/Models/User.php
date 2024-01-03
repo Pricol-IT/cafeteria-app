@@ -24,9 +24,11 @@ class User extends Authenticatable
         'emp_id',
         'name',
         'email',
+        'rfid',
         'password',
         'location',
         'role',
+        'status',
     ];
 
     /**
