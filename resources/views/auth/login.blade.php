@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/mdb.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/plugins/style.css')}}" />
   </head>
-  <body>
+  <body oncontextmenu="return false;">
       
     <section>
       <div class="row">

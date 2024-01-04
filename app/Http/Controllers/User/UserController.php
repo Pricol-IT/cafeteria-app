@@ -115,20 +115,47 @@ class UserController extends Controller
         $currentMonth = Carbon::now()->month;
         $nextMonth = Carbon::now()->addMonth()->month;
 
+        // $masters = MenuSelection::with('menu')
+        // ->where(function ($query) use ($currentDate, $currentTime) {
+        //     // Check if current date exists in the menu selections
+        //     $query->where('day', '>', $currentDate);
+        //     // If the current date exists and the time has not crossed 10:00:00, include it
+        //     $query->orWhere(function ($query) use ($currentDate, $currentTime) {
+        //         $query->where('day', '=', $currentDate)
+        //             ->where(DB::raw('CONCAT(day, " ", "10:00:00")'), '>', $currentDate . ' ' . $currentTime);
+        //     });
+        // })
+        // ->orderBy('day', 'asc')
+        // ->limit(5)
+        // ->get();
+
         $masters = MenuSelection::with('menu')
-        ->where(function ($query) use ($currentDate, $currentTime) {
-            // Check if current date exists in the menu selections
-            $query->where('day', '>', $currentDate);
-            // If the current date exists and the time has not crossed 10:00:00, include it
-            $query->orWhere(function ($query) use ($currentDate, $currentTime) {
-                $query->where('day', '=', $currentDate)
-                    ->where(DB::raw('CONCAT(day, " ", "10:00:00")'), '>', $currentDate . ' ' . $currentTime);
-            });
-        })
+        ->where('day', '>', $currentDate)
         ->orderBy('day', 'asc')
         ->limit(5)
         ->get();
-        
+    //     $masters = MenuSelection::with('menu')
+    // ->where(function ($query) use ($currentDate, $currentTime) {
+    //     // Check if current date exists in the menu selections
+    //     $query->where('day', '>', $currentDate);
+
+    //     // If the current date exists and the time has not crossed 19:00:00, include it
+    //     $query->orWhere(function ($query) use ($currentDate, $currentTime) {
+    //         $query->where('day', '=', $currentDate)
+    //             ->where(DB::raw('CONCAT(day, " ", "19:00:00")'), '>', $currentDate . ' ' . $currentTime);
+    //     });
+
+    //     // Include the next date if the current time has crossed 19:00:00
+    //     $query->orWhere(function ($query) use ($currentDate, $currentTime) {
+    //         $query->where('day', '>', $currentDate)
+    //             ->where(DB::raw('CONCAT(day, " ", "19:00:00")'), '<=', $currentDate . ' ' . $currentTime);
+    //     });
+    // })
+    // ->orderBy('day', 'asc')
+    // ->limit(5)
+    // ->get();
+
+
         $check_day = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->where('day', '>=', $currentDate)->get();
         $check = Token::select('id', 'emp_id', 'monthly_sim', 'monthly_curd', 'monthly', 'monthly_days')
             ->where('emp_id', auth()->user()->id)
@@ -160,7 +187,7 @@ class UserController extends Controller
             }
         }
 
-        // return $masters;
+        // return $notExistArray;
         
         return view('users.user.weekly.create',compact('masters','check','check_day','existArray','notExistArray'));
     }

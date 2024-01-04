@@ -19,5 +19,21 @@ jSuites.calendar(document.getElementById('calendar'),{
 @endif
 
 
-</script>
 
+</script>
+<script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // Disable Ctrl+Shift+I
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+    </script>

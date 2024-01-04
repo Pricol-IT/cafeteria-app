@@ -28,7 +28,7 @@
       crossorigin="anonymous"
     />
   </head>
-  <body>
+  <body oncontextmenu="return false;">
     <section>
       <div class="container p-3">
         <h1 class="text-white text-center p-3 fw-bold fst-italic">Cafeteria</h1>
