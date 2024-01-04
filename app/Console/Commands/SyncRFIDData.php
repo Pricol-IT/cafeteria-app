@@ -44,7 +44,7 @@ class SyncRFIDData extends Command
             DB::connection('mysql')
                 ->table('rfid_masters')
                 ->where('day', $data->day)
-                ->where('user_id', $data->user_id)
+                ->where('emp_id', $data->emp_id)
                 ->update(['status' => 1]);
         }
 

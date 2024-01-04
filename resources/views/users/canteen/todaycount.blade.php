@@ -2,6 +2,14 @@
 @section('title')
     {{__('Today Over all Count')}}
 @endsection
+@section('links')
+
+ <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
+ <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+ 
+
+
+@endsection
 @section('main')
 <main id="main" class="main">
     <div class="row">
@@ -22,7 +30,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="table-responsive">
-                            <table class="table datatable" >
+                            <table class="table datatable1" >
                               <thead>
                                 <tr>
                                   <th scope="col">#</th>
@@ -98,11 +106,29 @@
 </main>
 @endsection
 @section('script')
-<script type="text/javascript" src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
 <!-- Your existing table code -->
 
-
+<script type="text/javascript">
+    
+$(document).ready(function() {
+    $('.datatable1').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'print'
+        ],
+        lengthMenu: [10, 25, 50, 75, 100], // Specify the options for number of entries per page
+        pageLength: 100 
+    } );
+} );
+</script>
 
 @endsection

@@ -114,6 +114,7 @@ class UserController extends Controller
         $currentTime = $currentDateTime->format('H:i:s');
         $currentMonth = Carbon::now()->month;
         $nextMonth = Carbon::now()->addMonth()->month;
+        $nextDay = $currentDateTime->addDay()->format('Y-m-d');    
 
         // $masters = MenuSelection::with('menu')
         // ->where(function ($query) use ($currentDate, $currentTime) {
@@ -130,30 +131,20 @@ class UserController extends Controller
         // ->get();
 
         $masters = MenuSelection::with('menu')
-        ->where('day', '>', $currentDate)
-        ->orderBy('day', 'asc')
-        ->limit(5)
-        ->get();
-    //     $masters = MenuSelection::with('menu')
-    // ->where(function ($query) use ($currentDate, $currentTime) {
-    //     // Check if current date exists in the menu selections
-    //     $query->where('day', '>', $currentDate);
-
-    //     // If the current date exists and the time has not crossed 19:00:00, include it
-    //     $query->orWhere(function ($query) use ($currentDate, $currentTime) {
-    //         $query->where('day', '=', $currentDate)
-    //             ->where(DB::raw('CONCAT(day, " ", "19:00:00")'), '>', $currentDate . ' ' . $currentTime);
-    //     });
-
-    //     // Include the next date if the current time has crossed 19:00:00
-    //     $query->orWhere(function ($query) use ($currentDate, $currentTime) {
-    //         $query->where('day', '>', $currentDate)
-    //             ->where(DB::raw('CONCAT(day, " ", "19:00:00")'), '<=', $currentDate . ' ' . $currentTime);
-    //     });
-    // })
-    // ->orderBy('day', 'asc')
-    // ->limit(5)
-    // ->get();
+    ->where(function ($query) use ($currentDate, $nextDay, $currentTime) {
+        // Exclude the current date and time after 19:00:00
+        $query->where(function ($query) use ($currentDate, $nextDay, $currentTime) {
+            $query->where('day', '>', $nextDay)
+                ->orWhere(function ($query) use ($currentDate, $nextDay, $currentTime) {
+                    $query->where('day', '=', $nextDay)
+                        ->where(DB::raw('CONCAT(day, " ", "19:00:00")'), '>', $nextDay . ' ' . $currentTime);
+                });
+        });
+    })
+    ->orderBy('day', 'asc')
+    ->limit(5) // Include the current date and the next 5 upcoming dates
+    ->get();
+    
 
 
         $check_day = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->where('day', '>=', $currentDate)->get();
