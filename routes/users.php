@@ -33,7 +33,10 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::post('/remove-monthly-day/{id}', 'removeMonthlyDay')->name('user.removemonthlyday');
     Route::post('/remove-weekly-day/{id}', 'weeklyRemove')->name('user.removeweeklyday');
     Route::get('/report', 'userReport')->name('user.userReport');
-    
+    Route::get('/profile', 'userProfile')->name('user.profile');
+    Route::get('/forget_password','password')->name('user.password');
+    Route::post('/reset_password','passwordreset')->name('user.reset');
+
 });
 
 Route::prefix('canteen')->middleware('canteen')->group(function () { 

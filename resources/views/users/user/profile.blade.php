@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 @section('title')
     {{__('Dashboard')}}
 @endsection
@@ -9,7 +9,7 @@
             <div class="col-lg-12">
                 <div class="card p-3">
                     <div class="row mt-2 mb-2">
-                        <div class="col-lg-12"><h3 class="text-primary fw-bold">User Details</h3></div>
+                        <div class="col-lg-12"><h3 class="text-primary fw-bold">{{ $user->name }} Details</h3></div>
                     </div>
                     <div class="row mt-2 mb-2">
                         <div class="col-lg-4"><h5 class="text-primary fw-bold">Name :</h5></div>
@@ -23,10 +23,7 @@
                         <div class="col-lg-4"><h5 class="text-primary fw-bold">Emp ID :</h5></div>
                         <div class="col-lg-8"><h6>{{ $user->emp_id }}</h6></div>
                     </div>
-                    <div class="row mt-2 mb-2">
-                        <div class="col-lg-4"><h5 class="text-primary fw-bold">RFID :</h5></div>
-                        <div class="col-lg-8"><h6>{{ $user->rfid }}</h6></div>
-                    </div>
+                    
                     <div class="row mt-2 mb-2">
                         <div class="col-lg-4"><h5 class="text-primary fw-bold">Email ID :</h5></div>
                         <div class="col-lg-8"><h6>{{ $user->email }}</h6></div>
@@ -37,7 +34,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <center><a href="{{route('user.index')}}" class="btn btn-danger">Back</a></center>
+                            <center><a href="{{route('user.transaction')}}" class="btn btn-danger">Back</a></center>
                         </div>
                     </div>
                 </div>

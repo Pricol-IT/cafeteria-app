@@ -150,6 +150,7 @@ class CanteenController extends Controller
         else
         {
             $deliveryentry = Delivery::create($input);
+            $rfid = RfidMaster::where('user_id',$request->emp_id)->where('day',$request->day)->update(['status'=> 1]);
             if($deliveryentry)
             {
                 toastr()->success('Token Delivered Successfully');

@@ -31,7 +31,13 @@ class SyncRFIDData extends Command
 
         // Insert data into the first server
         foreach ($secondServerData as $data) {
-            DB::table('deliveries')->insert([
+
+            $existingRecord = DB::table('deliveries')
+                                ->where('emp_id', $data->user_id)
+                                ->where('day', $data->day)
+                                ->first();
+            if (!$existingRecord) {
+                DB::table('deliveries')->insert([
                 'emp_id'      => $data->user_id,
                 'day'         => $data->day,
                 'spm'         => $data->spm,
@@ -40,6 +46,8 @@ class SyncRFIDData extends Command
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            }
+            
 
             DB::connection('mysql')
                 ->table('rfid_masters')

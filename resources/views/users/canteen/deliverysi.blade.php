@@ -54,8 +54,9 @@
                                     </div>
                                     @endforeach
                                     <input type="hidden" name="day"  value="{{date('Y-m-d'); }}">
-                                    <input type="hidden" name="sim"  value="{{$result['sim']  }}">
-                                    <input type="hidden" name="curd"  value="{{$result['curd'] }}">
+                                    <input type="hidden" name="spm"  value="0">
+                                    <input type="hidden" name="sim"  value="{{$result['sim'] ? $result['sim'] : '0'  }}">
+                                    <input type="hidden" name="curd"  value="{{$result['curd'] ? $result['curd'] : '0' }}">
                                     <input type="hidden" name="page" value="canteen.deliverySim">
                                 </div>
                             </div>

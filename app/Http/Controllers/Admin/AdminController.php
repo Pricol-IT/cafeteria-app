@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -14,6 +15,8 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $users = User::orderBy('id','desc')->get();
+
+        return view('admin.user.index',compact('users'));
     }
 }

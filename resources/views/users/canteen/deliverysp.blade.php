@@ -54,8 +54,8 @@
                                     </div>
                                     @endforeach
                                     <input type="hidden" name="day"  value="{{date('Y-m-d'); }}">
-                                    <input type="hidden" name="spm"  value="{{$result['spm'] }}">
-                                    <input type="hidden" name="curd"  value="{{$result['curd'] }}">
+                                    <input type="hidden" name="spm"  value="{{$result['spm'] ? $result['spm'] : 0 }}">
+                                    <input type="hidden" name="curd"  value="{{$result['curd'] ? $result['curd'] : '0' }}">
                                     <input type="hidden" name="page" value="canteen.deliverySpm">
 
                                 </div>

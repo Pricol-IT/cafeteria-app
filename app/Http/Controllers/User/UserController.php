@@ -12,8 +12,12 @@ use Carbon\Carbon;
 use DateTime;
 use App\Models\MenuSelection;
 use DB;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Rules\OldPassword;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -401,5 +405,45 @@ class UserController extends Controller
         
 
         return view('users.user.reports',compact('reports'));
+    }
+
+    public function userProfile()
+    {
+        $user = auth()->user();
+        return view('users.user.profile',compact('user'));
+        // return $user;
+    }
+
+    public function passwordreset(Request $request)
+    {
+
+      $pass =  Validator::make($request->all(), [
+        'old_password' => ['required', new OldPassword],
+        'password' => ['required', 'different:old_password', 'confirmed'],
+        ]);
+
+      if ($pass->fails()) {
+        return redirect()->back()->withErrors($pass)->withInput();
+            }
+
+        $user = Auth::user();
+        $updated = $user->update([
+        'password' => Hash::make($request->input('password')),
+        ]);
+
+        if($updated)
+        {
+            toastr()->success('Password Reset Successfully');
+            return redirect()->route('user.transaction');
+        }
+        else{
+            toastr()->error('Something Went Wrong');
+            return back();
+        }
+    }
+
+    public function password()
+    {
+        return view('users.password');
     }
 }

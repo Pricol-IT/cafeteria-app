@@ -126,7 +126,7 @@ $(document).ready(function() {
             'csv', 'excel', 'print'
         ],
         lengthMenu: [10, 25, 50, 75, 100], // Specify the options for number of entries per page
-        pageLength: 100 
+        pageLength: 50 
     } );
 } );
 </script>
