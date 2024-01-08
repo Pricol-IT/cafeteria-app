@@ -56,17 +56,17 @@ class UserController extends Controller
             'role' => 'user',
             'status' => 'active',
         ]);
-        // $user1 = User::on('second_mysql')->create([
-        //     'company_name' => $request->company_name,
-        //     'name' => $request->name,
-        //     'emp_id' => $request->emp_id,
-        //     'rfid' => $request->rfid,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'location' => $request->location,
-        //     'role' => 'user',
-        //     'status' => 'active',
-        // ]);
+        $user1 = User::on('second_mysql')->create([
+            'company_name' => $request->company_name,
+            'name' => $request->name,
+            'emp_id' => $request->emp_id,
+            'rfid' => $request->rfid,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'location' => $request->location,
+            'role' => 'user',
+            'status' => 'active',
+        ]);
         if($user)
         {
             toastr()->success('User Created Successfully');
@@ -121,14 +121,14 @@ class UserController extends Controller
             'email' => $request->email,
             'location' => $request->location,
         ]);
-        // $user1 = User::on('second_mysql')->where('id',$id)->update([
-        //     'company_name' => $request->company_name,
-        //     'name' => $request->name,
-        //     'emp_id' => $request->emp_id,
-        //     'rfid' => $request->rfid,
-        //     'email' => $request->email,
-        //     'location' => $request->location,
-        // ]);
+        $user1 = User::on('second_mysql')->where('id',$id)->update([
+            'company_name' => $request->company_name,
+            'name' => $request->name,
+            'emp_id' => $request->emp_id,
+            'rfid' => $request->rfid,
+            'email' => $request->email,
+            'location' => $request->location,
+        ]);
         if($user)
         {
             toastr()->success('User Created Successfully');
