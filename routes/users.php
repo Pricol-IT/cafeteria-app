@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\User\CanteenController;
 use App\Http\Controllers\User\Canteen\MenuMasterController;
+use App\Http\Controllers\User\Canteen\PriceMasterController;
+use App\Http\Controllers\User\Canteen\SIMenuController;
+use App\Http\Controllers\User\Canteen\BannerMenuController;
 use App\Http\Controllers\User\Canteen\MenuSelectionController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\HomeController;
@@ -14,6 +17,7 @@ use App\Http\Controllers\CheckController;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/checkuser/{id}', [App\Http\Controllers\CheckController::class, 'checkuser'])->name('checkuser');
+Route::get('/banner', [App\Http\Controllers\CheckController::class, 'banner'])->name('banner');
 
 Auth::routes();
 
@@ -36,12 +40,17 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::get('/profile', 'userProfile')->name('user.profile');
     Route::get('/forget_password','password')->name('user.password');
     Route::post('/reset_password','passwordreset')->name('user.reset');
+    Route::post('/mark-as-read', 'markAsRead')->name('markAsRead');
 
 });
 
 Route::prefix('canteen')->middleware('canteen')->group(function () { 
     Route::get('/dashboard', [CanteenController::class, 'index'])->name('canteen.dashboard');
     Route::resource('menu_master', MenuMasterController::class);
+    Route::resource('price_master', PriceMasterController::class);
+    Route::resource('si_menu', SIMenuController::class);
+    Route::resource('banner_menu', BannerMenuController::class);
+    
     Route::resource('menu_selection', MenuSelectionController::class);
     Route::get('/sp_delivery', [CanteenController::class, 'deliverySpm'])->name('canteen.deliverySpm');
     Route::get('/si_delivery', [CanteenController::class, 'deliverySim'])->name('canteen.deliverySim');

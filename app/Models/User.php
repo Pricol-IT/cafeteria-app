@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Token::class,'emp_id','id');
     }
+
+    public function cancelbooking()
+    {
+        return $this->hasMany(CancelBooking::class);
+    }
 }

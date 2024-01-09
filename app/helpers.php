@@ -76,3 +76,19 @@ if (!function_exists('Shortname')) {
         return Carbon::createFromFormat('Y-m-d', $date)->locale('en')->shortDayName;
     }
 }
+
+if (! function_exists('userNotifications')) {
+    function userNotifications()
+    {
+        return auth()->user()->notifications()->orderBy('id','desc')->take(6)->get();
+    }
+}
+
+if (! function_exists('userNotificationsCount')) {
+
+    function userNotificationsCount()
+    {
+
+        return auth()->user()->unreadNotifications()->count();
+    }
+}

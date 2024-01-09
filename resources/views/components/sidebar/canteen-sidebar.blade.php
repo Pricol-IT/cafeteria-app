@@ -1,13 +1,36 @@
   <li class="nav-item">
-    <a class="nav-link " href="{{route('menu_master.index')}}">
+    <a class="nav-link collapsed" data-bs-target="#icons-navn" data-bs-toggle="collapse" href="#">
+      <i class="bx bx-category"></i><span>Special Meal</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="icons-navn" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{{route('menu_master.index')}}">
+          <i class="bi bi-circle"></i><span>Menu Master</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{route('menu_selection.index')}}">
+          <i class="bi bi-circle"></i><span>Menu Selection</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="{{route('si_menu.index')}}">
       <i class='bx bxs-category'></i>
-      <span>Special Menu Master </span>
+      <span>South Indian </span>
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="{{route('menu_selection.index')}}">
+    <a class="nav-link " href="{{route('banner_menu.index')}}">
       <i class='bx bxs-category'></i>
-      <span>Special Menu Selection </span>
+      <span>Banner Menu</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="{{route('price_master.index')}}">
+      <i class='bx bxs-category'></i>
+      <span>Price Master </span>
     </a>
   </li>
   

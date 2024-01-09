@@ -146,9 +146,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-
+        
+        $user = User::on('mysql')->find($id);
         $user->delete();
+        $user1 = User::on('second_mysql')->find($id);
+        $user1->delete();
 
         toastr()->success('User Removed Successfully');
         return back();

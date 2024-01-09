@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Token;
+use App\Models\CancelBooking;
 use App\Models\RfidMaster;
 use App\Models\Delivery;
 use Carbon\Carbon;
@@ -18,6 +19,9 @@ use App\Rules\OldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\WeeklyMenuCreatedNotification;
+use App\Notifications\MonthlyMenuCreatedNotification;
+use App\Notifications\MenuDeleteNotification;
 
 class UserController extends Controller
 {
@@ -96,6 +100,7 @@ class UserController extends Controller
                     'monthly' => $monthly,
                     'monthly_days' =>$v,
                 ]);
+                auth()->user()->notify(new MonthlyMenuCreatedNotification());
                 toastr()->success('Monthly Request Added Successfully');
                 return redirect()->route('user.monthly');
             }
@@ -207,12 +212,13 @@ class UserController extends Controller
         $weeklyFirstDB = $this->insertIntoDatabase('mysql', $singleArray);
 
         if ($weeklyFirstDB) {
+            auth()->user()->notify(new WeeklyMenuCreatedNotification());
             toastr()->success('Weekly Menu Created Successfully');
             return redirect()->route('user.weekly');
         } else {
             toastr()->error('Something Went Wrong. Please Try Again');
             return back();
-        }  
+        }
 
     }
 
@@ -318,17 +324,26 @@ class UserController extends Controller
     public function removeMonthlyDay($id,Request $request)
     {
         $token = Token::findOrFail($id);
-
+        $user = auth()->user();
         $monthlyDays = json_decode($token->monthly_days);
-        $removedDate = $request->date; // Assuming you are sending the date as a parameter
+        $removedDate = $request->date;
+        $rday = date('Y-m-d',strtotime($removedDate));
+        
+        $menuType = 'Monthly Menu'; // Assuming you are sending the date as a parameter
 
         // Remove the date from the array
         $updatedMonthlyDays = array_values(array_filter($monthlyDays, function ($date) use ($removedDate) {
             return $date !== $removedDate;
         }));
+
+        $cancel = $user->cancelbooking()->create([
+                'canceldate' => $rday,
+                'menu_type' => $menuType
+            ]);
         // return $updatedMonthlyDays;
         // Update the token record with the new monthly_days array
         $token->update(['monthly_days' => json_encode($updatedMonthlyDays)]);
+        auth()->user()->notify(new MenuDeleteNotification($menuType,$removedDate));
 
         toastr()->success($removedDate.' Menu Removed Successfully');
             return back();
@@ -346,10 +361,25 @@ class UserController extends Controller
     public function weeklyRemove($id)
     {
         $weekly  = Token::find($id);
+
         if($weekly)
         {
-            $weekly->delete();
-            toastr()->success('Weekly Menu Removed Successfully');
+            $user = auth()->user();
+            $menuType = 'Weekly Menu';
+            $canceldate = date('Y-m-d',strtotime($weekly->day));
+            $cancel = $user->cancelbooking()->create([
+                'canceldate' => $weekly->day,
+                'menu_type' => $menuType
+            ]);
+             
+            if($cancel)
+            {
+
+                $weekly->delete();
+                auth()->user()->notify(new MenuDeleteNotification($menuType,$canceldate));
+                toastr()->success('Weekly Menu Removed Successfully');
+            }
+            
             return back();
         }
         else{
@@ -445,5 +475,14 @@ class UserController extends Controller
     public function password()
     {
         return view('users.password');
+    }
+
+    public function markAsRead()
+    {
+        foreach (auth()->user()->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+
+        return response()->json(true);
     }
 }
