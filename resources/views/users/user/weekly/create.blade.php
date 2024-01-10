@@ -47,7 +47,7 @@
         <div class="col-lg-4 d-flex">
           <div class="card bg-primary p-3 flex-fill rounded shadow {{ in_array($master->day, $days) ? 'bg-light' : 'bg-primary' }} {{ in_array($master->day, $exist) ? 'bg-light' : 'bg-primary' }}">
             <div class="daycontent flex-fill bg-white ms-2 p-2 rounded ">
-              <img class="float-left" src="{{ $master->menu->imageurl }}" class="p-2" width="120px" style="position: relative; left: -20px; top: -10px;float: left;border-radius: 50%;"/>
+              <img class="float-left" src="{{ $master->menu->imageurl }}" class="p-2" width="110px" height="150px" style="position: relative; left: -20px; top: -15px;padding:5px;float: left;border-radius: 10%;"/>
               <div class="menucontent  ms-2" style="position: relative; left: -11px">
                 <h6 class="text-primary fw-bold">{{dayFormat($master->day)}} Menu</h6>
                 <h6>

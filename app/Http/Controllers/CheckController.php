@@ -42,12 +42,12 @@ class CheckController extends Controller
         $masters = MenuSelection::with('menu')
         ->where('day', '>=', $start_date)
         ->where('day', '<=', $end_date)
-        ->orderBy('day', 'desc')
+        ->orderBy('day', 'asc')
         ->get();
 
         $simenus = SiMenu::where('day', '>=', $start_date)
                 ->where('day', '<=', $end_date)
-                ->orderBy('id', 'desc')
+                ->orderBy('day', 'asc')
                 ->get();
         
         // $masters = MenuSelection::with('menu')->orderBy('day','desc')->get();

@@ -40,10 +40,56 @@
     }
 
     .swiper-slide img {
-      display: block;
-      width: 100%;
-      height: 100%;
+/*      display: block;*/
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
+    }
+    .swiper-slide .content {
+        position: absolute;
+        width: 95vw;
+        height: 80vh;
+        /*color: #fff;
+        background: #000;*/
+
+    }
+    .content li {
+        text-align: left;
+        font-size: 18pt;
+        margin-left: 5vw;
+        text-transform: uppercase;
+        line-height: 8vh;
+    }
+    .imgcontent {
+        position: relative;
+    }
+    .cimg img {
+        padding: 10px 20px;
+        margin-left: 5vw;
+        width: 80%;
+        height: 80vh;
+/*        border-radius: 40px;*/
+    }
+    .day {
+
+        position: absolute;
+        margin-top: 65vh;
+        margin-left: 25vw;
+        width: 20vw;
+        color: #000;
+        padding: 1vh 0;
+        
+/*        border-radius: 20px;*/
+        border: 1px solid #0d2273;
+
+    }
+    
+    .title {
+        padding: 1%;
+        background: #0d2273;
+        color:#fff;
+        border-radius: 150px;
+        font-size: 38pt;
     }
 
     .autoplay-progress {
@@ -75,6 +121,7 @@
       stroke-dasharray: 125.6;
       transform: rotate(-90deg);
     }
+
   </style>
 </head>
 
@@ -83,48 +130,88 @@
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
       
-      @for($i=1;$i<= count($simenus); $i++)
       <!-- @forelse($simenus as $simenu)
       
       <div class="swiper-slide">
           <img src="{{asset('sliders/Slide1.JPG')}}">
       </div>
       @empty
-
       @endforelse -->
-      <div class="swiper-slide">
-          <img src="{{asset('sliders/Slide'."$i".'.JPG')}}">
-      </div>
-      @endfor
-      @for($i=1;$i<= count($masters); $i++)
-      
-      @php $y = $i+2; @endphp
-      <!-- @forelse($masters as $master)
+      @php
+        $i = 0;
+        $j = 0;
+      @endphp
+      @forelse($masters as $master)
       
       <div class="swiper-slide">
-        <img src="{{asset('sliders/Slide4.JPG')}}">
-          <div class="row">
-            <div class="col-lg-6">{{$master->day}}</div>
-            <div class="col-lg-6">{{$master->day}}</div>
-          </div>
+        <img src="{{asset('sliders/banner2.png')}}">
+        <div class=" content">
+            <div class="row">
+                <div class="col-lg-6">
+                    
+                    <div class="title">
+                        {{$banners[$i]->day_type." 's Menu"}}
+                    </div>
+                    <div class="mt-3">
+                        <ul>
+                            @foreach(explode(',', $master->menu->description) as $item)
+                                <li>{{ trim($item) }}</li>
+                            @endforeach
+                        </ul>
+
+                        <!-- {{$master->menu->description}} -->
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="imgcontent">
+                        <div class="day card shadow fw-bold text-center"><span style="color: #0d2273;font-size: 20pt;">{{dayFormat($master->day)}}</span>Special Meal</div>
+                        <div class="cimg"><img src="{{$master->menu->imageurl}}"></div>   
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+          @php $i++ @endphp
+
           
       </div>
       @empty
-      @endforelse -->
+      @endforelse
+      @forelse($simenus as $simenu)
+      
       <div class="swiper-slide">
-          <img src="{{asset('sliders/Slide'."$y".'.JPG')}}">
+
+          <img src="{{asset('sliders/banner1.png')}}">
+          <div class=" content">
+            <div class="row">
+                <div class="col-lg-6">
+                    
+                    <div class="title">
+                        {{$banners[$j]->day_type." 's Menu"}}
+                    </div>
+                    <div class="mt-3">
+                        <ul>
+                            <li>{{$simenu->sambar}}</li>
+                            <li>{{$simenu->rasam}}</li>
+                            <li>{{$simenu->poriyal}}</li>
+                        </ul>
+
+                        <!-- {{$master->menu->description}} -->
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                </div>
+            </div>
+          </div>
       </div>
-      @endfor
+      @php $j++ @endphp
+      @empty
+      @endforelse
       <div class="swiper-slide">
         <img src="{{asset('sliders/Slide5.JPG')}}">
       </div>
-      <!-- <div class="swiper-slide">Slide 3</div>
-      <div class="swiper-slide">Slide 4</div>
-      <div class="swiper-slide">Slide 5</div>
-      <div class="swiper-slide">Slide 6</div>
-      <div class="swiper-slide">Slide 7</div>
-      <div class="swiper-slide">Slide 8</div>
-      <div class="swiper-slide">Slide 9</div> -->
+      
     </div>
     <!-- <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div> -->
@@ -148,7 +235,7 @@
       spaceBetween: 30,
       centeredSlides: true,
       autoplay: {
-        delay: 2500,
+        delay: 3500,
         disableOnInteraction: false
       },
       pagination: {
