@@ -82,11 +82,11 @@
             @endforelse
 
             
-            <li class="dropdown-footer">
-              <!-- Add a link or button to mark notifications as read -->
+            <!-- <li class="dropdown-footer">
+              
               <a href="{{ route('markAsRead') }}">Mark as Read</a>
 
-            </li>
+            </li> -->
 
           </ul><!-- End Notification Dropdown Items -->
 
