@@ -11,7 +11,9 @@
               <div class="col-lg-6">
                 <h4 class="text-white fw-bold">Banner Menu</h4>
               </div>
-              <div class="col-lg-6 text-lg-end"><a href="{{route('banner_menu.create')}}" class="btn btn-light round">Create</a></div>
+              <div class="col-lg-6 text-lg-end">
+                <!-- <a href="{{route('banner_menu.create')}}" class="btn btn-light round">Create</a> -->
+              </div>
             </div>
           </div>
         </div>

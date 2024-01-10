@@ -73,7 +73,7 @@
     .day {
 
         position: absolute;
-        margin-top: 65vh;
+        margin-top: 60vh;
         margin-left: 25vw;
         width: 20vw;
         color: #000;
