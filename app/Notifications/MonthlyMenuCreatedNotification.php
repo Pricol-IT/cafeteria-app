@@ -47,7 +47,7 @@ class MonthlyMenuCreatedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Monthly menu has been created successfully.',
+            'message' => 'Monthly menu has been Booked successfully.',
         ];
     }
 }

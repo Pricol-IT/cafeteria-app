@@ -58,7 +58,7 @@ class MenuDeleteNotification extends Notification
         return [
             'menu_type' => $this->menuType,
             'canceldate' => $this->canceldate,
-            'message'   => "The {$this->menuType}  for {$this->canceldate} has been deleted successfully.",
+            'message'   => "The {$this->menuType}  for {$this->canceldate} has been cancelled successfully.",
         ];
     }
 }

@@ -35,7 +35,7 @@ class WeeklyMenuCreatedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Weekly menu has been created successfully.')
+            ->line('Weekly menu has been Booked successfully.')
             ->line('Thank you for using our Cafeteria application!');
     }
 
@@ -47,7 +47,7 @@ class WeeklyMenuCreatedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Weekly menu has been created successfully.',
+            'message' => 'Weekly menu has been Booked successfully.',
         ];
     }
 }

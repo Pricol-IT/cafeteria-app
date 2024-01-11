@@ -80,7 +80,7 @@ if (!function_exists('Shortname')) {
 if (! function_exists('userNotifications')) {
     function userNotifications()
     {
-        return auth()->user()->notifications()->orderBy('id','desc')->take(6)->get();
+        return auth()->user()->unreadNotifications()->orderBy('id','desc')->take(6)->get();
     }
 }
 
