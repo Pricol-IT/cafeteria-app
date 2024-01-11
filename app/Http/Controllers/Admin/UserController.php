@@ -113,7 +113,7 @@ class UserController extends Controller
             'location' => 'required',
         ]);
 
-        $user = User::on('mysql')->where('id',$id)->update([
+        $user = User::on('mysql')->find($id)->update([
             'company_name' => $request->company_name,
             'name' => $request->name,
             'emp_id' => $request->emp_id,
@@ -121,7 +121,7 @@ class UserController extends Controller
             'email' => $request->email,
             'location' => $request->location,
         ]);
-        $user1 = User::on('second_mysql')->where('id',$id)->update([
+        $user1 = User::on('second_mysql')->find($id)->update([
             'company_name' => $request->company_name,
             'name' => $request->name,
             'emp_id' => $request->emp_id,
@@ -131,7 +131,7 @@ class UserController extends Controller
         ]);
         if($user)
         {
-            toastr()->success('User Created Successfully');
+            toastr()->success('User Details Updated Successfully');
             return redirect()->route('user.index');
         }
         else

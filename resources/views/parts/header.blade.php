@@ -96,7 +96,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <!-- <img src="{{ asset('assets/img/profile-img.jpg'); }}" alt="Profile" class="rounded-circle"> -->
-            <i class="bi bi-box-arrow-right"></i>
+            <i class="bi bi-person-circle"></i>
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user() ? Auth::user()->name : ''  }}</span>
           </a><!-- End Profile Iamge Icon -->
 
