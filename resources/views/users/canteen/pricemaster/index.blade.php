@@ -28,6 +28,8 @@
                                   <th scope="col">Menu Type</th>
                                   <th scope="col">Qty</th>
                                   <th scope="col">Price</th>
+                                  <th scope="col">Validity Start Date</th>
+                                  <th scope="col">Validity End Date</th>
                                   <th scope="col">Action</th>
                                 </tr>
                               </thead>
@@ -41,6 +43,8 @@
                                   <td>{{$price->menu_type}}</td>
                                   <td>{{$price->quantity}}</td>
                                   <td>{{'₹ '.$price->price}}</td>
+                                  <td>{{$price->start_date ? convertDateFormat($price->start_date) : '-'}}</td>
+                                  <td>{{$price->end_date ? convertDateFormat($price->end_date) : '-'}}</td>
                                  <td>
                                      <a href="{{route('price_master.edit',$price->id)}}">
                                         <i class="bi bi-pencil"></i>

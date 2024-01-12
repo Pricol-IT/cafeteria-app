@@ -38,12 +38,22 @@
                             @if ($errors->has('price'))
                                 <span class="error text-danger">{{ $errors->first('price') }}</span>
                             @endif
+                            <h5 class="text-primary fw-bold mb-2  mt-3">Validity Start Date :</h5>
+                            <input type="date" name="start_date" class="form-control" value="{{$price->start_date}}">
+                            @if ($errors->has('start_date'))
+                                <span class="error text-danger">{{ $errors->first('start_date') }}</span>
+                            @endif
+                            <h5 class="text-primary fw-bold mb-2  mt-3">Validity End Date :</h5>
+                            <input type="date" name="end_date" class="form-control" value="{{$price->end_date}}">
+                            @if ($errors->has('end_date'))
+                                <span class="error text-danger">{{ $errors->first('end_date') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="row">
                         <center>
                             <input type="submit" name="submit" value="Save" class="btn btn-primary">
-                            <a href="{{route('menu_master.index')}}" class="btn btn-danger">Back</a>
+                            <a href="{{route('price_master.index')}}" class="btn btn-danger">Back</a>
                         </center>
                     </div>
                     

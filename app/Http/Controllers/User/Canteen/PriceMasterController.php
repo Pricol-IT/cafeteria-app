@@ -35,6 +35,8 @@ class PriceMasterController extends Controller
             'menu_type' => 'required',
             'quantity' => 'required',
             'price' => 'required|numeric',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
         $price = PriceMaster::create($input);
@@ -78,6 +80,8 @@ class PriceMasterController extends Controller
             'menu_type' => 'required',
             'quantity' => 'required',
             'price' => 'required|numeric',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ]);
 
         $price = PriceMaster::where('id',$id)->update($input);

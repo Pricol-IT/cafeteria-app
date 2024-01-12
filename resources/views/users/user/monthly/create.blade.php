@@ -75,7 +75,8 @@
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-   $(document).ready(function() {
+   $(window).on("load", function() {
+   
   var today = new Date();
   var currentMonth = today.getMonth() + 1;
   var currentYear = today.getFullYear();

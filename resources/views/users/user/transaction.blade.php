@@ -108,7 +108,7 @@
         // center: 'title',
         right: 'dayGridMonth'
       },
-       aspectRatio: 2,
+       aspectRatio: 1,
       initialDate: date,
       initialView: 'dayGridMonth',
         

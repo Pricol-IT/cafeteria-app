@@ -39,20 +39,23 @@
   </head>
   <body oncontextmenu="return false;">
       
-    <section>
+    <section class="container-fluid">
       <div class="row ">
         <div class="col-lg-6 col-md-6">
           <div class="flexview">
             <div style="padding: 10px 3em;">
-                <h1 class="text-primary  fw-bold fst-italic">My Pricol</h1>
-                <h6 class="fw-bold">Cafeteria Log in</h6>
-                <span class="text-secondary">Welcome back! Please enter your details</span>
-                <form method="POST" action="{{ route('login') }}" class="p-3">
+                
+                <form method="POST" action="{{ route('login') }}">
                   @csrf
                 <div class="row">
-                  
+                  <div class="col-lg-8 offset-lg-2  col-md-12 mb-3">
+                    <h1 class="text-primary  fw-bold fst-italic">My Pricol</h1>
+                    <h6 class="fw-bold">Cafeteria Log in</h6>
+                    <span class="text-secondary ">Welcome back! Please enter your details</span>
+
+                  </div>
                 
-                  <div class="col-lg-12">
+                  <div class="col-lg-8 offset-lg-2  col-md-12 ">
                     <label class="h6">Username</label>
                     <input id="emp_id" type="text" class="form-control form-rounded @error('emp_id') is-invalid @enderror" name="emp_id" value="{{ old('emp_id') }}"  autocomplete="emp_id" autofocus placeholder="Username" >
 
@@ -63,7 +66,7 @@
                         @enderror
                     
                   </div>
-                  <div class="col-lg-12">
+                  <div class="col-lg-8 offset-lg-2  col-md-12 ">
                     <label class="h6">Password</label>
                     <input id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
 
@@ -75,7 +78,7 @@
                     
                   </div>
 
-                  <div class=" col-lg-12">
+                  <div class="col-lg-8 offset-lg-2  col-md-12 ">
                     @if (Route::has('password.request'))
                         <!-- <a class="btn btn-link" href="{{ route('password.request') }}">
                             {{ __('Forgot Your Password?') }}

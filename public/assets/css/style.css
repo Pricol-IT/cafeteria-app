@@ -1703,4 +1703,60 @@ border-radius: 10px!important;
   margin-top: -50px;
 }
 
+@media (max-width: 1199px)
+{
+  .breadcome-list{
+      margin:-20px;
+  }
+  .fc table{
+    font-size: 0.8em;
+  }
+}
 
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+min-height: 1em;
+}
+
+
+
+@media (min-width: 500px) and (max-width: 1100px)
+{
+  .fc-scrollgrid-sync-table {
+    height: 250px!important;
+  }
+  .fc-view-harness .fc-view-harness-active 
+  {
+    height: 280px!important;
+  }
+   .fc .fc-scrollgrid-liquid
+   {
+/*    min-height: 300px;*/
+    max-height: 280px;
+   }
+
+   #calendar
+   {
+    height: 350px!important;
+   }
+}
+
+@media (min-width: 1100px) and (max-width: 1400px)
+{
+  .fc-scrollgrid-sync-table {
+    height: 270px!important;
+  }
+  .fc-view-harness .fc-view-harness-active 
+  {
+    height: 280px!important;
+  }
+   .fc .fc-scrollgrid-liquid
+   {
+/*    min-height: 300px;*/
+    max-height: 370px;
+   }
+
+   #calendar
+   {
+    height: 450px!important;
+   }
+}
