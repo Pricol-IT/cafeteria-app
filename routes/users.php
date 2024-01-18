@@ -37,6 +37,8 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::post('/remove-monthly-day/{id}', 'removeMonthlyDay')->name('user.removemonthlyday');
     Route::post('/remove-weekly-day/{id}', 'weeklyRemove')->name('user.removeweeklyday');
     Route::get('/report', 'userReport')->name('user.userReport');
+
+    
     Route::get('/profile', 'userProfile')->name('user.profile');
     Route::get('/forget_password','password')->name('user.password');
     Route::post('/reset_password','passwordreset')->name('user.reset');
@@ -60,6 +62,7 @@ Route::prefix('canteen')->middleware('canteen')->group(function () {
     Route::get('/synk', [CanteenController::class, 'syncTokenDetails'])->name('canteen.synk');
     Route::get('/usertoken', [CanteenController::class, 'usertoken'])->name('canteen.usertoken');
     Route::get('/reports', [CanteenController::class, 'reports'])->name('canteen.reports');
+    Route::get('/employee_report', [CanteenController::class, 'detailedCount'])->name('canteen.detailreports');
     Route::get('/livereports', [CanteenController::class, 'livecount'])->name('canteen.livereport');
 });
 

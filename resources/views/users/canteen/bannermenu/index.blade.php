@@ -29,6 +29,8 @@
                                   <th scope="col">#</th>
                                   <th scope="col">Day</th>
                                   <th scope="col">Date</th>
+                                  <th scope="col">Special</th>
+                                  <th scope="col">South Indian</th>
                                   <th scope="col">Action</th>
                                 </tr>
                               </thead>
@@ -41,7 +43,8 @@
                                   <td>{{$loop->iteration}}</td>
                                   <td>{{$banner->day_type}}</td>
                                   <td>{{convertWDateFormat($banner->day)}}</td>
-
+                                  <td><img src="{{$banner->spmurl}}" width="150px"></td>
+                                  <td><img src="{{$banner->simurl}}" width="150px"></td>
                                  <td>
                                      <a href="{{route('banner_menu.edit',$banner->id)}}">
                                         <i class="bi bi-pencil"></i>

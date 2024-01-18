@@ -144,7 +144,7 @@
       @forelse($masters as $master)
       
       <div class="swiper-slide">
-        <img src="{{asset('sliders/banner2.png')}}">
+        <img src="{{ $banners[$i]->spmurl }}">
         <div class=" content">
             <div class="row">
                 <div class="col-lg-6">
@@ -182,7 +182,7 @@
       
       <div class="swiper-slide">
 
-          <img src="{{asset('sliders/banner1.png')}}">
+          <img src="{{ $banners[$j]->simurl }}">
           <div class=" content">
             <div class="row">
                 <div class="col-lg-6">

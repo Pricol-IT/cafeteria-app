@@ -16,7 +16,7 @@
         </div>
         <div class="col-lg-12 ">
             <div class="card breadcome-bottom p-3">
-                <form  action="{{route('banner_menu.update',$banner->id)}}" method="post" >
+                <form  action="{{route('banner_menu.update',$banner->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="row mt-3 mb-3">
@@ -32,7 +32,18 @@
                             @if ($errors->has('day'))
                                 <span class="error text-danger">{{ $errors->first('day') }}</span>
                             @endif
-                            
+                            <h5 class="text-primary fw-bold mb-2  mt-3">Special Meal Background :</h5>
+                            <input type="file" name="spm_bg" class="form-control" accept="image/png,image/jpeg,image/jpg" >
+                            @error('spm_bg')
+                                <span class="invalid-feedback"
+                                    role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                            <h5 class="text-primary fw-bold mb-2  mt-3">South Indian Background :</h5>
+                            <input type="file" name="sim_bg" class="form-control" accept="image/png,image/jpeg,image/jpg" >
+                            @error('sim_bg')
+                                <span class="invalid-feedback"
+                                    role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">

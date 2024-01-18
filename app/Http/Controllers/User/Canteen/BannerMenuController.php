@@ -80,6 +80,14 @@ class BannerMenuController extends Controller
             'day_type' => 'required',
             'day' => 'required',
         ]);
+        if ($image = $request->spm_bg) {
+            $url = uploadImage($image, 'menu');
+            $input['spm_bg'] = $url;
+        }
+        if ($image1 = $request->sim_bg) {
+            $url1 = uploadImage($image1, 'menu');
+            $input['sim_bg'] = $url1;
+        }
 
         $Banner = Banner::where('id',$id)->update($input);
 

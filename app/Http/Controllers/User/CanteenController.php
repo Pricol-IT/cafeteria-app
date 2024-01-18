@@ -383,6 +383,34 @@ class CanteenController extends Controller
         return view('users.canteen.reports',compact('combinedData'));
     }
 
+    public function detailedCount(Request $request)
+    {
+        $users = User::select('id','emp_id')->where('status','active')->get();
+        $query = RfidMaster::orderBy('id','asc');
+
+        $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
+        $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
+
+        if ($request->has('from_date') && $request->from_date != null )
+        {
+            $query->whereDate('day', '>=', $start_date);
+        }
+
+        if ($request->has('to_date') && $request->to_date != null )
+        {
+            $query->whereDate('day', '<=', $end_date);
+        }
+
+        if ($request->has('emp_id') && $request->emp_id != 'All' && $request->emp_id != null)
+        {
+            $query->where('emp_id',  $request->emp_id);
+        }
+
+         $records = $query->get();
+         return view('users.canteen.detailreports',compact('records','users'));
+         // return $records;
+    }
+
     public function livecount()
     {
         $datas = DB::connection('second_mysql')

@@ -52,11 +52,23 @@
     </ul>
   </li>
   <li class="nav-item">
-  <a class="nav-link " href="{{route('canteen.reports')}}" oncontextmenu="return false;">
-    <i class='bx bxs-calendar'></i>
-    <span>Reports</span>
-  </a>
-</li>
+    <a class="nav-link collapsed" data-bs-target="#icons-reports" data-bs-toggle="collapse" href="#">
+      <i class="bx bxs-calendar"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="icons-reports" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="{{route('canteen.reports')}}">
+          <i class="bi bi-circle"></i><span>Over All Reports</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{route('canteen.detailreports')}}">
+          <i class="bi bi-circle"></i><span>Individual Reports</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  
 <li class="nav-item">
     <a class="nav-link " href="{{route('canteen.today')}}">
       <i class='bx bxs-category'></i>

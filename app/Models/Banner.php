@@ -11,5 +11,22 @@ class Banner extends Model
 
     protected $guarded = [];
 
+    public function getSpmurlAttribute()
+    {
+        if (!$this->spm_bg) {
+            return asset('backend/image/default.png');
+        }
+
+        return asset($this->spm_bg);
+    }
+
+    public function getSimurlAttribute()
+    {
+        if (!$this->sim_bg) {
+            return asset('backend/image/default.png');
+        }
+
+        return asset($this->sim_bg);
+    }
     
 }
