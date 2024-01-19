@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__(' Employees Reports')}}
+    {{__(' Amount Reports')}}
 @endsection
 @section('links')
  <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
           <div class="breadcome-list">
             <div class="row p-3">
               <div class="col-lg-6">
-                <h4 class="text-white fw-bold">Reports</h4>
+                <h4 class="text-white fw-bold">Amount Reports</h4>
               </div>
               <div class="col-lg-6 text-lg-end">
                 @if (request('from_date') || request('to_date') || request('emp_id'))
@@ -69,13 +69,14 @@
                                   <th scope="col">SP Meal</th>
                                   <th scope="col">SI Meal</th>
                                   <th scope="col" >CURD</th>
+                                  <th scope="col" >Total</th>
                                   <!-- <th scope="col" >Status</th> -->
                                 </tr>
                                 
                               </thead>
                               <tbody>
                                 
-                                
+                                @php $tot = 0 @endphp
 
                                 @forelse ($records as $record)
                                     <tr>
@@ -86,6 +87,7 @@
                                         <td>{{ $record->spm }}</td>
                                         <td>{{ $record->sim }}</td>
                                         <td>{{ $record->curd }}</td>
+                                        <td>{{ 'Rs.'.$tot = (($record->spm) + ($record->sim) + ($record->curd)) }}</td>
                                         <!-- <td>
                                             @if($record->status == 0)
                                             <p class="text-danger">Not Delivered</p>

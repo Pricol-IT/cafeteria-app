@@ -418,7 +418,7 @@ class CanteenController extends Controller
 
         $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
         $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
-        $currentDate = Carbon::now()->toDateString();
+        $currentDate = Carbon::yesterday()->toDateString();
 
         if ($request->has('from_date') && $request->from_date != null )
         {

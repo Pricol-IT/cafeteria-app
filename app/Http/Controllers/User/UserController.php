@@ -63,54 +63,65 @@ class UserController extends Controller
     public function monthlyStore(Request $request)
     {
         $input = $request->validate(['monthly' => 'required']);
-        // $monthly = date('m',strtotime($request->monthly));
+
+
         $monthly = $request->monthly.'-01';
-        
-        $startDate = Carbon::parse($request->monthly)->startOfMonth();
-        $endDate = Carbon::parse($request->monthly)->endOfMonth();
 
-        $monthlyDays = [];
-
-        for ($date = $startDate; $date <= $endDate; $date->addDay()) {
-            if (!$date->isWeekend()) {
-                $monthlyDays[] = $date->format('d-m-Y');
-            }
-        }
-
-         // return $monthlyDays;
-        if((!$request->monthly_sim) && (!$request->monthly_curd))
-        {
-            toastr()->error('Select Atleast One Menu');
+        $currentMonth = Carbon::now()->format('Y-m');
+        if ($request->monthly === $currentMonth) {
+            toastr()->error('Cannot add Booking for the current month');
             return back();
         }
         else
         {
-            $emp_id = auth()->user()->id;
-            $month = Token::where('emp_id',$emp_id)->where('monthly','=', $monthly)->exists();
-            if(!$month)
-            {
-                
-                $v = json_encode($monthlyDays);
-                
+            $startDate = Carbon::parse($request->monthly)->startOfMonth();
+            $endDate = Carbon::parse($request->monthly)->endOfMonth();
 
-                   Token::Create([
-                    'emp_id' => $emp_id,
-                    'monthly_sim' => $request->monthly_sim,
-                    'monthly_curd' => $request->monthly_curd,
-                    'monthly' => $monthly,
-                    'monthly_days' =>$v,
-                ]);
-                auth()->user()->notify(new MonthlyMenuCreatedNotification());
-                toastr()->success('Monthly Request Added Successfully');
-                return redirect()->route('user.monthly');
+            $monthlyDays = [];
+
+            for ($date = $startDate; $date <= $endDate; $date->addDay()) {
+                if (!$date->isWeekend()) {
+                    $monthlyDays[] = $date->format('d-m-Y');
+                }
+            }
+
+             // return $monthlyDays;
+            if((!$request->monthly_sim) && (!$request->monthly_curd))
+            {
+                toastr()->error('Select Atleast One Menu');
+                return back();
             }
             else
             {
-                toastr()->error('Record Already Exists');
-                return back();
+                $emp_id = auth()->user()->id;
+                $month = Token::where('emp_id',$emp_id)->where('monthly','=', $monthly)->exists();
+                if(!$month)
+                {
+                    
+                    $v = json_encode($monthlyDays);
+                    
+
+                       Token::Create([
+                        'emp_id' => $emp_id,
+                        'monthly_sim' => $request->monthly_sim,
+                        'monthly_curd' => $request->monthly_curd,
+                        'monthly' => $monthly,
+                        'monthly_days' =>$v,
+                    ]);
+                    auth()->user()->notify(new MonthlyMenuCreatedNotification());
+                    toastr()->success('Monthly Request Added Successfully');
+                    return redirect()->route('user.monthly');
+                }
+                else
+                {
+                    toastr()->error('Record Already Exists');
+                    return back();
+                }
+                
             }
             
         }
+        
         
     }
 
