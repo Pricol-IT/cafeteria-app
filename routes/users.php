@@ -63,6 +63,7 @@ Route::prefix('canteen')->middleware('canteen')->group(function () {
     Route::get('/usertoken', [CanteenController::class, 'usertoken'])->name('canteen.usertoken');
     Route::get('/reports', [CanteenController::class, 'reports'])->name('canteen.reports');
     Route::get('/employee_report', [CanteenController::class, 'detailedCount'])->name('canteen.detailreports');
+    Route::get('/employee_month_report', [CanteenController::class, 'detailedmonthCount'])->name('canteen.detailallreports');
     Route::get('/livereports', [CanteenController::class, 'livecount'])->name('canteen.livereport');
 });
 

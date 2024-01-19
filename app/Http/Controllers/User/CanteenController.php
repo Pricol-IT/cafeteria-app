@@ -251,35 +251,35 @@ class CanteenController extends Controller
              return view('users.canteen.todaycount',compact('results'));
     }
 
-    protected function insertIntoDatabase($connection, $data)
-    {
-        try {
-            // Use the specified database connection
-            DB::connection($connection)->beginTransaction();
+    // protected function insertIntoDatabase($connection, $data)
+    // {
+    //     try {
+    //         // Use the specified database connection
+    //         DB::connection($connection)->beginTransaction();
             
             
-            foreach ($data as $week) {
+    //         foreach ($data as $week) {
 
-                RfidMaster::on($connection)->create([
-                    'day' =>$week->day,
-                    'user_id' =>$week->id,
-                    'emp_id' =>$week->emp_id,
-                    'rfid' =>$week->rfid,
-                    'name' =>$week->name,
-                    'spm' =>$week->spm,
-                    'sim' =>$week->sim,
-                    'curd' =>$week->curd,
-                ]);
-            }
+    //             RfidMaster::on($connection)->create([
+    //                 'day' =>$week->day,
+    //                 'user_id' =>$week->id,
+    //                 'emp_id' =>$week->emp_id,
+    //                 'rfid' =>$week->rfid,
+    //                 'name' =>$week->name,
+    //                 'spm' =>$week->spm,
+    //                 'sim' =>$week->sim,
+    //                 'curd' =>$week->curd,
+    //             ]);
+    //         }
 
-            DB::connection($connection)->commit();
-            return true;
-        } catch (\Exception $e) {
-            // Handle the exception if something goes wrong
-            DB::connection($connection)->rollBack();
-            return false;
-        }
-    }   
+    //         DB::connection($connection)->commit();
+    //         return true;
+    //     } catch (\Exception $e) {
+    //         // Handle the exception if something goes wrong
+    //         DB::connection($connection)->rollBack();
+    //         return false;
+    //     }
+    // }   
 
 
     public function usertoken()
@@ -289,34 +289,34 @@ class CanteenController extends Controller
         return $user;
     }
 
-    public function syncTokenDetails()
-    {
-        $currentDate = Carbon::now()->toDateString();
-        $formattedDates = Carbon::now()->format('d-m-Y');
+    // public function syncTokenDetails()
+    // {
+    //     $currentDate = Carbon::now()->toDateString();
+    //     $formattedDates = Carbon::now()->format('d-m-Y');
 
-        // Connect to the first server database
-        $resultsFirstServer = DB::connection('mysql')->table('tokens')
-            ->select('tokens.day', 'users.id', 'tokens.emp_id', 'users.emp_id', 'users.rfid', 'users.name')
-            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
-            ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
-            ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
-            ->where(function ($query) use ($currentDate, $formattedDates) {
-                $query->orWhereDate('day', $currentDate)
-                    ->orWhereRaw("monthly_days REGEXP ?", ['\\b' . $formattedDates . '\\b']);
-            })
-            ->groupBy('tokens.emp_id', 'users.emp_id', 'users.id', 'users.name', 'users.rfid', 'tokens.day')
-            ->join('users', 'tokens.emp_id', '=', 'users.id')
-            ->get();
+    //     // Connect to the first server database
+    //     $resultsFirstServer = DB::connection('mysql')->table('tokens')
+    //         ->select('tokens.day', 'users.id', 'tokens.emp_id', 'users.emp_id', 'users.rfid', 'users.name')
+    //         ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
+    //         ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
+    //         ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
+    //         ->where(function ($query) use ($currentDate, $formattedDates) {
+    //             $query->orWhereDate('day', $currentDate)
+    //                 ->orWhereRaw("monthly_days REGEXP ?", ['\\b' . $formattedDates . '\\b']);
+    //         })
+    //         ->groupBy('tokens.emp_id', 'users.emp_id', 'users.id', 'users.name', 'users.rfid', 'tokens.day')
+    //         ->join('users', 'tokens.emp_id', '=', 'users.id')
+    //         ->get();
 
-                // return date('Y-m-d:h:i:s');
-            return $resultsFirstServer;
-        // Connect to the second server database
+    //             // return date('Y-m-d:h:i:s');
+    //         return $resultsFirstServer;
+    //     // Connect to the second server database
         
 
-        // Insert into the rfid_masters table in both databases
-        // DB::connection('first_server')->table('rfid_masters')->insert($resultsFirstServer->toArray());
-        // DB::connection('second_server')->table('rfid_masters')->insert($resultsSecondServer->toArray());
-    }
+    //     // Insert into the rfid_masters table in both databases
+    //     // DB::connection('first_server')->table('rfid_masters')->insert($resultsFirstServer->toArray());
+    //     // DB::connection('second_server')->table('rfid_masters')->insert($resultsSecondServer->toArray());
+    // }
 
     public function reports(Request $request)
     {
@@ -383,6 +383,34 @@ class CanteenController extends Controller
         return view('users.canteen.reports',compact('combinedData'));
     }
 
+    // public function detailedCount(Request $request)
+    // {
+    //     $users = User::select('id','emp_id')->where('status','active')->get();
+    //     $query = RfidMaster::orderBy('id','asc');
+
+    //     $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
+    //     $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
+
+    //     if ($request->has('from_date') && $request->from_date != null )
+    //     {
+    //         $query->whereDate('day', '>=', $start_date);
+    //     }
+
+    //     if ($request->has('to_date') && $request->to_date != null )
+    //     {
+    //         $query->whereDate('day', '<=', $end_date);
+    //     }
+
+    //     if ($request->has('emp_id') && $request->emp_id != 'All' && $request->emp_id != null)
+    //     {
+    //         $query->where('emp_id',  $request->emp_id);
+    //     }
+
+    //      $records = $query->get();
+    //      return view('users.canteen.detailreports',compact('records','users'));
+    //      // return $records;
+    // }
+
     public function detailedCount(Request $request)
     {
         $users = User::select('id','emp_id')->where('status','active')->get();
@@ -390,10 +418,16 @@ class CanteenController extends Controller
 
         $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
         $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
+        $currentDate = Carbon::now()->toDateString();
 
         if ($request->has('from_date') && $request->from_date != null )
         {
             $query->whereDate('day', '>=', $start_date);
+        }
+        
+        if($request->from_date == null  && $request->to_date == null  && $request->emp_id != 'All' && $request->emp_id == null)
+        {
+            $query->whereDate('day', '>=', $currentDate);
         }
 
         if ($request->has('to_date') && $request->to_date != null )
@@ -409,6 +443,67 @@ class CanteenController extends Controller
          $records = $query->get();
          return view('users.canteen.detailreports',compact('records','users'));
          // return $records;
+    }
+
+    public function detailedmonthCount(Request $request)
+    {
+        $users = User::select('id','emp_id')->where('status','active')->get();
+        // $query = RfidMaster::selectRaw('emp_id,name,SUM(IFNULL(spm, 0)) as spm,SUM(IFNULL(sim, 0)) as sim,SUM(IFNULL(curd, 0)) as curd');
+
+        // $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
+        // $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
+
+        // if ($request->has('from_date') && $request->from_date != null )
+        // {
+        //     $query->whereDate('day', '>=', $start_date);
+        // }
+
+        // if ($request->has('to_date') && $request->to_date != null )
+        // {
+        //     $query->whereDate('day', '<=', $end_date);
+        // }
+
+        // if ($request->has('emp_id') && $request->emp_id != 'All' && $request->emp_id != null)
+        // {
+        //     $query->where('emp_id',  $request->emp_id);
+        // }
+
+        //  $records = $query->groupBy('name','emp_id')->get();
+        //  return view('users.canteen.detailallreports',compact('records','users'));
+         // return $records;
+         
+    $query = RfidMaster::selectRaw('rfid_masters.emp_id, rfid_masters.name,
+        SUM(IFNULL(rfid_masters.spm, 0)) as spm_count,
+    SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN price_masters.price ELSE 0 END) as spm,
+    SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN price_masters.price ELSE 0 END) as sim,
+    SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN price_masters.price ELSE 0 END) as curd')
+    ->leftJoin('price_masters', function ($join) {
+        $join->on('rfid_masters.day', '>=', 'price_masters.start_date')
+            ->on('rfid_masters.day', '<=', 'price_masters.end_date');
+    });
+    $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
+        $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
+if ($request->has('from_date') && $request->from_date != null )
+        {
+            $query->whereDate('rfid_masters.day', '>=', $start_date);
+        }
+
+        if ($request->has('to_date') && $request->to_date != null )
+        {
+            $query->whereDate('rfid_masters.day', '<=', $end_date);
+        }
+
+        if ($request->has('emp_id') && $request->emp_id != 'All' && $request->emp_id != null)
+        {
+            $query->where('rfid_masters.emp_id',  $request->emp_id);
+        }
+// Rest of your existing code for date filtering and employee filtering...
+
+$records = $query->groupBy('rfid_masters.name', 'rfid_masters.emp_id')->get();
+
+
+ return view('users.canteen.detailallreports',compact('records','users'));
+        // return $records;
     }
 
     public function livecount()

@@ -20,9 +20,6 @@
             @endif
           </a><!-- End Notification Icon -->
  
-    
-        
-    
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have {{ userNotificationsCount() }} new notifications

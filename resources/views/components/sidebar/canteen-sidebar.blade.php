@@ -66,6 +66,11 @@
           <i class="bi bi-circle"></i><span>Individual Reports</span>
         </a>
       </li>
+      <li>
+        <a href="{{route('canteen.detailallreports')}}">
+          <i class="bi bi-circle"></i><span>Monthly Reports</span>
+        </a>
+      </li>
     </ul>
   </li>
   

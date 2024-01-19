@@ -32,6 +32,7 @@ class PriceMasterController extends Controller
     public function store(Request $request)
     {
         $input = $request->validate([
+            'code' => 'required',
             'menu_type' => 'required',
             'quantity' => 'required',
             'price' => 'required|numeric',
@@ -77,6 +78,7 @@ class PriceMasterController extends Controller
     public function update(Request $request, string $id)
     {
         $input = $request->validate([
+            'code' => 'required',
             'menu_type' => 'required',
             'quantity' => 'required',
             'price' => 'required|numeric',
