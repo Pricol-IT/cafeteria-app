@@ -19,7 +19,7 @@
   
 </head>
 
-<body oncontextmenu="return false;">
+<body >
     <!-- ======= Header ======= -->
 @include('admin.parts.header')
   

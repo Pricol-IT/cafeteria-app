@@ -29,8 +29,8 @@
                                   <th scope="col">Menu Type</th>
                                   <th scope="col">Qty</th>
                                   <th scope="col">Price</th>
-                                  <th scope="col">Validity Start Date</th>
-                                  <th scope="col">Validity End Date</th>
+                                  <th scope="col">Validity From</th>
+                                  <th scope="col">Validity Till</th>
                                   <th scope="col">Action</th>
                                 </tr>
                               </thead>

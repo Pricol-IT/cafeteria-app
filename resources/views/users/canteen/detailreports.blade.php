@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{__(' Employees Reports')}}
+    {{__(' Day Reports')}}
 @endsection
 @section('links')
  <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
           <div class="breadcome-list">
             <div class="row p-3">
               <div class="col-lg-6">
-                <h4 class="text-white fw-bold">Reports</h4>
+                <h4 class="text-white fw-bold">Day Reports</h4>
               </div>
               <div class="col-lg-6 text-lg-end">
                 @if (request('from_date') || request('to_date') || request('emp_id'))

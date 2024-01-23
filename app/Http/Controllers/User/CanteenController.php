@@ -22,6 +22,48 @@ class CanteenController extends Controller
         return view('users.canteen.dashboard');
     }
 
+    // public function deliverySpm(Request $request)
+    // {
+    //     $monthly = [];
+    //     $today = [];
+    //     $forcheck = false;
+    //     $user_id = '';
+    //     $result = [];   
+    //     if ($request->has('emp_id') && $request->emp_id != null) 
+    //     {
+    //         $user_id = User::select('id','emp_id','name')->where('emp_id',strtoupper($request->emp_id))->get();
+    //         if(count($user_id)>0)
+    //         {
+    //             $forcheck = true;
+
+    //             $today = Token::select('id', 'emp_id', 'spm', 'sim', 'curd')
+    //                     ->whereDate('day', date('Y-m-d'))
+    //                     ->where('spm','!=','null')
+    //                     ->where('emp_id', $user_id[0]->id)
+    //                     ->first();
+
+    //                 if (!$today ) {
+    //                     toastr()->error('No entry found for today in this ID'.$user_id[0]->emp_id);
+    //                     return back();
+    //                 }
+    //                 $result = [
+    //                     'day' => date('Y-m-d'),
+    //                     'spm' => $today->spm ? $today->spm : null,
+    //                     'curd' => $today->curd ? $today->curd  : null,
+    //                 ];
+                    
+    //         }
+    //         else
+    //         {
+    //             toastr()->error('User ID Not  Found');
+    //             return back();
+    //         }
+            
+            
+    //     }
+
+    //     return view('users.canteen.deliverysp',compact('user_id','result','forcheck'));  
+    // }
     public function deliverySpm(Request $request)
     {
         $monthly = [];
@@ -36,22 +78,42 @@ class CanteenController extends Controller
             {
                 $forcheck = true;
 
-                $today = Token::select('id', 'emp_id', 'spm', 'sim', 'curd')
+                $today = Token::select('id', 'emp_id', 'spm', 'curd')
                         ->whereDate('day', date('Y-m-d'))
                         ->where('spm','!=','null')
                         ->where('emp_id', $user_id[0]->id)
                         ->first();
 
-                    if (!$today ) {
+                    // Get monthly entry
+                    $monthly = Token::select('id', 'emp_id', 'monthly_spm', 'monthly_curd', 'monthly_days', 'monthly')
+                        ->whereMonth('monthly', Carbon::now()->month)
+                        ->where('monthly_spm','!=','null')
+                        ->where('emp_id', $user_id[0]->id)
+                        ->first();
+
+                        
+                    if (!$today && !$monthly) {
+                        
                         toastr()->error('No entry found for today in this ID'.$user_id[0]->emp_id);
                         return back();
+                        
                     }
+                    else
+                    {
+                        if(!$today && !(in_array(date('d-m-Y'), json_decode($monthly->monthly_days, true))))
+                        {
+                            toastr()->error('No entry found for today in this ID'.$user_id[0]->emp_id);
+                        return back();
+                        }
+                    }
+
+                    // Prepare the result array
                     $result = [
                         'day' => date('Y-m-d'),
-                        'spm' => $today->spm ? $today->spm : null,
-                        'curd' => $today->curd ? $today->curd  : null,
+                        'spm' => $today ? $today->spm : ($monthly && in_array(date('d-m-Y'), json_decode($monthly->monthly_days, true)) ? $monthly->monthly_spm : null),
+                        'curd' => $today ? $today->curd : ($monthly && in_array(date('d-m-Y'), json_decode($monthly->monthly_days, true)) ? $monthly->monthly_curd : null),
                     ];
-                    
+                    // return $result;
             }
             else
             {
@@ -234,7 +296,8 @@ class CanteenController extends Controller
       
         $results = DB::table('tokens')
             ->select('tokens.day','users.id','tokens.emp_id','users.emp_id','users.rfid','users.name')
-            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
+            
+            ->selectRaw('SUM(IFNULL(tokens.spm, 0) + IFNULL(tokens.monthly_spm, 0)) as spm')
             ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
             ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
              
@@ -448,34 +511,14 @@ class CanteenController extends Controller
     public function detailedmonthCount(Request $request)
     {
         $users = User::select('id','emp_id')->where('status','active')->get();
-        // $query = RfidMaster::selectRaw('emp_id,name,SUM(IFNULL(spm, 0)) as spm,SUM(IFNULL(sim, 0)) as sim,SUM(IFNULL(curd, 0)) as curd');
-
-        // $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
-        // $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
-
-        // if ($request->has('from_date') && $request->from_date != null )
-        // {
-        //     $query->whereDate('day', '>=', $start_date);
-        // }
-
-        // if ($request->has('to_date') && $request->to_date != null )
-        // {
-        //     $query->whereDate('day', '<=', $end_date);
-        // }
-
-        // if ($request->has('emp_id') && $request->emp_id != 'All' && $request->emp_id != null)
-        // {
-        //     $query->where('emp_id',  $request->emp_id);
-        // }
-
-        //  $records = $query->groupBy('name','emp_id')->get();
-        //  return view('users.canteen.detailallreports',compact('records','users'));
-         // return $records;
+        
          
     $query = RfidMaster::selectRaw('rfid_masters.emp_id, rfid_masters.name,
-        SUM(IFNULL(rfid_masters.spm, 0)) as spm_count,
+    SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN 1 ELSE 0 END) as spm_count,
     SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN price_masters.price ELSE 0 END) as spm,
+    SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN 1 ELSE 0 END) as sim_count,
     SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN price_masters.price ELSE 0 END) as sim,
+    SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN 1 ELSE 0 END) as curd_count,
     SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN price_masters.price ELSE 0 END) as curd')
     ->leftJoin('price_masters', function ($join) {
         $join->on('rfid_masters.day', '>=', 'price_masters.start_date')
@@ -483,7 +526,7 @@ class CanteenController extends Controller
     });
     $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
         $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
-if ($request->has('from_date') && $request->from_date != null )
+    if ($request->has('from_date') && $request->from_date != null )
         {
             $query->whereDate('rfid_masters.day', '>=', $start_date);
         }
@@ -497,12 +540,12 @@ if ($request->has('from_date') && $request->from_date != null )
         {
             $query->where('rfid_masters.emp_id',  $request->emp_id);
         }
-// Rest of your existing code for date filtering and employee filtering...
-
-$records = $query->groupBy('rfid_masters.name', 'rfid_masters.emp_id')->get();
 
 
- return view('users.canteen.detailallreports',compact('records','users'));
+    $records = $query->groupBy('rfid_masters.name', 'rfid_masters.emp_id')->get();
+
+
+    return view('users.canteen.detailallreports',compact('records','users'));
         // return $records;
     }
 

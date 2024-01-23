@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\SyncTokenDetails::class,
         Commands\SyncRFIDData::class,
+        Commands\MonthlyAutoRecoveries::class,
     ];
 
 
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('sync:token-details')->dailyAt('10:05');
         $schedule->command('sync:rfid-data')->dailyAt('15:30');
+        $schedule->command('monthly:auto-recoveries')->monthlyOn(26, '00:00');
     }
 
     /**

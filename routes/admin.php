@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AutoRecoveryController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 
 
@@ -16,5 +17,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::resource('user', UserController::class);
+        Route::resource('auto_booking', AutoRecoveryController::class);
+        
+        Route::post('/checkauto', [AutoRecoveryController::class, 'checkauto'])->name('checkauto');
     });
  });

@@ -63,7 +63,7 @@
       </li>
       <li>
         <a href="{{route('canteen.detailreports')}}">
-          <i class="bi bi-circle"></i><span>Individual Reports</span>
+          <i class="bi bi-circle"></i><span>Day Reports</span>
         </a>
       </li>
       <li>

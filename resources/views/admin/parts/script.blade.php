@@ -21,7 +21,7 @@ jSuites.calendar(document.getElementById('calendar'),{
 
 
 </script>
-<script>
+<!-- <script>
         // Disable right-click
         document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
@@ -36,4 +36,4 @@ jSuites.calendar(document.getElementById('calendar'),{
                 e.preventDefault();
             }
         });
-    </script>
+    </script> -->

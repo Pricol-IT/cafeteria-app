@@ -40,7 +40,7 @@ class SyncTokenDetails extends Command
         // Connect to the first server database
         $resultsFirstServer = DB::connection('mysql')->table('tokens')
             ->select('tokens.day', 'users.id', 'tokens.emp_id', 'users.emp_id', 'users.rfid', 'users.name')
-            ->selectRaw('SUM(IFNULL(tokens.spm, 0)) as spm')
+            ->selectRaw('SUM(IFNULL(tokens.spm, 0) + IFNULL(tokens.monthly_spm, 0)) as spm')
             ->selectRaw('SUM(IFNULL(tokens.sim, 0) + IFNULL(tokens.monthly_sim, 0)) as sim')
             ->selectRaw('SUM(IFNULL(tokens.curd, 0) + IFNULL(tokens.monthly_curd, 0)) as curd')
             ->where(function ($query) use ($currentDate, $formattedDates) {

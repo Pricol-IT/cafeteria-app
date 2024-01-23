@@ -242,7 +242,7 @@ class UserController extends Controller
     public function transactionHistory()
     {
 
-        $monthlyEntries = Token::select('id','emp_id','monthly','monthly_curd','monthly_sim','monthly_days')->where('emp_id',(auth()->user()->id))->whereMonth('monthly', Carbon::now()->month)->get();
+        $monthlyEntries = Token::select('id','emp_id','monthly','monthly_curd','monthly_sim','monthly_spm','monthly_days')->where('emp_id',(auth()->user()->id))->whereMonth('monthly', Carbon::now()->month)->get();
 
         $weeklyEntries = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->get();
 
@@ -254,7 +254,7 @@ class UserController extends Controller
         foreach ($monthlyEntries as $monthlyEntry) {
             foreach (json_decode($monthlyEntry->monthly_days) as $weekday) {
                 $combinedRecords[date('Y-m-d',strtotime($weekday))]['day'] = date('Y-m-d',strtotime($weekday));
-                $combinedRecords[date('Y-m-d',strtotime($weekday))]['spm'] = 0;
+                $combinedRecords[date('Y-m-d',strtotime($weekday))]['spm'] = $monthlyEntry->monthly_spm ?? 0;
                 $combinedRecords[date('Y-m-d',strtotime($weekday))]['sim'] = $monthlyEntry->monthly_sim ?? 0;
                 $combinedRecords[date('Y-m-d',strtotime($weekday))]['curd'] = $monthlyEntry->monthly_curd ?? 0;
             }
@@ -276,7 +276,7 @@ class UserController extends Controller
 
         return view('users.user.transaction',compact('singles','deliverys'));
 
-
+        // return $singles;
         // Now $combinedRecords contains the desired array format
             // $result = array_values(array_map(function ($empRecords) {
             //     return array_values($empRecords);

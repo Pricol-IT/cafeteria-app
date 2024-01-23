@@ -18,7 +18,7 @@
 
     body {
       background: #eee;
-      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-family: Poppins;
       font-size: 14px;
       color: #000;
       margin: 0;
@@ -59,39 +59,124 @@
         margin-left: 5vw;
         text-transform: uppercase;
         line-height: 8vh;
+        font-weight:700;
     }
     .imgcontent {
         position: relative;
+
     }
     .cimg img {
         padding: 10px 20px;
         margin-left: 5vw;
         width: 80%;
         height: 80vh;
-/*        border-radius: 40px;*/
+        border-radius: 3vw;
     }
     .day {
 
         position: absolute;
-        margin-top: 60vh;
-        margin-left: 25vw;
-        width: 20vw;
-        color: #000;
-        padding: 1vh 0;
         
-/*        border-radius: 20px;*/
-        border: 1px solid #0d2273;
+        margin-top: 50vh;
+        margin-left: 0vw;
+        width: 30vw;
+        height: 20vh;
+        color: #000;
+        z-index: 1;
+        background: #fff;
+        padding: 1vh 0;
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        border-radius: 2vh;
+        font-size: 28pt;
+/*        border: 1px solid #0d2273;*/
 
     }
-    
+.day1 {
+
+        position: absolute;
+        
+        margin-top: 50vh;
+        margin-left: 20vw;
+        width: 30vw;
+        height: 20vh;
+        color: #000;
+        z-index: 1;
+        background: #fff;
+        padding: 1vh 0;
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        border-radius: 2vh;
+        font-size: 28pt;
+/*        border: 1px solid #0d2273;*/
+
+    }
+    .day .qu {
+        color: #fff;
+        background: #0d2273;
+/*        width: vw;*/
+/*        height: 14vh;*/
+/*        padding: 0.5vh 0;*/
+        margin-left: -2vw;
+        margin-top: 1vh;
+        padding: 1vw;
+        border-radius: 10px;
+/*        text-align: center;*/
+        font-size: 50px;
+/*        font-weight: 700;*/
+        float: left;
+    }
+
+    .day1 .qu {
+        color: #fff;
+        background: #0d2273;
+/*        width: vw;*/
+/*        height: 14vh;*/
+/*        padding: 0.5vh 0;*/
+        margin-right: -2vw;
+        margin-top: 1vh;
+        padding: 1vw;
+        border-radius: 10px;
+/*        text-align: center;*/
+        font-size: 50px;
+/*        font-weight: 700;*/
+        float: right;
+    }
+
+    /*.qu svg {
+        width: 5vw;
+    }*/
     .title {
         padding: 1%;
         background: #0d2273;
         color:#fff;
-        border-radius: 150px;
+        border-radius: 10px;
         font-size: 38pt;
+        font-family: Open Sans;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        margin: 0 5%;
     }
-
+    .title1 {
+/*        padding: 1vh ;*/
+        height: 15vh;
+        background: #fff;
+        color:#0d2273;
+        border-radius: 10px;
+        font-size: 38pt;
+        font-family: Open Sans;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        position: relative;
+        margin-bottom: 6vh;
+    }
+    .sday
+    {
+        background: #0d2273;
+        color: #fff;
+        font-size: 20pt;
+        align-items: center;
+        margin: 0 20vh;
+        padding: 0 1vw ;
+/*        top:7vh;*/
+        border-radius: 10px;
+        text-align: center;
+    }
     .autoplay-progress {
       position: absolute;
       right: 16px;
@@ -148,8 +233,8 @@
         <div class=" content">
             <div class="row">
                 <div class="col-lg-6">
-                    
-                    <div class="title">
+                    @if($banners[$i]->day_type == 'Today')
+                    <div class="title shadow">
                         {{$banners[$i]->day_type." 's Menu"}}
                     </div>
                     <div class="mt-3">
@@ -158,15 +243,59 @@
                                 <li>{{ trim($item) }}</li>
                             @endforeach
                         </ul>
-
-                        <!-- {{$master->menu->description}} -->
                     </div>
-                </div>
-                <div class="col-lg-6">
+                    @endif
+                    @if($banners[$i]->day_type == 'Tomorrow')
                     <div class="imgcontent">
-                        <div class="day card shadow fw-bold text-center"><span style="color: #0d2273;font-size: 20pt;">{{dayFormat($master->day)}}</span>Special Meal</div>
+                        <div class="day1   fw-bold ">
+                            
+                                <div class="qu">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="4vw" height="8vh" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+
+                                    <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="none">
+                                    <path d="M0 1760 l0 -480 316 0 317 0 -5 -67 c-10 -127 -72 -263 -170 -369 -94 -102 -256 -182 -390 -192 l-68 -5 0 -163 0 -164 53 0 c209 0 452 106 620 269 140 135 246 336 276 521 7 40 11 273 11 598 l0 532 -480 0 -480 0 0 -480z"/>
+                                    <path d="M1600 1760 l0 -480 316 0 317 0 -5 -67 c-10 -127 -72 -263 -170 -369 -94 -102 -256 -182 -390 -192 l-68 -5 0 -163 0 -164 53 0 c209 0 452 106 620 269 140 135 246 336 276 521 7 40 11 273 11 598 l0 532 -480 0 -480 0 0 -480z"/>
+                                    </g>
+                                    </svg>
+                                </div>
+                                <span style="color: #0d2273;font-size: 28pt;">{{dayFormat($master->day)}}</span><br><span style="font-size: 28pt;">Special Meal</span>
+                            
+                            </div>
                         <div class="cimg"><img src="{{$master->menu->imageurl}}"></div>   
                     </div>
+                    @endif
+                </div>
+                <div class="col-lg-6">
+                    @if($banners[$i]->day_type == 'Today')
+                    <div class="imgcontent">
+                        <div class="day   fw-bold ">
+                                <div class="qu">
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="4vw" height="8vh" viewBox="0 0 256.000000 256.000000" preserveAspectRatio="xMidYMid meet">
+
+                                    <g transform="translate(0.000000,256.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="none">
+                                    <path d="M0 1760 l0 -480 316 0 317 0 -5 -67 c-10 -127 -72 -263 -170 -369 -94 -102 -256 -182 -390 -192 l-68 -5 0 -163 0 -164 53 0 c209 0 452 106 620 269 140 135 246 336 276 521 7 40 11 273 11 598 l0 532 -480 0 -480 0 0 -480z"/>
+                                    <path d="M1600 1760 l0 -480 316 0 317 0 -5 -67 c-10 -127 -72 -263 -170 -369 -94 -102 -256 -182 -390 -192 l-68 -5 0 -163 0 -164 53 0 c209 0 452 106 620 269 140 135 246 336 276 521 7 40 11 273 11 598 l0 532 -480 0 -480 0 0 -480z"/>
+                                    </g>
+                                    </svg>
+                                </div>
+                                <span style="color: #0d2273;font-size: 28pt;">{{dayFormat($master->day)}}</span><br><span style="font-size: 28pt;">Special Meal</span>
+                            
+                            </div>
+                        <div class="cimg"><img src="{{$master->menu->imageurl}}"></div>   
+                    </div>
+                    @endif
+                    @if($banners[$i]->day_type == 'Tomorrow')
+                    <div class="title shadow">
+                        {{$banners[$i]->day_type." 's Menu"}}
+                    </div>
+                    <div class="mt-3">
+                        <ul>
+                            @foreach(explode(',', $master->menu->description) as $item)
+                                <li>{{ trim($item) }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                 </div>
                 
                 
@@ -186,21 +315,40 @@
           <div class=" content">
             <div class="row">
                 <div class="col-lg-6">
-                    
-                    <div class="title">
+                    @if($banners[$j]->day_type == 'Today')
+                    <div class="title1">
                         {{$banners[$j]->day_type." 's Menu"}}
+                        <div class="sday">
+                        South Indian
                     </div>
+                    </div>
+                    
                     <div class="mt-3">
                         <ul>
                             <li>{{$simenu->sambar}}</li>
                             <li>{{$simenu->rasam}}</li>
                             <li>{{$simenu->poriyal}}</li>
                         </ul>
-
-                        <!-- {{$master->menu->description}} -->
                     </div>
+                    @endif
                 </div>
                 <div class="col-lg-6">
+                    @if($banners[$j]->day_type == 'Tomorrow')
+                    <div class="title1">
+                        {{$banners[$j]->day_type." 's Menu"}}
+                        <div class="sday">
+                        South Indian
+                    </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <ul>
+                            <li>{{$simenu->sambar}}</li>
+                            <li>{{$simenu->rasam}}</li>
+                            <li>{{$simenu->poriyal}}</li>
+                        </ul>
+                    </div>
+                    @endif
                 </div>
             </div>
           </div>
@@ -235,7 +383,7 @@
       spaceBetween: 30,
       centeredSlides: true,
       autoplay: {
-        delay: 3500,
+        delay: 4500,
         disableOnInteraction: false
       },
       pagination: {
