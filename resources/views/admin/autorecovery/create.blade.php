@@ -30,7 +30,7 @@
                         <div class="col-lg-6 offset-lg-3 col-sm-12 col-md-4 pt-2 pb-2">
                             <select data-placeholder="Select Emp ID" multiple class="chosen-select form-control" name="user_id[]" required>
                                 @forelse($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->emp_id }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->emp_id }} - {{ $user->name }}</option>
                                 @empty
                                     <option>No Users Found</option>
                                 @endforelse
