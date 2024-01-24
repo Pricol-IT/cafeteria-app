@@ -92,3 +92,13 @@ if (! function_exists('userNotificationsCount')) {
         return auth()->user()->unreadNotifications()->count();
     }
 }
+
+if (!function_exists('responseSuccess')) {
+    function responseSuccess(string $msg = "Success")
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $msg,
+        ], 200);
+    }
+}

@@ -84,10 +84,11 @@ class LoginController extends Controller
             if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
                 return redirect()->route('admin.dashboard');
             } else {
+                toastr()->error('Invalid username or Password. Please try again.');
                 return redirect()->back();
             }
         }
-        return view('backend.modules.auth.login')->withTitle('Login');
+        return view('admin.auth.login');
     }
 
     protected function guard()

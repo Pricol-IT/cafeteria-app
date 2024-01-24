@@ -35,13 +35,11 @@ class CanteenController extends Controller
     //         if(count($user_id)>0)
     //         {
     //             $forcheck = true;
-
     //             $today = Token::select('id', 'emp_id', 'spm', 'sim', 'curd')
     //                     ->whereDate('day', date('Y-m-d'))
     //                     ->where('spm','!=','null')
     //                     ->where('emp_id', $user_id[0]->id)
     //                     ->first();
-
     //                 if (!$today ) {
     //                     toastr()->error('No entry found for today in this ID'.$user_id[0]->emp_id);
     //                     return back();
@@ -51,15 +49,12 @@ class CanteenController extends Controller
     //                     'spm' => $today->spm ? $today->spm : null,
     //                     'curd' => $today->curd ? $today->curd  : null,
     //                 ];
-                    
     //         }
     //         else
     //         {
     //             toastr()->error('User ID Not  Found');
     //             return back();
     //         }
-            
-            
     //     }
 
     //     return view('users.canteen.deliverysp',compact('user_id','result','forcheck'));  
@@ -392,9 +387,6 @@ class CanteenController extends Controller
                 DB::raw('SUM(curd) as rfid_curd')
             )
             ->groupBy('day');
-
-        
-
         $query1 = Delivery::select(
                 'day',
                 DB::raw('SUM(spm) as delivery_spm'),
@@ -438,11 +430,7 @@ class CanteenController extends Controller
                 'delivery_curd' => $deliveryRow ? $deliveryRow->delivery_curd : 0,
             ];
         }
-
         // return $combinedData;
-
-        
-
         return view('users.canteen.reports',compact('combinedData'));
     }
 

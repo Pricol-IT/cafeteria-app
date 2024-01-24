@@ -6,7 +6,7 @@
 
  <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
  <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
- 
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 @endsection
 @section('main')
 <main id="main" class="main">
@@ -36,6 +36,7 @@
                                   <th scope="col">Special Meal</th>
                                   <th scope="col">South Indian</th>
                                   <th scope="col">Curd</th>
+                                  <th scope="col">Status</th>
                                   <th scope="col">Action</th>
                                 </tr>
                               </thead>
@@ -51,6 +52,15 @@
                                   <td>{{$record->monthly_spm ? $record->monthly_spm : '-'}}</td>
                                   <td>{{$record->monthly_sim ? $record->monthly_sim : '-'}}</td>
                                   <td>{{$record->monthly_curd ? $record->monthly_curd : '-'}}</td>
+                                  <td tabindex="0">
+                                    <div class="form-check form-switch">
+                                      <input data-id="{{ $record->id }}" class="form-check-input status-switch" type="checkbox" id="flexSwitchCheckChecked" {{ $record->status == 1 ? 'checked' : '' }}>
+                                      <label class="form-check-label" for="flexSwitchCheckChecked">
+                                          {{ $record->status == 1 ? __('Activated') : __('Deactivated') }}
+                                      </label>
+                                    </div>
+                                    
+                                </td>
                                  <td>
                                     <div class="d-flex justify-content-around">
                                         
@@ -100,7 +110,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- Your existing table code -->
 
 <script type="text/javascript">
@@ -136,6 +146,30 @@ $(document).ready(function() {
         title: tableTitle
     } );
 } );
+$('.status-switch').on('change', function() {
+            var status = $(this).prop('checked') == true ? 1 : 0;
+            // alert(status);
+            var id = $(this).data('id');
+            // alert(id);
+            
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: '{{ route('changestatus') }}',
+                data: {
+                    'status': status,
+                    'id': id
+                },
+                success: function(response) {
+
+                    toastr.success(response.message, 'Success');
+                    // location.reload();
+                    setTimeout(function(){
+                           location.reload(); 
+                      }, 5000);
+                }
+            });
+        });
 </script>
 
 @endsection

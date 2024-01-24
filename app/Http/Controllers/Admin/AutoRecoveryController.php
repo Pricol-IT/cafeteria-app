@@ -34,13 +34,13 @@ class AutoRecoveryController extends Controller
     public function store(Request $request)
     {
         // return $request->user_id[2];
-        $input = $request->validate([
-            'emp_id' => 'required',
-            'monthly_spm' => 'nullable',
-            'monthly_sim' => 'nullable',
-            'monthly_curd' => 'nullable'
-        ]);
-
+        // $input = $request->validate([
+        //     'user_id' => 'required',
+        //     'monthly_spm' => 'nullable',
+        //     'monthly_sim' => 'nullable',
+        //     'monthly_curd' => 'nullable'
+        // ]);
+        
         for($i=0; $i<count($request->user_id); $i++)
         {
             $record = AutoRecovery::where('user_id',$request->user_id[$i])->first();
@@ -149,5 +149,19 @@ class AutoRecoveryController extends Controller
     {
         $menu = AutoRecovery::where('user_id',$request->user_id)->exists();
         return $menu;
+    }
+
+    public function statusChange(Request $request)
+    {
+        $book = AutoRecovery::findOrFail($request->id);
+        $book->status = $request->status;
+        $book->save();
+
+        if ($request->status == 1) {
+            return responseSuccess(__('AutoBooking Activated Successfully'));
+
+        } else {
+            return responseSuccess(__('AutoBooking Deactivated Successfully'));
+        }
     }
 }

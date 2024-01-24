@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 @section('title')
-    {{__('Monthly Reports')}}
+    {{__(' Day Reports')}}
 @endsection
 @section('links')
  <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -14,11 +14,11 @@
           <div class="breadcome-list">
             <div class="row p-3">
               <div class="col-lg-6">
-                <h4 class="text-white fw-bold">Monthly Reports</h4>
+                <h4 class="text-white fw-bold">Day Reports</h4>
               </div>
               <div class="col-lg-6 text-lg-end">
                 @if (request('from_date') || request('to_date') || request('emp_id'))
-                    <a href="{{ route('canteen.detailallreports') }}" class="btn btn-danger"><i
+                    <a href="{{ route('admin.detailreports') }}" class="btn btn-danger"><i
                             class="fas fa-times"></i>&nbsp; {{ __('Reset') }}
                     </a>
                 @endif
@@ -29,7 +29,7 @@
         <div class="col-lg-12">
 
             <div class="card breadcome-bottom p-3">
-                <form action="{{route('canteen.detailallreports')}}" method="get" onchange="this.submit();">
+                <form action="{{route('admin.detailreports')}}" method="get" onchange="this.submit();">
                 @csrf
                 @method('GET')  
                 <div class="row">
@@ -60,50 +60,39 @@
                         <br>
                         <div class="table-responsive">
                             <table class="table datatable1">
-                            <thead>
+                              <thead>
                                 <tr>
-                                    <th scope="col" rowspan="2">#</th>
-                                    <th scope="col" rowspan="2">Emp ID</th>
-                                    <th scope="col" rowspan="2">Name</th>
-                                    <th scope="col" colspan="2">SP Meal</th>
-                                    <th scope="col" colspan="2">SI Meal</th>
-                                    <th scope="col" colspan="2">CURD</th>
-                                    <th scope="col" rowspan="2">Total Amount </th>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Emp ID</th>
+                                  <th scope="col">Name</th>
+                                  <th scope="col">SP Meal</th>
+                                  <th scope="col">SI Meal</th>
+                                  <th scope="col" >CURD</th>
+                                  <th scope="col" >Status</th>
                                 </tr>
-                                <tr>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">Amt</th>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">Amt</th>
-                                    <th scope="col">Qty</th>
-                                    <th scope="col">Amt</th>
-                                </tr>
-                            </thead>
-                              
+                                
+                              </thead>
                               <tbody>
                                 
-                                @php $tot = 0 @endphp
+                                
 
                                 @forelse ($records as $record)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <!-- <td>{{ convertDateFormat($record['day']) }}</td> -->
+                                        <td>{{ convertDateFormat($record['day']) }}</td>
                                         <td>{{ $record->emp_id }}</td>
                                         <td>{{ $record->name }}</td>
-                                        <td>{{ $record->spm_count }}</td>
                                         <td>{{ $record->spm }}</td>
-                                        <td>{{ $record->sim_count }}</td>
                                         <td>{{ $record->sim }}</td>
-                                        <td>{{ $record->curd_count }}</td>
                                         <td>{{ $record->curd }}</td>
-                                        <td>{{ $tot = (($record->spm) + ($record->sim) + ($record->curd)) }}</td>
-                                        <!-- <td>
+                                        <td>
                                             @if($record->status == 0)
                                             <p class="text-danger">Not Delivered</p>
                                             @else
                                             <p class="text-success">Delivered</p>
                                             @endif
-                                        </td> -->
+                                        </td>
                                     </tr>
 
                                     
@@ -116,8 +105,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <!-- <td></td>
-                                        <td></td> -->
+                                        <td></td>
+                                        <td></td>
 
                                         
                                     </tr>

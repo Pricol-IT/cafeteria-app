@@ -59,7 +59,7 @@ class MonthlyAutoRecoveries extends Command
         }
 
         $v = json_encode($monthlyDays);
-        $autoRecoveries = AutoRecovery::all();
+        $autoRecoveries = AutoRecovery::where('status',1)->get();
         foreach ($autoRecoveries as $autoRecovery) {
             // Insert records into the token table
             $this->insertTokenRecord($autoRecovery,$v,$monv);

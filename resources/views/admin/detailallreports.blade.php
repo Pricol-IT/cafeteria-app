@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 @section('title')
     {{__('Monthly Reports')}}
 @endsection
@@ -18,7 +18,7 @@
               </div>
               <div class="col-lg-6 text-lg-end">
                 @if (request('from_date') || request('to_date') || request('emp_id'))
-                    <a href="{{ route('canteen.detailallreports') }}" class="btn btn-danger"><i
+                    <a href="{{ route('admin.detailallreports') }}" class="btn btn-danger"><i
                             class="fas fa-times"></i>&nbsp; {{ __('Reset') }}
                     </a>
                 @endif
@@ -29,7 +29,7 @@
         <div class="col-lg-12">
 
             <div class="card breadcome-bottom p-3">
-                <form action="{{route('canteen.detailallreports')}}" method="get" onchange="this.submit();">
+                <form action="{{route('admin.detailallreports')}}" method="get" onchange="this.submit();">
                 @csrf
                 @method('GET')  
                 <div class="row">
