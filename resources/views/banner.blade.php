@@ -15,7 +15,7 @@
     html,
     body {
       position: relative;
-      height: 100%;
+      height: 100vh;
     }
 
     body {
@@ -69,10 +69,11 @@
     }
     .cimg img {
         padding: 10px 20px;
-        margin-left: 5vw;
-        width: 80%;
-        height: 80vh;
-        border-radius: 3vw;
+        margin-left: 2vw;
+        width: 35vw;
+        height: 85vh;
+/*        border-radius: 10%;*/
+        margin-top:-2vh;
     }
     .day {
 
@@ -92,7 +93,7 @@
 /*        border: 1px solid #0d2273;*/
 
     }
-.day1 {
+/*.day1 {
 
         position: absolute;
         
@@ -107,9 +108,9 @@
         box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
         border-radius: 2vh;
         font-size: 14pt;
-/*        border: 1px solid #0d2273;*/
+        border: 1px solid #0d2273;
 
-    }
+    }*/
     .day .qu {
         color: #fff;
         background: #0d2273;
@@ -356,7 +357,7 @@
           <div class=" content">
             <div class="row">
                 @if($banners[$j]->day_type == 'Today')
-                <div class="col-lg-6 offset-lg-3">
+                <div class="col-lg-6 offset-lg-6">
                     
                     <div class="title1">
                         {{$banners[$j]->day_type." 's Menu"}}
