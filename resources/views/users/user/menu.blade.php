@@ -21,7 +21,7 @@
          height: 180px;
     }
 
-    @media (max-width:350px)
+    @media (max-width:400px)
     {
         ul li {
             font-size: 12px;
