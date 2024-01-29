@@ -1752,11 +1752,11 @@ min-height: 1em;
    .fc .fc-scrollgrid-liquid
    {
 /*    min-height: 300px;*/
-    max-height: 370px;
+    max-height: 390px;
    }
 
    #calendar
    {
-    height: 450px!important;
+    height: 480px!important;
    }
 }

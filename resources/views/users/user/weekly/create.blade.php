@@ -73,7 +73,7 @@
       </div>
       <div class="row mt-2 mb-2">
         <div class="col-lg-6 mb-2 southindianitem">
-          <table style="margin-left: auto">
+          <table style="margin-left: auto"width="100%">
             <tr class="text-primary">
               <th class="p-1"></th>
               @forelse($masters as $master)

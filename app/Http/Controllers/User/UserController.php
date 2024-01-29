@@ -40,7 +40,7 @@ class UserController extends Controller
         $currentMonth = Carbon::now()->month;
         $nextMonth = Carbon::now()->addMonth()->month;
 
-        $monthlys = Token::select('id','emp_id','monthly_sim','monthly_curd','monthly','monthly_days')->where('emp_id',(auth()->user()->id))
+        $monthlys = Token::select('id','emp_id','monthly_spm','monthly_sim','monthly_curd','monthly','monthly_days','autovalue')->where('emp_id',(auth()->user()->id))
         ->where(function ($query) use ($currentMonth, $nextMonth) {
             $query->whereMonth('monthly', $currentMonth)
             ->orWhereMonth('monthly', $nextMonth);
@@ -241,13 +241,22 @@ class UserController extends Controller
 
     public function transactionHistory()
     {
+        $currentDate = Carbon::now();
 
-        $monthlyEntries = Token::select('id','emp_id','monthly','monthly_curd','monthly_sim','monthly_spm','monthly_days')->where('emp_id',(auth()->user()->id))->whereMonth('monthly', Carbon::now()->month)->get();
+// Get the first day of the previous month
+$previousMonthStart = $currentDate->copy()->subMonth()->startOfMonth();
 
-        $weeklyEntries = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->get();
+// Get the last day of the next month
+$nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
+
+    
+
+        $monthlyEntries = Token::select('id','emp_id','monthly','monthly_curd','monthly_sim','monthly_spm','monthly_days')->where('emp_id',(auth()->user()->id))->where('monthly','>=', $previousMonthStart)->where('monthly','<=', $nextMonthEnd)->get();
+
+        $weeklyEntries = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->whereMonth('day', '>=',Carbon::now()->month)->get();
 
         $deliverys =Delivery::where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->get();
-
+// return $monthlyEntries;
         $combinedRecords = [];
         $singles = [];
 

@@ -500,21 +500,21 @@ class CanteenController extends Controller
     {
         $users = User::select('id','emp_id')->where('status','active')->get();
         
-         
-    $query = RfidMaster::selectRaw('rfid_masters.emp_id, rfid_masters.name,
-    SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN 1 ELSE 0 END) as spm_count,
-    SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN price_masters.price ELSE 0 END) as spm,
-    SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN 1 ELSE 0 END) as sim_count,
-    SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN price_masters.price ELSE 0 END) as sim,
-    SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN 1 ELSE 0 END) as curd_count,
-    SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN price_masters.price ELSE 0 END) as curd')
-    ->leftJoin('price_masters', function ($join) {
-        $join->on('rfid_masters.day', '>=', 'price_masters.start_date')
-            ->on('rfid_masters.day', '<=', 'price_masters.end_date');
-    });
-    $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
+             
+        $query = RfidMaster::selectRaw('rfid_masters.emp_id, rfid_masters.name,
+        SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN 1 ELSE 0 END) as spm_count,
+        SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN price_masters.price ELSE 0 END) as spm,
+        SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN 1 ELSE 0 END) as sim_count,
+        SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN price_masters.price ELSE 0 END) as sim,
+        SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN 1 ELSE 0 END) as curd_count,
+        SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN price_masters.price ELSE 0 END) as curd')
+        ->leftJoin('price_masters', function ($join) {
+            $join->on('rfid_masters.day', '>=', 'price_masters.start_date')
+                ->on('rfid_masters.day', '<=', 'price_masters.end_date');
+        });
+        $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
         $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
-    if ($request->has('from_date') && $request->from_date != null )
+        if ($request->has('from_date') && $request->from_date != null )
         {
             $query->whereDate('rfid_masters.day', '>=', $start_date);
         }
@@ -530,10 +530,10 @@ class CanteenController extends Controller
         }
 
 
-    $records = $query->groupBy('rfid_masters.name', 'rfid_masters.emp_id')->get();
+        $records = $query->groupBy('rfid_masters.name', 'rfid_masters.emp_id')->get();
 
 
-    return view('users.canteen.detailallreports',compact('records','users'));
+        return view('users.canteen.detailallreports',compact('records','users'));
         // return $records;
     }
 

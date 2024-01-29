@@ -181,6 +181,8 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         position: relative;
         margin-bottom: 6vh;
+        margin-left: 8vh;
+        margin-right: 8vh;
     }
     .sday
     {

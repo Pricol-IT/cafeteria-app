@@ -14,6 +14,9 @@
     display: flex;
 /*      */
   }
+  .fc .fc-day-disabled{
+    background: #ffffff ;
+  }
  /* .fc-sat, .fc-sun {
     background-color: red !important;
 }*/
@@ -22,6 +25,18 @@
     height: 5px;*/
     border-width:6px;
 /*    border-radius: 50px;*/
+  }
+  @media (max-width: 900px)
+  {
+    .fc-daygrid-event-dot {
+    
+    border-width:4px;
+
+  }
+  .fc .fc-toolbar-title
+  {
+    font-size: 1.2em;
+  }
   }
 </style>
 @endsection
@@ -51,7 +66,9 @@
         }
         @endphp
         @endif
-
+        <!-- @foreach($singles as $single)
+        {{ $single["day"] }}
+        @endforeach -->
     </div>
     
       <div class="row">
@@ -67,16 +84,18 @@
         <div class="col-lg-12">
           <div class="card breadcome-bottom pt-4 pb-4">
             <div class="card-header ">
-              <div class="row p-2">
+              <h6 class="fw-bold text-primary"><span class="">Note: </span><br> 1.Next day Menu to be booked on previous day itself before 07.00 PM <br> 2.Cancellation of booked menu to be done before 9.58 AM of current date.</h6>
+              
+              
+            </div>
+            <div class="card-footer">
+              <div class="row p-1 m-1">
                 <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #7fe84e;"> </span>Special Meal : <span class="badge bg-primary badge-pill">{{$spmCount}}</span></p></div>
                 <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #ffff00;"> </span>South Indian : <span class="badge  bg-primary badge-pill">{{$simCount}}</span></p></div>
                 <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #f2a40d;"> </span>Curd : <span class="badge bg-primary badge-pill">{{$curdCount}}</span></p></div>
               </div>
-              
             </div>
-            <div class="card-footer">
-              <h6 class="fw-bold text-primary"><span class="">Note: </span><br> 1.Next day Menu to be booked on previous day itself before 07.00 PM <br> 2.Cancellation of booked menu to be done before 9.58 AM of current date.</h6>
-            </div>
+            
             <div id='calendar' class="pt-2"></div>
 
         </div>
@@ -88,79 +107,65 @@
 </main>
 @endsection
 
+
+
 @section('script')
 <script src="{{asset('fullcalendar/dist/index.global.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     var calendarId = document.getElementById('calendar');
         var date = document.getElementById('date').innerHTML;
-        var fdate = document.getElementById('startdate').innerHTML;
-        var ldate = document.getElementById('enddate').innerHTML;
-        
+            
+        var currentDate = new Date();
+        var previousMonthStart = new Date(currentDate);
+        previousMonthStart.setMonth(currentDate.getMonth() - 1);
+        previousMonthStart.setDate(1);
+
+        // Get the first day of the next month
+        var nextMonthStart = new Date(currentDate);
+        nextMonthStart.setMonth(currentDate.getMonth() + 2);
+        nextMonthStart.setDate(1);
+
+
+
         var calendar = new FullCalendar.Calendar(calendarId,{
 
-  // document.addEventListener('DOMContentLoaded', function() {
-  //   var calendarEl = document.getElementById('calendar');
-
-  //   var calendar = new FullCalendar.Calendar(calendarEl, {
+  
       headerToolbar: {
-          
+        //   left: 'prev,next',
         // center: 'title',
-        right: 'dayGridMonth'
+        // right: 'dayGridMonth'
+        right:'prev,next'
       },
        aspectRatio: 1,
       initialDate: date,
       initialView: 'dayGridMonth',
-        
+        validRange: {
+          start: previousMonthStart,
+          end: nextMonthStart
+        },
       navLinks: false, // can click day/week names to navigate views
       businessHours: false, // display business hours
       editable: false,
       selectable: false,
+      showNonCurrentDates: true,
 
       events: [
         @if(!empty($singles))
         @foreach ($singles as $single)
         @if($single['spm'] != 0)
-        { start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#7FE84E' },
+        { start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#7FE84E',description: 'Special Meal',category: 'spm' },
         @endif
         @if($single['sim'] != 0)
-        { start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00' },
+        { start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
         @endif
         @if($single['curd'] != 0)
-        {  start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#F2A40D' },
+        {  start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#F2A40D',description: 'Curd',category: 'curd' },
         @endif
         @endforeach
         @endif
         
-        // {
-        //   title: 'Business Lunch',
-        //   start: '2023-01-03T13:00:00',
-        //   constraint: 'businessHours'
-        // },
-        
-
-        // areas where "Meeting" must be dropped
-        // {
-        //   groupId: 'availableForMeeting',
-        //   start: '2023-01-11T10:00:00',
-        //   end: '2023-01-11T16:00:00',
-        //   display: 'background'
-        // },
-        // {
-        //   groupId: 'availableForMeeting',
-        //   start: '2023-01-13T10:00:00',
-        //   end: '2023-01-13T16:00:00',
-        //   display: 'background'
-        // },
-
-        // red areas where no events can be dropped
-        // {
-        //   start: '2023-01-24',
-        //   end: '2023-01-28',
-        //   overlap: false,
-        //   display: 'background',
-        //   color: '#ff9f89'
-        // },
         @if(!empty($deliverys))
         @forelse($deliverys as $delivery)
         {
@@ -173,11 +178,14 @@
         @empty
         @endforelse
         @endif
-      ],
+      ],  
       displayEventTime : false
     });
 
     calendar.render();
+    
+    
+    
   });
 
 </script>

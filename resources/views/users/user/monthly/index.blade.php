@@ -48,7 +48,11 @@
                                 <tr>
                                   <td>{{$loop->iteration}}</td>
                                   <td>{{ day1Format($month) }}<br>{{$month}}</td>
-                                  <td>@if($monthly->monthly_sim != null)
+                                  <td>
+                                    @if($monthly->monthly_spm != null)
+                                        <p class="mb-2"><span class="text-primary">Special Meal -</span>  {{$monthly->monthly_spm}}</p>
+                                   @endif
+                                    @if($monthly->monthly_sim != null)
                                         <p class="mb-2"><span class="text-primary">South Indian Meal -</span>  {{$monthly->monthly_sim}}</p>
                                    @endif
                                    @if($monthly->monthly_curd != null)
@@ -56,12 +60,17 @@
                                    @endif
                                  </td>
                                  <td>
-                                 <form method="post" action="{{ route('user.removemonthlyday', ['id' => $monthly->id]) }}">
-                                    @csrf
-                                    @method('POST')
-                                    <input type="hidden" name="date" value="{{ $month }}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
-                                </form>
+                                    @if($monthly->autovalue == 1)
+                                    <p class="text-success">Auto Booking</p>
+                                    @else
+
+                                     <form method="post" action="{{ route('user.removemonthlyday', ['id' => $monthly->id]) }}">
+                                        @csrf
+                                        @method('POST')
+                                        <input type="hidden" name="date" value="{{ $month }}">
+                                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                    </form>
+                                    @endif
                                   </td>
                                   
                                 </tr>

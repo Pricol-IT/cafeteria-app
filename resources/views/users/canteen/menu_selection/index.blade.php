@@ -1,4 +1,4 @@
-@extends('layouts.app')
+    @extends('layouts.app')
 @section('title')
     {{__('Menu Selection')}}
 @endsection
@@ -23,6 +23,15 @@
     border-width:10px;
 
   }
+  .fc .fc-scrollgrid-liquid
+   {
+/*    min-height: 300px;*/
+    max-height: 90%;
+   }
+  #calendar
+   {
+    height: 400px!important;
+   }
 </style>
 @endsection
 @section('main')
