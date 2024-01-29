@@ -9,7 +9,9 @@ use App\Models\Token;
 use App\Models\CancelBooking;
 use App\Models\RfidMaster;
 use App\Models\Delivery;
+use App\Models\SiMenu;
 use Carbon\Carbon;
+
 use DateTime;
 use App\Models\MenuSelection;
 use DB;
@@ -49,10 +51,18 @@ class UserController extends Controller
         ->get();
 
         // return $monthlys;
-
-                    
                                 
         return view('users.user.monthly.index',compact('monthlys'));
+    }
+
+    public function menu()
+    {
+        $currentDate = Carbon::today();
+        $tomorrowDate = Carbon::tomorrow();
+        $si_menus = SiMenu::where('day','>=',$currentDate)->where('day','<=',$tomorrowDate)->get();
+        $masters = MenuSelection::where('day','>=',$currentDate)->where('day','<=',$tomorrowDate)->get();
+
+        return view('users.user.menu',compact('si_menus','masters'));
     }
 
     public function monthlycreate()

@@ -1,4 +1,10 @@
 <li class="nav-item">
+  <a class="nav-link " href="{{route('user.menu')}}">
+    <i class='bx bxs-calendar'></i>
+    <span>Menu </span>
+  </a>
+</li>
+<li class="nav-item">
   <a class="nav-link " href="{{route('user.monthly')}}">
     <i class='bx bxs-calendar'></i>
     <span>Monthly Menu </span>

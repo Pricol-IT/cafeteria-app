@@ -7,6 +7,7 @@
     #calendar {
     width: 90%;
     height: 80%;
+    min-height: 380px;
     margin: 0 auto;
   }
   .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events
@@ -95,7 +96,6 @@
                 <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #f2a40d;"> </span>Curd : <span class="badge bg-primary badge-pill">{{$curdCount}}</span></p></div>
               </div>
             </div>
-            
             <div id='calendar' class="pt-2"></div>
 
         </div>
@@ -123,12 +123,15 @@
         previousMonthStart.setDate(1);
 
         // Get the first day of the next month
-        var nextMonthStart = new Date(currentDate);
-        nextMonthStart.setMonth(currentDate.getMonth() + 2);
-        nextMonthStart.setDate(1);
+        // var nextMonthStart = new Date(currentDate);
+        var nextMonthStart = new Date(currentDate.getFullYear(), currentDate.getMonth()+2, 0);
+        // nextMonthStart.setMonth(currentDate.getMonth() + 2);
+        // nextMonthStart.setDate(1);
+ // console.log(nextMonthStart);
 
-
-
+        var spCount = 0;
+        var siCount = 0;
+        var curdCount = 0;
         var calendar = new FullCalendar.Calendar(calendarId,{
 
   
@@ -138,7 +141,7 @@
         // right: 'dayGridMonth'
         right:'prev,next'
       },
-       aspectRatio: 1,
+       aspectRatio: 2,
       initialDate: date,
       initialView: 'dayGridMonth',
         validRange: {
@@ -150,18 +153,23 @@
       editable: false,
       selectable: false,
       showNonCurrentDates: true,
-
+  //     dayMaxEventRows: true, // for all non-TimeGrid views
+  // views: {
+  //   dayGrid: {
+  //     dayMaxEventRows: 1 // adjust to 6 only for timeGridWeek/timeGridDay
+  //   }
+  // },
       events: [
         @if(!empty($singles))
         @foreach ($singles as $single)
         @if($single['spm'] != 0)
-        { start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#7FE84E',description: 'Special Meal',category: 'spm' },
+        {  groupId: 'SP', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#7FE84E',description: 'Special Meal',category: 'spm' },
         @endif
         @if($single['sim'] != 0)
-        { start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
+        {  groupId: 'SI', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
         @endif
         @if($single['curd'] != 0)
-        {  start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#F2A40D',description: 'Curd',category: 'curd' },
+        {  groupId: 'Curd', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#F2A40D',description: 'Curd',category: 'curd' },
         @endif
         @endforeach
         @endif
@@ -179,14 +187,18 @@
         @endforelse
         @endif
       ],  
-      displayEventTime : false
+      displayEventTime : false,
+  //     eventRender: function (info) {
+  //   console.log(info.event.extendedProps);
+  //   // {description: "Lecture", department: "BioChemistry"}
+  // }
+      
     });
 
+    
+
     calendar.render();
-    
-    
-    
-  });
+});
 
 </script>
 @endsection

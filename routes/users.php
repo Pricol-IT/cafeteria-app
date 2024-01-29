@@ -29,6 +29,7 @@ Route::controller(UserController::class)->prefix('user')->middleware('user')->gr
     Route::get('/dashboard', 'index')->name('user.dashboard');
     Route::get('/monthly', 'monthly')->name('user.monthly');
     Route::get('/weekly', 'weekly')->name('user.weekly');
+    Route::get('/menu_details', 'menu')->name('user.menu');
     Route::get('/monthly_create', 'monthlycreate')->name('user.monthlycreate');
     Route::post('/monthly_store', 'monthlyStore')->name('user.monthlystore');
     Route::post('/weekly_store', 'weeklyStore')->name('user.weeklystore');
