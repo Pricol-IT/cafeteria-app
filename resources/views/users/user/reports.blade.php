@@ -24,6 +24,7 @@
         </div>
         <div class="col-lg-12">
             <div class="card breadcome-bottom p-3">
+                
                 <form action="{{route('user.userReport')}}" method="get" onchange="this.submit();">
                 @csrf
                 @method('GET')  
@@ -70,18 +71,21 @@
                               </thead>
                               <tbody>
                                 @php
-                                    $totalrsp = 0;
-                                    $totalrsi = 0;
-                                    $totalrcurd = 0;
+                                    $totalrspc = 0;
+                                    $totalrspa = 0;
+                                    $totalrsic = 0;
+                                    $totalrsia = 0;
+                                    $totalrcurdc = 0;
+                                    $totalrcurda = 0;
                                 @endphp
 
                                 @forelse ($reports as $rfid)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{ convertDateFormat($rfid['day']) }}</td>
-                                        <td>{{ $rfid->spm}}</td>
-                                        <td>{{ $rfid->sim}}</td>
-                                        <td>{{ $rfid->curd }}</td>
+                                        <td>{{ $rfid->spm_count}}</td>
+                                        <td>{{ $rfid->sim_count}}</td>
+                                        <td>{{ $rfid->curd_count }} </td>
                                         <td>
                                             @if($rfid->status == 0)
                                             <p class="text-danger">Not delivered</p>
@@ -95,9 +99,12 @@
                                         
                                         
 
-                                        $totalrsp += (int)$rfid->spm;
-                                        $totalrsi += (int)$rfid->sim;
-                                        $totalrcurd += (int)$rfid->curd;
+                                        $totalrspc += (int)$rfid->spm_count;
+                                        $totalrspa += (int)$rfid->spm;
+                                        $totalrsic += (int)$rfid->sim_count;
+                                        $totalrsia += (int)$rfid->sim;
+                                        $totalrcurdc += (int)$rfid->curd_count;
+                                        $totalrcurda += (int)$rfid->curd;
                                     @endphp
 
                                 @empty
@@ -124,19 +131,25 @@
         <div class="col-lg-4">
             <div class="card p-3  rounded text-center">
                 <h5 class="text-primary fw-bold">Special Meal</h5>
-                <h3 class="text-primary">{{$totalrsp}}</h3>
+                
+                <h3 class="text-primary">{{$totalrspa}}/{{$totalrspc}}</h3>
+                <p>Total (Amount/Qty)</p>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card p-3  rounded text-center">
                 <h5 class="text-primary fw-bold">South Indian</h5>
-                <h3 class="text-primary">{{$totalrsi}}</h3>
+                
+                <h3 class="text-primary">{{$totalrsia}}/{{$totalrsic}}</h3>
+                <p>Total (Amount/Qty)</p>
+
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card p-3  rounded text-center">
                 <h5 class="text-primary fw-bold">Curd</h5>
-                <h3 class="text-primary">{{$totalrcurd}}</h3>
+                <h3 class="text-primary">{{$totalrcurda}}/{{$totalrcurdc}}</h3>
+                <p>Total (Amount/Qty)</p>
             </div>
         </div>
     </div>

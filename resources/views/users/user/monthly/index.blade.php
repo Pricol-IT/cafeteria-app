@@ -60,17 +60,12 @@
                                    @endif
                                  </td>
                                  <td>
-                                    @if($monthly->autovalue == 1)
-                                    <p class="text-success">Auto Booking</p>
-                                    @else
-
                                      <form method="post" action="{{ route('user.removemonthlyday', ['id' => $monthly->id]) }}">
                                         @csrf
                                         @method('POST')
                                         <input type="hidden" name="date" value="{{ $month }}">
                                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form>
-                                    @endif
                                   </td>
                                   
                                 </tr>

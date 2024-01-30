@@ -439,7 +439,18 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
 
     public function userReport(Request $request)
     {
-        $query = RfidMaster::select('day','spm','sim','curd','status')->where('user_id',auth()->user()->id)->orderBy('day','desc');
+        // $query = RfidMaster::select('day','spm','sim','curd','status')->where('user_id',auth()->user()->id)->orderBy('day','desc');
+        $query = RfidMaster::selectRaw('rfid_masters.day,rfid_masters.status,
+        SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN 1 ELSE 0 END) as spm_count,
+        SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN price_masters.price ELSE 0 END) as spm,
+        SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN 1 ELSE 0 END) as sim_count,
+        SUM(IFNULL(rfid_masters.sim, 0) * CASE WHEN price_masters.code = "sim" THEN price_masters.price ELSE 0 END) as sim,
+        SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN 1 ELSE 0 END) as curd_count,
+        SUM(IFNULL(rfid_masters.curd, 0) * CASE WHEN price_masters.code = "curd" THEN price_masters.price ELSE 0 END) as curd')
+        ->leftJoin('price_masters', function ($join) {
+            $join->on('rfid_masters.day', '>=', 'price_masters.start_date')
+                ->on('rfid_masters.day', '<=', 'price_masters.end_date');
+        })->where('rfid_masters.user_id',auth()->user()->id);
         // return $query;
         $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
         $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
@@ -448,22 +459,22 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
         if ($request->has('from_date') && $request->from_date != null )
         {
             // $query->whereBetween('from_date', [$start_date, $end_date]);
-            $query->whereDate('day', '>=', $start_date);
+            $query->whereDate('rfid_masters.day', '>=', $start_date);
         }
 
         if ($request->has('to_date') && $request->to_date != null )
         {
             // $query->whereBetween('to_date', [$start_date, $end_date]);
-            $query->whereDate('day', '<=', $end_date);
+            $query->whereDate('rfid_masters.day', '<=', $end_date);
         }
         if ($request->has('status') && $request->status != null )
         {
             // $query->whereBetween('to_date', [$start_date, $end_date]);
-            $query->where('status', $request->status);
+            $query->where('rfid_masters.status', $request->status);
         }
-        $reports = $query->get();
+        $reports = $query->groupBy('rfid_masters.day','rfid_masters.status')->get();
         
-
+        // return $reports;
         return view('users.user.reports',compact('reports'));
     }
 
