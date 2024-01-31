@@ -42,7 +42,7 @@ class MonthlyAutoRecoveries extends Command
         $currentDate = Carbon::now();
 
 // Get the next month's date
-        $nextMonthDate = $currentDate->addMonth()->startOfMonth();
+        $nextMonthDate = $currentDate->addMonthNoOverflow()->setDay(1);
         $monv =$nextMonthDate;
 
         $startDate = $nextMonthDate->copy();

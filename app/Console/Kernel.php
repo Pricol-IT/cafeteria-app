@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('sync:token-details')->dailyAt('10:05');
         $schedule->command('sync:rfid-data')->dailyAt('15:30');
-        $schedule->command('monthly:auto-recoveries')->monthlyOn(31, '16:50');
+        $schedule->command('monthly:auto-recoveries')->monthlyOn(31, '17:17');
     }
 
     /**

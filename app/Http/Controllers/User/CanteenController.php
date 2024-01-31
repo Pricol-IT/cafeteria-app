@@ -227,25 +227,49 @@ class CanteenController extends Controller
 
     public function total_month_request()
     {
-        $currentMonth = Carbon::now()->format('Y-m');
-        $results = DB::table('tokens')
-            ->select('emp_id',
-                // DB::raw('DATE_FORMAT(day, "%Y-%m") as record_month'),
-                DB::raw('SUM(spm) as total_spm'),
-                DB::raw('SUM(sim) as total_sim'),
-                DB::raw('SUM(curd) as total_curd'),
-                DB::raw('SUM(monthly_sim * JSON_LENGTH(monthly_days)) as total_monthly_sim'),
-                DB::raw('SUM(monthly_curd * JSON_LENGTH(monthly_days)) as total_monthly_curd'),
-                DB::raw('SUM(sim) + SUM(monthly_sim * JSON_LENGTH(monthly_days)) as total_month_sim'),
-                DB::raw('SUM(curd) + SUM(monthly_curd * JSON_LENGTH(monthly_days)) as total_month_curd'),
-            )
-            ->where(function ($query) use ($currentMonth) {
-        $query->where('day', 'like', $currentMonth . '%')
-            ->orWhere('monthly', 'like', $currentMonth . '%');
-        })
-            ->groupBy('emp_id')
-            ->get();
-            return $results;
+        // $currentMonth = Carbon::now()->format('Y-m');
+        // $results = DB::table('tokens')
+        //     ->select('emp_id',
+        //         // DB::raw('DATE_FORMAT(day, "%Y-%m") as record_month'),
+        //         DB::raw('SUM(spm) as total_spm'),
+        //         DB::raw('SUM(sim) as total_sim'),
+        //         DB::raw('SUM(curd) as total_curd'),
+        //         DB::raw('SUM(monthly_sim * JSON_LENGTH(monthly_days)) as total_monthly_sim'),
+        //         DB::raw('SUM(monthly_curd * JSON_LENGTH(monthly_days)) as total_monthly_curd'),
+        //         DB::raw('SUM(sim) + SUM(monthly_sim * JSON_LENGTH(monthly_days)) as total_month_sim'),
+        //         DB::raw('SUM(curd) + SUM(monthly_curd * JSON_LENGTH(monthly_days)) as total_month_curd'),
+        //     )
+        //     ->where(function ($query) use ($currentMonth) {
+        // $query->where('day', 'like', $currentMonth . '%')
+        //     ->orWhere('monthly', 'like', $currentMonth . '%');
+        // })
+        //     ->groupBy('emp_id')
+        //     ->get();
+        //     return $results;
+
+        $currentDate = Carbon::now();
+        
+
+        // $nextMonthDate = $currentDate->addMonthsNoOverflow(1)->startOfMonth();
+        $nextMonthDate = $currentDate->addMonthNoOverflow()->setDay(1);
+        $monv =$nextMonthDate;
+        // return $nextMonthDate;
+
+        $startDate = $nextMonthDate->copy();
+        $endDate = $nextMonthDate->copy()->endOfMonth();
+
+        $monthlyDays = [];
+
+
+
+        for ($date = $startDate; $date <= $endDate; $date->addDay()) {
+            if (!$date->isWeekend()) {
+                $monthlyDays[] = $date->format('d-m-Y');
+            }
+        }
+
+        $v = json_encode($monthlyDays);
+        return $monthlyDays;
         // $currentDate = Carbon::now()->toDateString();
         // $formattedDates = Carbon::now()->format('d-m-Y');
 
