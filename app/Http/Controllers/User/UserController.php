@@ -143,9 +143,9 @@ class UserController extends Controller
         $currentDate = $currentDateTime->format('Y-m-d');
         $currentTime = $currentDateTime->format('H:i:s');
         $currentMonth = Carbon::now()->month;
-        $nextMonth = Carbon::now()->addMonth()->month;
+        $nextMonth = Carbon::now()->addMonthNoOverflow()->month;
         $nextDay = $currentDateTime->addDay()->format('Y-m-d');    
-
+        // return $nextMonth;
         // $masters = MenuSelection::with('menu')
         // ->where(function ($query) use ($currentDate, $currentTime) {
         //     // Check if current date exists in the menu selections
