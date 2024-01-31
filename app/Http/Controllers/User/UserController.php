@@ -40,8 +40,8 @@ class UserController extends Controller
     public function monthly()
     {
         $currentMonth = Carbon::now()->month;
-        $nextMonth = Carbon::now()->addMonth()->month;
-
+        $nextMonth = Carbon::now()->addMonthNoOverflow()->month;
+        // return $nextMonth;
         $monthlys = Token::select('id','emp_id','monthly_spm','monthly_sim','monthly_curd','monthly','monthly_days','autovalue')->where('emp_id',(auth()->user()->id))
         ->where(function ($query) use ($currentMonth, $nextMonth) {
             $query->whereMonth('monthly', $currentMonth)

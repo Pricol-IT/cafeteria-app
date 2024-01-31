@@ -41,6 +41,7 @@
                                 @foreach((json_decode($monthly->monthly_days)) as $month)
                                 @php
                                     $formattedDate = date('Y-m-d:10:i:s', strtotime($month));
+                                    
                                 @endphp
 
                                 @if($formattedDate >= date('Y-m-d:H:i:s'))
