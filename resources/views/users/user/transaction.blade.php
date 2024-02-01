@@ -166,7 +166,7 @@
         {  groupId: 'SP', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#7FE84E',description: 'Special Meal',category: 'spm' },
         @endif
         @if($single['sim'] != 0)
-        {  title: '{{$single["sim"]}}', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
+        {   groupId: 'SIM', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
         @endif
         @if($single['curd'] != 0)
         {  groupId: 'Curd', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#F2A40D',description: 'Curd',category: 'curd' },
