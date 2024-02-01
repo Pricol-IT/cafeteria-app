@@ -18,6 +18,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name
 
 Route::get('/checkuser/{id}', [App\Http\Controllers\CheckController::class, 'checkuser'])->name('checkuser');
 Route::get('/banner', [App\Http\Controllers\CheckController::class, 'banner'])->name('banner');
+Route::get('/welcome', [App\Http\Controllers\CheckController::class, 'welcome'])->name('welcome');
 
 Auth::routes();
 
