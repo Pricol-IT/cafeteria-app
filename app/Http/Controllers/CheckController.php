@@ -56,4 +56,10 @@ class CheckController extends Controller
 
         return view('banner',compact('banners','masters','simenus'));
     }
+
+    public function welcome()
+    {
+
+        return view('welcome');
+    }
 }
