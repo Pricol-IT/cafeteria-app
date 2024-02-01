@@ -33,15 +33,15 @@
       }
       
   </style>
-  <img referrerpolicy="no-referrer-when-downgrade" src="
-http://10.90.18.94/matomo.php?idsite=4&amp;rec=1&amp;action_name=Index"
-style="border:0" alt="" />
+  
     <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/plugins/mdb.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/plugins/style.css')}}" />
     <script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+  _paq.push(["setCookieDomain", "*.cafeteria.mypricol.in"]);
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
