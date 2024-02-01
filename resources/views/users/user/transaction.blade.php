@@ -95,7 +95,7 @@
                 <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #ffff00;"> </span>South Indian : <span class="badge  bg-primary badge-pill">{{$simCount}}</span></p></div>
                 <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #f2a40d;"> </span>Curd : <span class="badge bg-primary badge-pill">{{$curdCount}}</span></p></div>
               </div>
-            </div>
+            </div>  
             <div id='calendar' class="pt-2"></div>
 
         </div>
@@ -166,7 +166,7 @@
         {  groupId: 'SP', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#7FE84E',description: 'Special Meal',category: 'spm' },
         @endif
         @if($single['sim'] != 0)
-        {  groupId: 'SI', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
+        {  title: '{{$single["sim"]}}', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#FFFF00',description: 'South Indian',category: 'sim' },
         @endif
         @if($single['curd'] != 0)
         {  groupId: 'Curd', start: '{{(date("Y-m-d",strtotime($single["day"])))."T01:00:00"}}',color: '#F2A40D',description: 'Curd',category: 'curd' },

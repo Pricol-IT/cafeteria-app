@@ -25,7 +25,7 @@
                               <thead>
                                 <tr>
                                   <th scope="col">#</th>
-                                  <th scope="col">Code</th>
+                                  <!-- <th scope="col">Code</th> -->
                                   <th scope="col">Menu Type</th>
                                   <th scope="col">Qty</th>
                                   <th scope="col">Price</th>
@@ -41,7 +41,6 @@
                                 
                                 <tr>
                                   <td>{{$loop->iteration}}</td>
-                                  <td>{{$price->code}}</td>
                                   <td>{{$price->menu_type}}</td>
                                   <td>{{$price->quantity}}</td>
                                   <td>{{'₹ '.$price->price}}</td>

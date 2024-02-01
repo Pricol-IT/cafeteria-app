@@ -254,19 +254,21 @@ class UserController extends Controller
         $currentDate = Carbon::now();
 
 // Get the first day of the previous month
-$previousMonthStart = $currentDate->copy()->subMonth()->startOfMonth();
+// $previousMonthStart = $currentDate->copy()->subMonth()->startOfMonth();
+        $previousMonthStart = $currentDate->copy()->subMonthNoOverflow()->setDay(1);
 
 // Get the last day of the next month
 $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
 
+// return $nextMonthEnd;
     
 
         $monthlyEntries = Token::select('id','emp_id','monthly','monthly_curd','monthly_sim','monthly_spm','monthly_days')->where('emp_id',(auth()->user()->id))->where('monthly','>=', $previousMonthStart)->where('monthly','<=', $nextMonthEnd)->get();
 
-        $weeklyEntries = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->whereMonth('day', '>=',Carbon::now()->month)->get();
+        $weeklyEntries = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->whereMonth('day', '>=',$previousMonthStart)->get();
 
         $deliverys =Delivery::where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->get();
-// return $monthlyEntries;
+// return $weeklyEntries;
         $combinedRecords = [];
         $singles = [];
 
@@ -292,7 +294,7 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
             $singles[$i] = $array;
             $i++;
         }
-
+        // return $singles;
         return view('users.user.transaction',compact('singles','deliverys'));
 
         // return $singles;
@@ -418,28 +420,12 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
         }
     }
 
-    protected function insertIntoDatabase($connection, $data)
-    {
-        try {
-            // Use the specified database connection
-            DB::connection($connection)->beginTransaction();
-
-            foreach ($data as $week) {
-                Token::on($connection)->create($week);
-            }
-
-            DB::connection($connection)->commit();
-            return true;
-        } catch (\Exception $e) {
-            // Handle the exception if something goes wrong
-            DB::connection($connection)->rollBack();
-            return false;
-        }
-    }
+    
 
     public function userReport(Request $request)
     {
-        // $query = RfidMaster::select('day','spm','sim','curd','status')->where('user_id',auth()->user()->id)->orderBy('day','desc');
+        // $query = RfidMaster::select('day','spm','sim','curd','status')->where('user_id',auth()->user()->id)->orderBy('day','desc')->get();
+        // return $query;
         $query = RfidMaster::selectRaw('rfid_masters.day,rfid_masters.status,
         SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN 1 ELSE 0 END) as spm_count,
         SUM(IFNULL(rfid_masters.spm, 0) * CASE WHEN price_masters.code = "spm" THEN price_masters.price ELSE 0 END) as spm,
@@ -451,7 +437,7 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
             $join->on('rfid_masters.day', '>=', 'price_masters.start_date')
                 ->on('rfid_masters.day', '<=', 'price_masters.end_date');
         })->where('rfid_masters.user_id',auth()->user()->id);
-        // return $query;
+        
         $start_date = Carbon::parse(request()->from_date)->toDateTimeString();
         $end_date = Carbon::parse(request()->to_date)->toDateTimeString();
         

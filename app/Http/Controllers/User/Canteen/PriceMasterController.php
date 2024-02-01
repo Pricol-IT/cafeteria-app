@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Canteen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PriceMaster;
+use App\Models\PriceMenu;
 
 class PriceMasterController extends Controller
 {
@@ -23,7 +24,8 @@ class PriceMasterController extends Controller
      */
     public function create()
     {
-        return view('users.canteen.pricemaster.create');
+        $pricemasters = PriceMenu::orderBy('id','asc')->get();
+        return view('users.canteen.pricemaster.create',compact('pricemasters'));
     }
 
     /**
@@ -32,7 +34,7 @@ class PriceMasterController extends Controller
     public function store(Request $request)
     {
         $input = $request->validate([
-            'code' => 'required',
+            
             'menu_type' => 'required',
             'quantity' => 'required',
             'price' => 'required|numeric',
@@ -67,9 +69,10 @@ class PriceMasterController extends Controller
      */
     public function edit(string $id)
     {
+        $pricemasters = PriceMenu::orderBy('id','asc')->get();
         $price = PriceMaster::find($id);
 
-        return view('users.canteen.pricemaster.edit',compact('price'));
+        return view('users.canteen.pricemaster.edit',compact('price','pricemasters'));
     }
 
     /**
@@ -78,7 +81,7 @@ class PriceMasterController extends Controller
     public function update(Request $request, string $id)
     {
         $input = $request->validate([
-            'code' => 'required',
+            
             'menu_type' => 'required',
             'quantity' => 'required',
             'price' => 'required|numeric',
@@ -86,7 +89,7 @@ class PriceMasterController extends Controller
             'end_date' => 'required',
         ]);
 
-        $price = PriceMaster::where('id',$id)->update($input);
+        $price = PriceMaster::find($id)->update($input);
 
         if($price)
         {

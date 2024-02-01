@@ -23,13 +23,18 @@
                     <div class="row mt-3 mb-3">
                         <div class="col-lg-8 offset-lg-2">
                             <h4 class="fw-bold text-primary text-center mb-3"> Price Details</h4>
-                            <h5 class="text-primary fw-bold mb-2  mt-3">Code :</h5>
-                            <input type="text" name="code" class="form-control" value="{{$price->code}}">
-                            @if ($errors->has('code'))
-                                <span class="error text-danger">{{ $errors->first('code') }}</span>
-                            @endif
+                            
                             <h5 class="text-primary fw-bold mb-2  mt-3">Menu Type :</h5>
-                            <input type="text" name="menu_type" class="form-control" value="{{$price->menu_type}}" readonly> 
+                            <select class="form-control" name="menu_type">
+                                <option value="">Select Menu</option>
+
+                                @forelse($pricemasters as $pricemaster)
+                                <option value="{{$pricemaster->menu_type}}" {{$price->menu_type == $pricemaster->menu_type ? 'selected' : ''}}>{{$pricemaster->menu_type}}</option>
+                                @empty
+                                    <option>Select Menu</option>
+                                @endforelse
+                            </select>
+                            
                             @if ($errors->has('menu_type'))
                                 <span class="error text-danger">{{ $errors->first('menu_type') }}</span>
                             @endif
