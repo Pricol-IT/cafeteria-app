@@ -309,35 +309,35 @@ class CanteenController extends Controller
              return view('users.canteen.todaycount',compact('results'));
     }
 
-    // protected function insertIntoDatabase($connection, $data)
-    // {
-    //     try {
-    //         // Use the specified database connection
-    //         DB::connection($connection)->beginTransaction();
+    protected function insertIntoDatabase($connection, $data)
+    {
+        try {
+            // Use the specified database connection
+            DB::connection($connection)->beginTransaction();
             
             
-    //         foreach ($data as $week) {
+            foreach ($data as $week) {
 
-    //             RfidMaster::on($connection)->create([
-    //                 'day' =>$week->day,
-    //                 'user_id' =>$week->id,
-    //                 'emp_id' =>$week->emp_id,
-    //                 'rfid' =>$week->rfid,
-    //                 'name' =>$week->name,
-    //                 'spm' =>$week->spm,
-    //                 'sim' =>$week->sim,
-    //                 'curd' =>$week->curd,
-    //             ]);
-    //         }
+                RfidMaster::on($connection)->create([
+                    'day' =>$week->day,
+                    'user_id' =>$week->id,
+                    'emp_id' =>$week->emp_id,
+                    'rfid' =>$week->rfid,
+                    'name' =>$week->name,
+                    'spm' =>$week->spm,
+                    'sim' =>$week->sim,
+                    'curd' =>$week->curd,
+                ]);
+            }
 
-    //         DB::connection($connection)->commit();
-    //         return true;
-    //     } catch (\Exception $e) {
-    //         // Handle the exception if something goes wrong
-    //         DB::connection($connection)->rollBack();
-    //         return false;
-    //     }
-    // }   
+            DB::connection($connection)->commit();
+            return true;
+        } catch (\Exception $e) {
+            // Handle the exception if something goes wrong
+            DB::connection($connection)->rollBack();
+            return false;
+        }
+    }   
 
 
     public function usertoken()

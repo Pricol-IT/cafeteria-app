@@ -420,7 +420,24 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
         }
     }
 
-    
+    protected function insertIntoDatabase($connection, $data)
+    {
+        try {
+            // Use the specified database connection
+            DB::connection($connection)->beginTransaction();
+
+            foreach ($data as $week) {
+                Token::on($connection)->create($week);
+            }
+
+            DB::connection($connection)->commit();
+            return true;
+        } catch (\Exception $e) {
+            // Handle the exception if something goes wrong
+            DB::connection($connection)->rollBack();
+            return false;
+        }
+    }
 
     public function userReport(Request $request)
     {
