@@ -14,6 +14,9 @@ include base_path('routes/users.php');
 //     return view('errors.404');
 // });
 Route::fallback(function () {
+    if (request()->is('419')) {
+        return redirect()->route('dashboard');
+    }
     return view('users.error');
 });
 

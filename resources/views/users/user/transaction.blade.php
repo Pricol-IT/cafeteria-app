@@ -91,9 +91,15 @@
             </div>
             <div class="card-footer">
               <div class="row p-1 m-1">
-                <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #7fe84e;"> </span>Special Meal : <span class="badge bg-primary badge-pill">{{$spmCount}}</span></p></div>
-                <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #ffff00;"> </span>South Indian : <span class="badge  bg-primary badge-pill">{{$simCount}}</span></p></div>
-                <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #f2a40d;"> </span>Curd : <span class="badge bg-primary badge-pill">{{$curdCount}}</span></p></div>
+                <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #7fe84e;"> </span>Special Meal 
+                  <!-- : <span class="badge bg-primary badge-pill">{{$spmCount}}</span> -->
+                </p></div>
+                <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #ffff00;"> </span>South Indian 
+                  <!-- : <span class="badge  bg-primary badge-pill">{{$simCount}}</span> -->
+                </p></div>
+                <div class="col-lg-4 col-md-4"><p class="h5"><span class="badge p-2 " style=" margin-right: 5px; background: #f2a40d;"> </span>Curd 
+                  <!-- : <span class="badge bg-primary badge-pill">{{$curdCount}}</span> -->
+                </p></div>
               </div>
             </div>  
             <div id='calendar' class="pt-2"></div>
