@@ -267,7 +267,7 @@ $nextMonthEnd = $currentDate->copy()->addMonth()->endOfMonth();
 
         $weeklyEntries = Token::select('id','emp_id','day','spm','sim','curd')->where('emp_id',(auth()->user()->id))->whereMonth('day', '>=',$previousMonthStart)->get();
 
-        $deliverys =Delivery::where('emp_id',(auth()->user()->id))->whereMonth('day', Carbon::now()->month)->get();
+        $deliverys =Delivery::where('emp_id',(auth()->user()->id))->whereMonth('day','>=',$previousMonthStart)->get();
 // return $weeklyEntries;
         $combinedRecords = [];
         $singles = [];
