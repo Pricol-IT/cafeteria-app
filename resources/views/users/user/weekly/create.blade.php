@@ -10,7 +10,7 @@
       <a href="{{route('user.weeklyindex')}}" class="btn btn-danger text-end">Cancel Order</a>
     </div>
   </div>
-  <form action="{{route('user.weeklystore')}}" method="post">
+  <form action="{{route('user.weeklystore')}}" method="post" id="myForm">
     @csrf
     @method('post')
       <div class="row">
@@ -73,11 +73,12 @@
       </div>
       <div class="row mt-2 mb-2">
         <div class="col-lg-6 mb-2 southindianitem">
-          <table style="margin-left: auto"width="100%">
+          <div class="table-responsive" >
+          <table style="margin-left: auto; " width="100%">
             <tr class="text-primary">
               <th class="p-1"></th>
               @forelse($masters as $master)
-              <th class="p-1">{{Shortname($master->day)}} <br> <p style="font-size:10px;">{{convertDateFormat($master->day)}}</p> <input type="hidden" {{ in_array($master->day, $days) ? 'disabled' : '' }}  name="day[]" value="{{$master->day}}"></th>
+              <th class="p-1">{{Shortname($master->day)}} <br> <p style="font-size:8px;">{{convertDateFormat($master->day)}}</p> <input type="hidden" {{ in_array($master->day, $days) ? 'disabled' : '' }}  name="day[]" value="{{$master->day}}"></th>
               @empty
               @endforelse
             </tr>
@@ -87,7 +88,7 @@
 
               <td class="p-2">
                 
-                <input class="form-check-input p-2 border  {{ in_array($master->day, $days) ? 'border-link' : 'border-primary' }} " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }} data-date="{{$master->day}}" type="checkbox" name="si[]" id=""   value="{{$master->day}}" />
+                <input class="form-check-input p-1 border  {{ in_array($master->day, $days) ? 'border-link' : 'border-primary' }} " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }} data-date="{{$master->day}}" type="checkbox" name="si[]" id=""   value="{{$master->day}}" />
                 
               </td>
               
@@ -99,8 +100,7 @@
               @forelse($masters as $master)
               <td class="p-2">
                 
-                <input class="form-check-input p-2 border  {{ in_array($master->day, $days) ? 'border-link' : 'border-primary' }}  " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }}
- type="checkbox" name="curd[]"  id="" value="{{$master->day}}" />
+                <input class="form-check-input p-1 border  {{ in_array($master->day, $days) ? 'border-link' : 'border-primary' }}  " {{ in_array($master->day, $days) ? 'disabled' : '' }} {{ in_array($master->day, $exist) ? 'disabled ' : '' }} type="checkbox" name="curd[]"  id="" value="{{$master->day}}" />
                 
               </td>
               
@@ -109,6 +109,7 @@
               
             </tr>
           </table>
+          </div>
         </div>
         <div class="col-lg-6">
           <div class="row bg-white p-3 rounded">
@@ -133,7 +134,7 @@
             </div>
             <div class="col-lg-12">
               <center>
-                <button onclick="confirm('Are you sure? You want to add this ');" class="btn btn-primary" >confirm</button>
+                <button onclick="return handleConfirmation()" class="btn btn-primary" >confirm</button>
                 <a href="{{route('user.weekly')}}" class="btn btn-danger">Cancel</a>
                 
               </center>
@@ -151,6 +152,21 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+  function handleConfirmation() {
+    var userConfirmed = confirm("Are you sure? You want to add this");
+
+    if (userConfirmed) {
+      // User clicked "OK"
+      // Add your code to execute when the user confirms
+      console.log("User clicked OK");
+      document.getElementById("myForm").submit();  // Submit the form if needed
+    } else {
+      // User clicked "Cancel"
+      // Add your code to execute when the user cancels
+      console.log("User clicked Cancel");
+      return false;  // Prevent form submission
+    }
+  }
   $("body").on("change","input[name='si[]']",function(){
 
      var date = $(this).data('date');

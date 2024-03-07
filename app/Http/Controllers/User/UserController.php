@@ -108,8 +108,14 @@ class UserController extends Controller
                 {
                     
                     $v = json_encode($monthlyDays);
+                    $monthdelete = Token::where('emp_id',$emp_id)->whereDate('day','>=', $monthly)->get();
+                    if($monthdelete)
+                    {
+                        foreach ($monthdelete as $token) {
+                            $token->delete();
+                        }
+                    }
                     
-
                        Token::Create([
                         'emp_id' => $emp_id,
                         'monthly_sim' => $request->monthly_sim,
@@ -171,7 +177,7 @@ class UserController extends Controller
         });
     })
     ->orderBy('day', 'asc')
-    ->limit(5) // Include the current date and the next 5 upcoming dates
+    ->limit(6) // Include the current date and the next 5 upcoming dates
     ->get();
     
 
